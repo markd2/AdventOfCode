@@ -6,6 +6,19 @@
 ! * the fuel counter-upper&trade; needs to know the total, so calculate
 !   mass for each module (puzzle input) and sum all the values
 
+function calculateFuelNeededForMass(mass) result(fuelNeeded)
+  implicit none
+
+  real, intent(in) :: mass
+  integer :: fuelNeeded
+
+  integer :: divThree
+
+  divThree = mass / 3.0
+  fuelNeeded = divThree - 2
+end function
+
+
 program day1
   use :: iso_fortran_env
 
@@ -14,18 +27,22 @@ program day1
   integer :: status
   integer, parameter :: EOF = -1
   character(*), parameter :: filename = "day-1-input.txt"
-  character(50) :: line
+  real :: mass
+  integer :: calculateFuelNeededForMass
+  integer :: totalFuel = 0
 
   open (unit=23, file=filename, status='old', action='read')
-  
+
   do
-     read(23, *, iostat=status) line
+     read(23, *, iostat=status) mass
 
      if (status .eq. iostat_end) then
         exit
      end if
-     print *, line
+     totalFuel = totalFuel + calculateFuelNeededForMass(mass)
   end do
+
+  print *, totalFuel
   
   close(23)
 
