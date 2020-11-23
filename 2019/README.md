@@ -16,4 +16,9 @@ Needing to calculate fuel requireents
 * the fuel counter-upper&trade; needs to know the total, so calculate
   mass for each module (puzzle input) and sum all the values
 
+Fun learnings
+- Uninitialized variables had a value of `1`, leading to weirdness
+- fortran EOF detection, have an `iostat` argument in the `read`, and then check
+  the result value
+- still monkey-see/monkey-do for variable and function declaration
 
