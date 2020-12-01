@@ -1,5 +1,5 @@
 # add new exercises to this
-allTheThings = test1 test2
+allTheThings = day1
 
 all: $(allTheThings)
 
