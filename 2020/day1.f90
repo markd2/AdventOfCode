@@ -80,7 +80,6 @@ function fileCount(filename) result(lineCount)
      lineCount = lineCount + 1
   end do
   close(23)
-
 end function
 
 
@@ -88,26 +87,28 @@ program preflight
   implicit none
 
   character(*), parameter :: filename = "day-1-input.txt"
-  integer :: thing1
-  integer :: thing2
-  integer :: thing3
+  integer, allocatable, dimension(:) :: data
+  integer :: lineCount
+
+  integer :: thing1, thing2, thing3
   integer :: product
   logical :: found
-  integer, allocatable, dimension(:) :: data
-  logical :: findMatch2
-  logical :: findMatch3
-  integer :: fileCount
-  integer :: lineCount
   integer :: i
 
-  print *, "filecount ", fileCount(filename)
+  ! functions
+  logical :: findMatch2, findMatch3
+  integer :: fileCount
+
+  ! read in the file contents. Assuming it's well-formed
   lineCount = fileCount(filename)
+  print *, lineCount, "lines in ", filename
 
   allocate(data(lineCount))
   open(unit=23, file=filename, status='old', action='read')
   read(23, *) (data(i), i=1, lineCount)
   close(23)
 
+  ! pair-wise work (part 1)
   found = findMatch2(data, lineCount, thing1, thing2)
 
   if (found) then
@@ -117,6 +118,7 @@ program preflight
      print *, "match-2 not found"
   end if
 
+  ! triplet-wise work (part 2)
   found = findMatch3(data, lineCount, thing1, thing2, thing3)
 
   if (found) then

@@ -48,5 +48,6 @@ parallel arrays?  Not sure. So will go with the butt-simple approach.
 
 Yep, it's _three_ numbers.
 
-Running out of time this morning, so do the cheap-ass way.
+Running out of time this morning, so doing the cheap-ass way by copying and pasting.
 
+[Solution](day1.f90)
