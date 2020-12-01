@@ -58,7 +58,7 @@ end function
 program preflight
   implicit none
 
-  character(*), parameter :: filename = "day-1-test-input.txt"
+  character(*), parameter :: filename = "day-1-input.txt"
   integer :: thing1
   integer :: thing2
   integer :: product
