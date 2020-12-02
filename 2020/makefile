@@ -1,5 +1,5 @@
 # add new exercises to this
-allTheThings = day1
+allTheThings = day1 day2
 
 all: $(allTheThings)
 
@@ -7,4 +7,4 @@ all: $(allTheThings)
 	gfortran $< -o $*
 
 clean:
-	rm -f $(allTheThings) a.out *.o
+	rm -f $(allTheThings) a.out *.o *.mod *~
