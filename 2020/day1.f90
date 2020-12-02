@@ -1,4 +1,5 @@
 ! Day 1 - Preflight
+! https://adventofcode.com/2020/day/1
 
 function findMatch2(inArray, inSize, outThing1, outThing2) result(foundMatch)
   implicit none
