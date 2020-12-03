@@ -44,10 +44,22 @@ program togogganTrajector
   character(80) :: line
   integer :: row, column
 
-  integer :: deltaWest, deltaSouth, currentColumn, crashCount
+  integer :: deltaEast, deltaSouth, currentColumn, crashCount
   character :: forestObject
 
+  type :: SledVector
+     integer :: right ! east
+     integer :: down  ! south
+  end type SledVector
+
+  type(SledVector) :: algorithms(5)
+  integer :: algorithm
+
+  integer(8) :: runningMultiplication
+
   character, dimension(:, :), allocatable :: forest
+
+  algorithms = [SledVector(1, 1), SledVector(3, 1), SledVector(5, 1), SledVector(7, 1), SledVector(1, 2)]
 
   ! how tall of an array?
   lines = lineCount(filename)
@@ -76,27 +88,37 @@ program togogganTrajector
   close(23)
 
   ! go sledding
-  deltaWest = 3
-  deltaSouth = 1
-  currentColumn = 0 ! zero-index
-  crashCount = 0
 
-  do row = 2, lines
-     currentColumn = currentColumn + deltaWest
-     column = mod(currentColumn, width) + 1
-     
-     forestObject = forest(column, row)
+  
+  runningMultiplication = 1
+  do algorithm = 1, 5
+     deltaSouth = algorithms(algorithm)%down
+     deltaEast = algorithms(algorithm)%right
 
-     if (forestObject .eq. "#") then
-        crashCount = crashCount + 1
-     end if
-     print *, "looking at (row, column, effective)", row, currentColumn, column, " and see ", forestObject
+     currentColumn = 0 ! zero-index
+     crashCount = 0
      
+     do row = deltaSouth + 1, lines, deltaSouth
+        currentColumn = currentColumn + deltaEast
+        column = mod(currentColumn, width) + 1
+        
+        forestObject = forest(column, row)
+        
+        if (forestObject .eq. "#") then
+           crashCount = crashCount + 1
+        end if
+        ! print *, "looking at (row, column, effective)", row, currentColumn, column, " and see ", forestObject
+        
+     end do
+     print *, "tree count for ", algorithm,"is ", crashCount
+     runningMultiplication = runningMultiplication * crashCount
+
   end do
+
+  print *, "final product ", runningMultiplication
 
   deallocate(forest)
 
-  print *, "tree count: ", crashCount
 
 end program
 
