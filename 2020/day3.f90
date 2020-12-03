@@ -35,11 +35,13 @@ program togogganTrajector
   use :: iso_fortran_env
   implicit none
 
-  character(*), parameter :: filename = "day-3-test-input.txt"
+  character(*), parameter :: filename = "day-3-input.txt"
   integer :: lineCount
   integer :: width
   integer :: lines
+  integer :: readStatus
   character(80) :: line
+  integer :: row, column
 
   character, dimension(:, :), allocatable :: forest
 
@@ -49,11 +51,31 @@ program togogganTrajector
   ! how wide?
   open(unit=23, file=filename, status='old', action='read')
   read(23, *) line
-  close(23)
   width = len(trim(line))
 
-  print *, width, lines
+  allocate(forest(width, lines))  ! columns, rows
 
+  close(23)
+  open(unit=23, file=filename, status='old', action='read')
+
+!  rewind(23)
+  do row = 1, lines
+     read(23, *) line
+
+     do column = 1, width
+        forest(column, row) = line(column:column)
+     end do
+
+     if (readStatus .eq. iostat_end) then
+        print *, "eof"
+        exit
+     end if
+  end do
+  close(23)
+
+  
+
+  deallocate(forest)
 
 
 end program
