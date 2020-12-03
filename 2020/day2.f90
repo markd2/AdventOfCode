@@ -57,7 +57,6 @@ program passwordPhilosophy
 
   implicit none
 
-
   character(*), parameter :: filename = "day-2-input.txt"
 
   logical :: isGood
