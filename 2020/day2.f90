@@ -54,7 +54,11 @@ end module
 program passwordPhilosophy
   use :: iso_fortran_env
   use blah
+
   implicit none
+
+  character(*), parameter :: filename = "day-2-input.txt"
+
   logical :: isGood
   integer :: goodCount
 
@@ -64,7 +68,6 @@ program passwordPhilosophy
   integer :: readStatus
   character(len=80) :: range, required, password
 
-  character(*), parameter :: filename = "day-2-input.txt"
 
   open(unit=23, file=filename, status='old', action='read')
 

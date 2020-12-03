@@ -4,6 +4,93 @@ FORTRAN, because why not.  Last FORTRAN I did was in the 80s - had it in the UCS
 on an Apple ][, and took a college course in it during high school at UALR one summer. Some days
 I miss VAX/VMS
 
+## Day 3 - Toboggan Trajectory
+
+https://adventofcode.com/2020/day/3
+
+TL;DR
+
+* read in a grid of open spaces `.` and trees `#`
+
+e.g.
+
+
+* Then, start at (1, 1) (fortran 1-index)
+* repeat until fall off the bottom
+  - move right 3, down 1
+  - incr count if on a tree
+* report the number of trees
+* if fall off the right, then repeat the pattern
+
+#### Example
+
+```
+..##.......
+#...#...#..
+.#....#..#.
+..#.#...#.#
+.#...##..#.
+..#.##.....
+.#.#.#....#
+.#........#
+#.##...#...
+#...##....#
+.#..#...#.#
+```
+
+is the grid.  For this solution, it'd be repeated horizontally 3 times, with this
+path of X and O:
+
+```
+..##.........##.........##.......
+#..O#...#..#...#...#..#...#...#..
+.#....X..#..#....#..#..#....#..#.
+..#.#...#O#..#.#...#.#..#.#...#.#
+.#...##..#..X...##..#..#...##..#.
+..#.##.......#.X#.......#.##.....
+.#.#.#....#.#.#.#.O..#.#.#.#....#
+.#........#.#........X.#........#
+#.##...#...#.##...#...#.X#...#...
+#...##....##...##....##...#X....#
+.#..#...#.#.#..#...#.#.#..#...X.#
+```
+
+With the total counted here being 7.
+
+
+#### Preflight
+
+This hopefully will go smoother than yesterday, since it's just reading in lines (323 in
+the input), and doing mod math (being aware of fenceposts on the wrap)
+
+The twist for part two?  Something where just doing mod math in a loop won't cut it.  Maybe if
+hit a tree reposition to a space.
+
+#### Notes
+
+The mod math in a 1-index world was annoying.  So keep the index zero-based, and
+then bias it by one when looking up values.
+
+### Part 2
+
+Twist - parameritize the alogrithm (right 1 down 1, or right 5 down 1)
+
+Ended up making a little type
+
+```
+  type :: SledVector
+     integer :: right ! east
+     integer :: down  ! south
+  end type SledVector
+```
+
+I did screw up the loop indexing for the "down 2" case, starting one row off and getting way the wrong
+number. Help me Obiwan Kenobi...
+
+
+----------
+
+
 ## Day 2 - Password Philosophy
 
 https://adventofcode.com/2020/day/2
@@ -80,6 +167,8 @@ Pretty trivial:
 ```
 [Solution](day2.f90)
 
+
+----------
 
 ## Day 1 - Report Repair
 
