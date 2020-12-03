@@ -36,12 +36,16 @@ program togogganTrajector
   implicit none
 
   character(*), parameter :: filename = "day-3-input.txt"
+!  character(*), parameter :: filename = "splunge.txt"
   integer :: lineCount
   integer :: width
   integer :: lines
   integer :: readStatus
   character(80) :: line
   integer :: row, column
+
+  integer :: deltaWest, deltaSouth, currentColumn, crashCount
+  character :: forestObject
 
   character, dimension(:, :), allocatable :: forest
 
@@ -55,10 +59,8 @@ program togogganTrajector
 
   allocate(forest(width, lines))  ! columns, rows
 
-  close(23)
-  open(unit=23, file=filename, status='old', action='read')
-
-!  rewind(23)
+  ! read it in
+  rewind(23)
   do row = 1, lines
      read(23, *) line
 
@@ -73,10 +75,28 @@ program togogganTrajector
   end do
   close(23)
 
-  
+  ! go sledding
+  deltaWest = 3
+  deltaSouth = 1
+  currentColumn = 0 ! zero-index
+  crashCount = 0
+
+  do row = 2, lines
+     currentColumn = currentColumn + deltaWest
+     column = mod(currentColumn, width) + 1
+     
+     forestObject = forest(column, row)
+
+     if (forestObject .eq. "#") then
+        crashCount = crashCount + 1
+     end if
+     print *, "looking at (row, column, effective)", row, currentColumn, column, " and see ", forestObject
+     
+  end do
 
   deallocate(forest)
 
+  print *, "tree count: ", crashCount
 
 end program
 
