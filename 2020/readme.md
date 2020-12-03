@@ -56,6 +56,7 @@ then count
 
 twist?  Maybe multiple characters
 
+
 ### Part 2
 
 A rule change. The numbers aren't number of characters, but instead character positions
@@ -77,6 +78,7 @@ Pretty trivial:
 
     valid = inPosition1 .neqv. inPosition2
 ```
+[Solution](day2.f90)
 
 
 ## Day 1 - Report Repair
