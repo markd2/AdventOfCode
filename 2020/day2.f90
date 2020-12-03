@@ -6,7 +6,7 @@ module blah
   
 contains
   
-  function isValid(password, required, upperBound, lowerBound) result(valid)
+  function isValidPart1(password, required, upperBound, lowerBound) result(valid)
     implicit none
     character(len=*) :: password
     character, intent(in) :: required
@@ -21,7 +21,6 @@ contains
     count = 0
     length = len(password)
 
-
     do i = 1, length
        scan = password(i:i)
        if (scan .eq. required) then 
@@ -31,6 +30,22 @@ contains
     
     valid = count .ge. upperBound .and. count .le. lowerBound
     ! print *, "pw ", password, "valid ", valid
+
+  end function
+
+  function isValidPart2(password, required, position1, position2) result(valid)
+    implicit none
+    character(len=*) :: password
+    character, intent(in) :: required
+    integer, intent(in) :: position1, position2
+    logical :: valid
+    
+    logical :: inPosition1, inPosition2
+
+    inPosition1 = password(position1:position1) .eq. required
+    inPosition2 = password(position2:position2) .eq. required
+
+    valid = inPosition1 .neqv. inPosition2
 
   end function
 end module
@@ -74,10 +89,11 @@ program passwordPhilosophy
      ! --- get the required letter
      required(2:2) = ''
 
-     isGood = isValid(trim(password), required, thing1, thing2)
+     isGood = isValidPart2(trim(password), required, thing1, thing2)
      if (isGood) then
         goodCount = goodCount + 1
      end if
+        print *, "flonk", trim(password), isGood
 
   end do
 
