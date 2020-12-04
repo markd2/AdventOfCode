@@ -419,3 +419,12 @@ module fToC
 stopped part-way through "Derived types"
 
 * emacs f90-smart-end to no-blink
+
+### Open MPI and CoArrays
+
+* Modern Fortran - https://learning.oreilly.com/library/view/modern-fortran
+* installed via homebrew - `brew install open-mpi`
+* mpif90 --version
+* brew install opencoarrays
+* `caf array_copy_caf.f90 -o array_copy_caf`
+* `cafrun -n 2 array_copy_caf`
