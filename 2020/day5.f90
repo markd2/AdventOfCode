@@ -14,6 +14,11 @@ program binaryBoarding
   integer :: i, seat, bitWidth, exponent, effectiveIndex
   integer :: highestSeat
 
+  logical :: seatMap(1024)
+  integer :: lastSeenTrue
+
+  seatMap = .true.
+
   highestSeat = -1
 
   open(unit=23, file=filename, status='old', action='read')
@@ -49,12 +54,25 @@ program binaryBoarding
      
      seat = row * 8 + column
      print *, trim(line), row, column, seat
+     seatMap(seat) = .false.
 
      highestSeat = max(seat, highestSeat)
   end do
   close(23)
 
   print *, "Highest seat ", highestSeat
+
+  lastSeenTrue = 1
+  do i = 1, 1024
+     if (seatMap(i)) then
+        if (i > lastSeenTrue + 1) then
+           print *, "found discontinuity at ", i
+           exit
+        end if
+        lastSeenTrue = i
+     end if
+  end do
+
 
 end program
 
