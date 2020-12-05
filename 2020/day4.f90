@@ -233,9 +233,10 @@ program passportProcessing
 
   character(*), parameter :: filename = "day-4-input.txt"
   character(len=256) :: line
+  integer :: readStatus
+
   character(50), allocatable :: pairs(:)
   character(50) :: thingie, key, value
-  integer :: readStatus
   integer :: n, i, scan, seenCount, validCount
   logical :: done, valid
 
