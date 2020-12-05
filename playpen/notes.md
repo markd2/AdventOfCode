@@ -417,3 +417,5 @@ module fToC
 * paramterzied declaration list stuff
 
 stopped part-way through "Derived types"
+
+* emacs f90-smart-end to no-blink

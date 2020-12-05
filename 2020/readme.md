@@ -4,6 +4,52 @@ FORTRAN, because why not.  Last FORTRAN I did was in the 80s - had it in the UCS
 on an Apple ][, and took a college course in it during high school at UALR one summer. Some days
 I miss VAX/VMS
 
+
+## Day 4 - Passport Processing
+
+https://adventofcode.com/2020/day/4
+
+TL;DR
+
+* Read in some key:value records, blank line seperates
+
+```
+ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
+byr:1937 iyr:2017 cid:147 hgt:183cm
+
+iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
+hcl:#cfa07d byr:1929
+```
+
+* Check for validity - 7 fields are required, one is optional.
+
+#### Preflight
+
+I've done list-directed breaking on spaces, and also splitting on colons, so
+that can be adapted. I don't care about the values for the keys (for now), so
+don't need to find a hash table yet.
+
+Maybe just have an "accumulate" that sets a flag in a structure, and then the
+structure can be evaluated for correctness.
+
+The twist probably includes meaningful processing of the values, perhaps like
+the `year` fields for expiray
+
+### Notes
+
+Wow, not proud of any of that code.  Obiwan at the end.  Would have liked to have
+had a scoring function, but couldn't figure out (and still get some sleep tonight)
+where to put my struct definition, so just copy and pasted things. And also one 
+submission failure because didn't handle the last record properly.
+
+
+### Part 2
+
+Twist - validate the data.
+
+Might skip this for now until I read more about the language beyond caveman level.
+
+
 ## Day 3 - Toboggan Trajectory
 
 https://adventofcode.com/2020/day/3
