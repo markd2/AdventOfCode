@@ -47,7 +47,11 @@ submission failure because didn't handle the last record properly.
 
 Twist - validate the data.
 
-Might skip this for now until I read more about the language beyond caveman level.
+had fun making it OO and cleaing up.
+
+150 (for my data set) is too high, so false positives getting in
+
+Wasn't handling verification for empty strings (missing fields) properly
 
 
 ## Day 3 - Toboggan Trajectory
