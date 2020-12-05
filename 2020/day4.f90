@@ -9,13 +9,21 @@ module class_Passport
 
   type, public :: Passport
      logical :: byrSeen = .false.
+     character(50) :: byrValue = ""
      logical :: iyrSeen = .false.
+     character(50) :: iyrValue = ""
      logical :: eyrSeen = .false.
+     character(50) :: eyrValue = ""
      logical :: hgtSeen = .false.
+     character(50) :: hgtValue = ""
      logical :: hclSeen = .false.
+     character(50) :: hclValue = ""
      logical :: eclSeen = .false.
+     character(50) :: eclValue = ""
      logical :: pidSeen = .false.
+     character(50) :: pidValue = ""
      logical :: cidSeen = .false.
+     character(50) :: cidValue = ""
    contains
      procedure :: see => passport_see
      procedure :: valid => passport_valid
@@ -29,16 +37,73 @@ contains
     character(50), intent(in) :: value
 
     select case(trim(key))
-    case('byr'); this%byrSeen = .true.
-    case('iyr'); this%iyrSeen = .true.
-    case('eyr'); this%eyrSeen = .true.
-    case('hgt'); this%hgtSeen = .true.
-    case('hcl'); this%hclSeen = .true.
-    case('ecl'); this%eclSeen = .true.
-    case('pid'); this%pidSeen = .true.
-    case('cid'); this%cidSeen = .true.
+    case('byr')
+       this%byrSeen = .true.
+       this%byrValue = trim(value)
+    case('iyr')
+       this%iyrSeen = .true.
+       this%iyrValue = trim(value)
+    case('eyr')
+       this%eyrSeen = .true.
+       this%eyrValue = trim(value)
+    case('hgt')
+       this%hgtSeen = .true.
+       this%hgtValue = trim(value)
+    case('hcl')
+       this%hclSeen = .true.
+       this%hclValue = trim(value)
+    case('ecl')
+       this%eclSeen = .true.
+       this%eclValue = trim(value)
+    case('pid')
+       this%pidSeen = .true.
+       this%pidValue = trim(value)
+    case('cid')
+       this%cidSeen = .true.
+       this%cidValue = trim(value)
     end select
   end subroutine
+
+  function validNumber(candidate, low, high) result(valid)
+    character(50), intent(in) :: candidate
+    integer :: low, high
+    logical :: valid
+
+    integer :: blah
+
+    read(candidate, *) blah
+    valid = blah .ge. low .and. blah .le. high
+  end function
+
+  function validPassportID(candidate) result(valid)
+    character(50), intent(in) :: candidate
+    logical :: valid
+    integer :: length, scan
+
+    valid = .true.
+
+    ! make sure 9 long
+    if (len(trim(candidate)) .ne. 9) then
+       valid = .false.
+       return
+    end if
+
+    ! make sure just digits
+    valid = verify(trim(candidate), "0123456789") .eq. 0
+  end function
+
+  function validEyeColor(candidate) result(valid)
+    character(50), intent(in) :: candidate
+    logical :: valid
+
+    character(3) :: validColors(7)
+
+    valid = .false.
+    validColors = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
+
+    valid = any(validColors .eq. trim(candidate))
+  end function
+
 
   function passport_valid(this) result(valid)
     class(Passport), intent(in) :: this
@@ -51,12 +116,18 @@ contains
 
     if (this%byrSeen) then
        seenCount = seenCount + 1
+       valid = validNumber(this%byrValue, 1920, 2002)
+       print *, "is byr ", trim(this%byrValue), " valid? ", valid
     end if
     if (this%iyrSeen) then
        seenCount = seenCount + 1
+       valid = validNumber(this%iyrValue, 2010, 2020)
+       print *, "is iyr ", trim(this%iyrValue), " valid? ", valid
     end if
     if (this%eyrSeen) then
        seenCount = seenCount + 1
+       valid = validNumber(this%eyrValue, 2020, 2030)
+       print *, "is iyr ", trim(this%eyrValue), " valid? ", valid
     end if
     if (this%hgtSeen) then
        seenCount = seenCount + 1
@@ -66,9 +137,13 @@ contains
     end if
     if (this%eclSeen) then
        seenCount = seenCount + 1
+       valid = validEyeColor(this%eclValue)
+       print *, "is ecl ", trim(this%eclValue), " valid? ", valid
     end if
     if (this%pidSeen) then
        seenCount = seenCount + 1
+       valid = validPassportID(this%pidValue)
+       print *, "is pid ", trim(this%pidValue), " valid? ", valid
     end if
     if (this%cidSeen) then
        seenCount = seenCount + 1
@@ -76,15 +151,14 @@ contains
 
     if (seenCount .eq. 8) then
        valid = .true.
-       print *, "  valid"
     else if (seenCount .eq. 7) then
        if (this%cidSeen) then
           ! the optional one is there, so this is invalid
+          valid = .false.
        else
           valid = .true.
        end if
     end if
-
   end function
 
 end module
@@ -94,7 +168,7 @@ program passportProcessing
   use :: iso_fortran_env
   implicit none
 
-  character(*), parameter :: filename = "day-4-input.txt"
+  character(*), parameter :: filename = "day-4-test-input-part-2.txt"
   character(len=256) :: line
   character(50), allocatable :: pairs(:)
   character(50) :: thingie, key, value
@@ -125,7 +199,7 @@ outer:  do
 
      ! no records means done with this passport. Evaluate it
      if (done .or. n .eq. 0) then
-        print *, "END OF RECORD. Last passport: ", thePassport
+        print *, "END OF RECORD."
 
         ! evaluate
 
