@@ -92,6 +92,26 @@ contains
     valid = verify(trim(candidate), "0123456789") .eq. 0
   end function
 
+  function validHairColor(candidate) result(valid)
+    character(50), intent(in) :: candidate
+    logical :: valid
+
+    ! make sure 7 long
+    if (len(trim(candidate)) .ne. 7) then
+       valid = .false.
+       return
+    end if
+
+    ! make sure starts with #
+    if (candidate(1:1) .ne. "#") then
+       valid = .false.
+       return
+    end if
+
+    ! make sure just digits
+    valid = verify(trim(candidate(2:7)), "0123456789abcdef") .eq. 0
+  end function
+
   function validEyeColor(candidate) result(valid)
     character(50), intent(in) :: candidate
     logical :: valid
@@ -104,6 +124,37 @@ contains
     valid = any(validColors .eq. trim(candidate))
   end function
 
+  function validHeight(candidate) result(valid)
+    character(50), intent(in) :: candidate
+    logical :: valid
+    integer :: length, number
+    character(2) :: nom
+
+    valid = .false.
+
+    ! number followed by `cm` or `in`
+    length = len(trim(candidate))
+
+    if (length .lt. 2) then
+       valid = .false.
+       return
+    end if
+
+    if ((candidate(length-1:length) .ne. "cm") .and. (candidate(length-1:length) .ne. "in")) then
+       valid = .false.
+    end if
+
+    ! pull out the number
+    read(candidate(1:length-2), *) number
+
+    select case(candidate(length-1:length))
+    case('cm')
+       valid = ((number .ge. 150) .and. (number .le. 193))
+    case('in')
+       valid = ((number .ge. 59) .and. (number .le. 76))
+    end select
+  end function
+
 
   function passport_valid(this) result(valid)
     class(Passport), intent(in) :: this
@@ -112,55 +163,67 @@ contains
     integer :: seenCount
 
     valid = .false.
-    seenCount = 0
 
     if (this%byrSeen) then
-       seenCount = seenCount + 1
        valid = validNumber(this%byrValue, 1920, 2002)
        print *, "is byr ", trim(this%byrValue), " valid? ", valid
+       if (.not. valid) then; return; end if
+    else
+       valid = .false.; return
     end if
+
     if (this%iyrSeen) then
-       seenCount = seenCount + 1
        valid = validNumber(this%iyrValue, 2010, 2020)
        print *, "is iyr ", trim(this%iyrValue), " valid? ", valid
+       if (.not. valid) then; return; end if
+    else
+       valid = .false.; return
     end if
+
     if (this%eyrSeen) then
-       seenCount = seenCount + 1
        valid = validNumber(this%eyrValue, 2020, 2030)
        print *, "is iyr ", trim(this%eyrValue), " valid? ", valid
+       if (.not. valid) then; return; end if
+    else
+       valid = .false.; return
     end if
+
     if (this%hgtSeen) then
-       seenCount = seenCount + 1
+       valid = validHeight(this%hgtValue)
+       print *, "is hgt ", trim(this%hgtValue), " valid? ", valid
+       if (.not. valid) then; return; end if
+    else
+       valid = .false.; return
     end if
+
     if (this%hclSeen) then
-       seenCount = seenCount + 1
+       valid = validHairColor(this%hclValue)
+       print *, "is hcl ", trim(this%hclValue), " valid? ", valid
+       if (.not. valid) then; return; end if
+    else
+       valid = .false.; return
     end if
+
     if (this%eclSeen) then
-       seenCount = seenCount + 1
        valid = validEyeColor(this%eclValue)
        print *, "is ecl ", trim(this%eclValue), " valid? ", valid
+       if (.not. valid) then; return; end if
+    else
+       valid = .false.; return
     end if
+
     if (this%pidSeen) then
-       seenCount = seenCount + 1
        valid = validPassportID(this%pidValue)
        print *, "is pid ", trim(this%pidValue), " valid? ", valid
+       if (.not. valid) then; return; end if
+    else
+       valid = .false.; return
     end if
-    if (this%cidSeen) then
-       seenCount = seenCount + 1
-    end if
+    ! ignore cid
 
-    if (seenCount .eq. 8) then
-       valid = .true.
-    else if (seenCount .eq. 7) then
-       if (this%cidSeen) then
-          ! the optional one is there, so this is invalid
-          valid = .false.
-       else
-          valid = .true.
-       end if
-    end if
+    ! we survived!
+    valid = .true.
   end function
-
 end module
 
 program passportProcessing
@@ -168,7 +231,7 @@ program passportProcessing
   use :: iso_fortran_env
   implicit none
 
-  character(*), parameter :: filename = "day-4-test-input-part-2.txt"
+  character(*), parameter :: filename = "day-4-input.txt"
   character(len=256) :: line
   character(50), allocatable :: pairs(:)
   character(50) :: thingie, key, value
