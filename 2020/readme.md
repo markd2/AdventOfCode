@@ -5,6 +5,52 @@ on an Apple ][, and took a college course in it during high school at UALR one s
 I miss VAX/VMS
 
 
+## Day 5 - Binary Boarding
+
+https://adventofcode.com/2020/day/5
+
+TL;DR
+
+* Start with 128 (or 8), then number-guessing-game them by slicing off half.
+* that gives a row / column (row, seat) index
+* calculate the linear index (row * 8 + set)
+
+#### Preflight
+
+Feeling off-by-1 fencepost obiwans in my future.
+
+Twist?  This problem statement is essentially "this is a binary number",
+so the twist would be something that breaks that assumption.
+
+#### Part 2
+
+Find ID of your seat, it'll be the only missing boarding pass.
+Some of the seats at the very front and back of the plane don't exist.
+
+So 761 lines in the file.  Luckily our fencepost is such that our seat
+is ID +/- 1
+
+So, what's the size of the complete set of numbers?  1024.  bit set of ones we've seen
+
+So, the 
+we get 
+```
+          37
+          38
+          39
+         597
+         802
+         803
+         804
+```
+
+So find the first discontinuity. That was pretty straightforward.  YAY
+
+
+
+----------
+
+
 ## Day 4 - Passport Processing
 
 https://adventofcode.com/2020/day/4
@@ -52,6 +98,7 @@ had fun making it OO and cleaing up.
 150 (for my data set) is too high, so false positives getting in
 
 Wasn't handling verification for empty strings (missing fields) properly
+
 
 
 ## Day 3 - Toboggan Trajectory
