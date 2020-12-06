@@ -56,7 +56,7 @@ program customCustoms
 
   type(CharacterSet) :: cset
 
-  character(*), parameter :: filename = "day-6-test-input.txt"
+  character(*), parameter :: filename = "day-6-input.txt"
   character(len=50) :: line
   integer :: readStatus, sum
 
