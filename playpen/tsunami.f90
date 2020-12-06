@@ -23,7 +23,7 @@ program tsunami
 
 
   ! gaussian initial setup
-  do i = 1, grid_size
+  do concurrent (i = 1:grid_size)
      h(i) = exp(-decay * (i - icenter) ** 2 )
   end do
 
@@ -34,15 +34,17 @@ program tsunami
      dh(1) = h(1) - h(grid_size)
 
      ! calculates the finite difference of h in space
-     do i = 2, grid_size
+     do concurrent (i = 2:grid_size)
         dh(i) = h(i) - h(i-1)
      end do
 
      ! evaluate h at the next time step
-     do i = 1, grid_size
+     do concurrent (i = 1:grid_size)
         h(i) = h(i) - c * dh(i) / dx * dt
      end do
+     print *, n, h
   end do time_loop
+
 
 end program
 
