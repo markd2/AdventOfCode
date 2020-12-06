@@ -454,3 +454,24 @@ stopped part-way through "Derived types"
 
 * allocatable arrays - only specify the rank (number of dimensions), not the size of dimensions
   Once size is known, `allocate` allocates the array. (c.f. chapter 5)
+* `stop` to halt and catch fire
+```
+  if (dt <= 0) stop 'time step dt must be > 0'
+
+./tsunami
+STOP time step dt must be > 0
+```
+
+* `do` loop if start == end, it will execute once 
+* loops can be named
+```
+outer_loop: do j = 1, jm
+  inner_loop: do i = 1, im
+    blah
+  end do inner_loop
+end do outer_loop
+```
+
+* can exit a specific label - `exit outer_loop`
+* `do concurrent` exists
+* typical operator precendence.  For equal precedence, left to right
