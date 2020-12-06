@@ -4,6 +4,55 @@ FORTRAN, because why not.  Last FORTRAN I did was in the 80s - had it in the UCS
 on an Apple ][, and took a college course in it during high school at UALR one summer. Some days
 I miss VAX/VMS
 
+## Day 6 - Custom Customs
+
+https://adventofcode.com/2020/day/6
+
+TL;DR
+
+* passengers are in arbitrary groups
+* They answer a T/F questionairre
+* collect the number of unique T responses.
+
+Here's three records
+
+```
+abc
+
+a
+b
+c
+
+ab
+ac
+```
+
+* Each boils down to `abc` having set to true
+
+#### Preflight
+
+* Can re-use the newline-seperated record approach
+* Still haven't looked for a hashtable data structure, so thinking of an
+  array of 26 logicals, and using the letter as an index into it.
+* Maybe a letterSet type
+
+Twist?  Maybe if the set of values expands (update letter->index translation).
+Or we need to collect counts (then array of integers rather than bools)
+
+#### Notes
+
+Pretty straight forward (6310).  Still really struggling with strings and passing to procedures
+
+### Part 2
+
+instead of couting the ones where someone said yes, but where everyone said yes.
+So yes, (yes), need to keep counts.
+
+Doing the straightforward thing, getting too large a value (3201).
+
+Argh - included one stray AnySeen rather than AllSeen.  (3193)
+
+----------
 
 ## Day 5 - Binary Boarding
 
