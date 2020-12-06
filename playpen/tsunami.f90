@@ -12,8 +12,8 @@ program tsunami
 
   real :: h(grid_size), dh(grid_size)
 
-  integer, parameter :: icenter = 25
-  real, parameter :: decay = 0.02
+  integer, parameter :: icenter = 25  ! index where center of water perturation
+  real, parameter :: decay = 0.02     ! width of perturbation
 
   ! sanity check settings
   if (grid_size <= 0) stop 'grid size must be > 0'
@@ -22,29 +22,37 @@ program tsunami
   if (c <= 0) stop 'background flow speed c must be > 0'
 
 
-  ! gaussian initial setup
-  do concurrent (i = 1:grid_size)
-     h(i) = exp(-decay * (i - icenter) ** 2 )
-  end do
-
+  call set_gaussian(h, icenter, decay)
 
   ! core of the solver - iterating the solution forward in time
   time_loop: do n = 1, num_time_steps
-     ! apply the periodic boundary condition to the left
-     dh(1) = h(1) - h(grid_size)
-
-     ! calculates the finite difference of h in space
-     do concurrent (i = 2:grid_size)
-        dh(i) = h(i) - h(i-1)
-     end do
-
-     ! evaluate h at the next time step
-     do concurrent (i = 1:grid_size)
-        h(i) = h(i) - c * dh(i) / dx * dt
-     end do
+     h = h - c * diff(h) / dx * dt
      print *, n, h
   end do time_loop
 
+contains
+
+  subroutine set_gaussian(x, icenter, decay)
+    real, intent(in out) :: x(:)
+
+    integer, intent(in) :: icenter
+    real, intent(in) :: decay
+    integer :: i
+
+    do concurrent (i = 1:size(x))
+       h(i) = exp(-decay * (i - icenter) ** 2 )
+    end do
+  end subroutine
+
+  pure function diff(x) result(dx)
+    real, intent(in) :: x(:)
+    real :: dx(size(x))
+    integer :: im
+
+    im = size(x)
+    dx(1) = x(1) - x(im)
+    dx(2 : im) = x(2 : im) - x(1 : im - 1)
+  end function
 
 end program
 

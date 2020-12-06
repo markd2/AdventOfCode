@@ -505,3 +505,33 @@ end do outer_loop
   - actual arguments are the ones passed when invoking the procedure (function or subroutine)
   - dummy arguments are the ones declared in the procedure definition
   - sum(3, 5) - 3 and 5 are the actual arguments, and a, b in th efunction are the dummy onesbtg
+
+* array-oriented syntax (sneak peek)
+
+```
+     dh = diff(h)
+
+     ! evaluate h at the next time step
+     do concurrent (i = 1:grid_size)
+        h(i) = h(i) - c * dh(i) / dx * dt
+     end do
+```
+
+becomes
+
+```
+     h = h - c * diff(h) / dx * dt
+```
+
+Could replace a whole loop with an array operation are possible b/c h and diff(h)
+hare the same shape (one-dimensional) and size.  c, dx, dt are scalar, and 
+compatible with array operations.  (more in later chapter)
+
+* pure procedures - no side effects. Declare with a `pure` keyword
+  - includes i/o, or modifying the value of a variable declared outside the procedure
+  - can only call pure procedures
+  - can't contain `stop`
+  - and some more coming up later
+
+* "there's no croutons in the future" -- distractedElf
+
