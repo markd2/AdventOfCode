@@ -25,13 +25,16 @@ contains
 
     print *, "    ", trim(line)
     
-    length = len(line)
+    length = len(trim(line))
     this%linesSeen = this%linesSeen + 1
 
     do scan = 1, length
        char = line(scan:scan)
        setIndex = index("abcdefghijklmnopqrstuvwxyz", char)
-       if (setIndex .eq. 0) cycle
+       if (setIndex .eq. 0) then
+          print *, "  skipping '", char, "'"
+          cycle
+       end if
 
        currentValue = this%seenCharacters(setIndex)
        this%seenCharacters(setIndex) = currentValue + 1
@@ -45,6 +48,8 @@ contains
     class(CharacterSet), intent(inout) :: this
 
     integer :: count = 0, scan
+    
+    stop "argh"
 
     cset_uniqueSeenCount = 0
 
@@ -66,6 +71,10 @@ contains
     do scan = 1, arrayCount
        if (this%seenCharacters(scan) .eq. this%linesSeen) then
           cset_allSeenCount = cset_allSeenCount + 1
+       end if
+
+       if (this%seenCharacters(scan) .gt. this%linesSeen) then
+          stop "huh"
        end if
     end do
 
@@ -94,7 +103,7 @@ program customCustoms
 
      if (readStatus .eq. iostat_end) then
         print *, "EOF - count is ", cset%allSeenCount(), "out of ", cset%linesSeen
-        sum = sum + cset%uniqueSeenCount()
+        sum = sum + cset%allSeenCount()
         exit
      end if
      if (readStatus .ne. 0) then
@@ -103,6 +112,7 @@ program customCustoms
 
      if (len(trim(line)) == 0) then
         print *, "END OF RECORD - count is ", cset%allSeenCount(), "out of ", cset%linesSeen
+        print *, ""
 
         sum = sum + cset%allSeenCount()
         cset = CharacterSet()
