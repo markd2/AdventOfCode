@@ -22,6 +22,8 @@ contains
     
     integer :: length, scan, setIndex, currentValue
     character :: char
+
+    print *, "    ", trim(line)
     
     length = len(line)
     this%linesSeen = this%linesSeen + 1
@@ -33,6 +35,8 @@ contains
 
        currentValue = this%seenCharacters(setIndex)
        this%seenCharacters(setIndex) = currentValue + 1
+
+       if (currentValue + 1 > this%linesSeen) stop "argh"
     end do
 
   end subroutine
@@ -55,7 +59,7 @@ contains
   integer function cset_allSeenCount(this)
     class(CharacterSet), intent(inout) :: this
 
-    integer :: count = 0, scan
+    integer :: scan
 
     cset_allSeenCount = 0
 
@@ -77,7 +81,7 @@ program customCustoms
 
   type(CharacterSet) :: cset
 
-  character(*), parameter :: filename = "day-6-test-input.txt"
+  character(*), parameter :: filename = "day-6-input.txt"
   character(len=50) :: line
   integer :: readStatus, sum
 
@@ -89,7 +93,7 @@ program customCustoms
      read(23, '(a)', iostat=readStatus) line
 
      if (readStatus .eq. iostat_end) then
-        print *, "EOF"
+        print *, "EOF - count is ", cset%allSeenCount(), "out of ", cset%linesSeen
         sum = sum + cset%uniqueSeenCount()
         exit
      end if
