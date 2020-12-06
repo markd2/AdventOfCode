@@ -473,5 +473,35 @@ end do outer_loop
 ```
 
 * can exit a specific label - `exit outer_loop`
-* `do concurrent` exists
 * typical operator precendence.  For equal precedence, left to right
+
+* `do concurrent` exists.  More detail in chapter 6.
+  It's a promise to the compiler that the loop contents can be safely vectorized
+```
+! do i = 1, grid_size
+  do concurrent (i = 1:grid_size)
+     h(i) = exp(-decay * (i - icenter) ** 2 )
+  end do
+```
+
+* have procedures and functions in the program by having a `contains` block after the code
+* `&` for line continuation
+
+* return type in function declaration. Eliminates need to have an explicit `res`
+  type declaration
+```
+  real function cold_front_temperature( &
+       temp1, temp2, c, dx, dt) result(res)
+```
+
+* can also omit the result() by assigning to function name
+```
+  real function flonk()
+    flonk = 3.15
+  end function
+```
+
+* actual vs dummy arguments
+  - actual arguments are the ones passed when invoking the procedure (function or subroutine)
+  - dummy arguments are the ones declared in the procedure definition
+  - sum(3, 5) - 3 and 5 are the actual arguments, and a, b in th efunction are the dummy onesbtg

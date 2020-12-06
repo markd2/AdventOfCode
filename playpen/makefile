@@ -1,5 +1,5 @@
 # add new exercises to this
-allTheThings = allocatable allocatableString arithmetic arraySlice arrays dowhile float hello ifs loopy module readValue string subby typey variables tsunami
+allTheThings = allocatable allocatableString arithmetic arraySlice arrays dowhile float hello ifs loopy module readValue string subby typey variables tsunami coldfront
 
 all: $(allTheThings)
 
