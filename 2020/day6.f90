@@ -6,10 +6,13 @@ module class_CharacterSet
   integer, parameter :: arrayCount = 26
 
   type, public :: CharacterSet 
-     logical :: seenCharacters(arrayCount) = .false.
+     integer :: seenCharacters(arrayCount) = 0
+     integer :: linesSeen = 0
+     
    contains
      procedure :: seeLine => cset_see
      procedure :: uniqueSeenCount => cset_uniqueSeenCount
+     procedure :: allSeenCount => cset_allSeenCount
   end type
   
 contains
@@ -17,16 +20,19 @@ contains
     class(CharacterSet), intent(inout) :: this
     character(len=50), intent(in) :: line
     
-    integer :: length, scan, setIndex
+    integer :: length, scan, setIndex, currentValue
     character :: char
     
     length = len(line)
+    this%linesSeen = this%linesSeen + 1
 
     do scan = 1, length
        char = line(scan:scan)
        setIndex = index("abcdefghijklmnopqrstuvwxyz", char)
        if (setIndex .eq. 0) cycle
-       this%seenCharacters(setIndex) = .true.
+
+       currentValue = this%seenCharacters(setIndex)
+       this%seenCharacters(setIndex) = currentValue + 1
     end do
 
   end subroutine
@@ -39,8 +45,23 @@ contains
     cset_uniqueSeenCount = 0
 
     do scan = 1, arrayCount
-       if (this%seenCharacters(scan)) then
+       if (this%seenCharacters(scan) .gt. 0) then
           cset_uniqueSeenCount = cset_uniqueSeenCount + 1
+       end if
+    end do
+
+  end function
+
+  integer function cset_allSeenCount(this)
+    class(CharacterSet), intent(inout) :: this
+
+    integer :: count = 0, scan
+
+    cset_allSeenCount = 0
+
+    do scan = 1, arrayCount
+       if (this%seenCharacters(scan) .eq. this%linesSeen) then
+          cset_allSeenCount = cset_allSeenCount + 1
        end if
     end do
 
@@ -56,7 +77,7 @@ program customCustoms
 
   type(CharacterSet) :: cset
 
-  character(*), parameter :: filename = "day-6-input.txt"
+  character(*), parameter :: filename = "day-6-test-input.txt"
   character(len=50) :: line
   integer :: readStatus, sum
 
@@ -77,9 +98,9 @@ program customCustoms
      end if
 
      if (len(trim(line)) == 0) then
-        print *, "END OF RECORD - count is ", cset%uniqueSeenCount()
+        print *, "END OF RECORD - count is ", cset%allSeenCount(), "out of ", cset%linesSeen
 
-        sum = sum + cset%uniqueSeenCount()
+        sum = sum + cset%allSeenCount()
         cset = CharacterSet()
         cycle
      end if
