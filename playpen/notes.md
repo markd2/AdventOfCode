@@ -418,9 +418,13 @@ module fToC
 
 stopped part-way through "Derived types"
 
+<<<<<<< HEAD
 * emacs f90-smart-end to no-blink
+=======
+## Modern Fortran work-through
+>>>>>>> 94b4868 (checkpoint)
 
-### Open MPI and CoArrays
+### (setup) Open MPI and CoArrays
 
 * Modern Fortran - https://learning.oreilly.com/library/view/modern-fortran
 * installed via homebrew - `brew install open-mpi`
@@ -428,3 +432,25 @@ stopped part-way through "Derived types"
 * brew install opencoarrays
 * `caf array_copy_caf.f90 -o array_copy_caf`
 * `cafrun -n 2 array_copy_caf`
+
+* emacs f90-smart-end to no-blink
+
+### Notes
+
+* `parameter` for constants : `integer, parameter :: grid_size`
+* Array properties
+  - contiguous
+  - multi-dimensional (up to 15 dimensions)
+  - static or dynamic - set at compile tome, or runtime-dimensions
+  - whole-array math - use arithmetic operators and functions on arrays too
+  - column-major indexing - like matlab or R (unlike C/Pythong), so left-most index
+    varies fastest.  Keep in mind when looping
+
+* these are the same:
+```
+  real, dimension(grid_size) :: h
+  real :: h(grid_size)
+```
+
+* allocatable arrays - only specify the rank (number of dimensions), not the size of dimensions
+  Once size is known, `allocate` allocates the array. (c.f. chapter 5)
