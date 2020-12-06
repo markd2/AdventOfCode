@@ -418,4 +418,120 @@ module fToC
 
 stopped part-way through "Derived types"
 
+<<<<<<< HEAD
 * emacs f90-smart-end to no-blink
+=======
+## Modern Fortran work-through
+>>>>>>> 94b4868 (checkpoint)
+
+### (setup) Open MPI and CoArrays
+
+* Modern Fortran - https://learning.oreilly.com/library/view/modern-fortran
+* installed via homebrew - `brew install open-mpi`
+* mpif90 --version
+* brew install opencoarrays
+* `caf array_copy_caf.f90 -o array_copy_caf`
+* `cafrun -n 2 array_copy_caf`
+
+* emacs f90-smart-end to no-blink
+
+### Notes
+
+* `parameter` for constants : `integer, parameter :: grid_size`
+* Array properties
+  - contiguous
+  - multi-dimensional (up to 15 dimensions)
+  - static or dynamic - set at compile tome, or runtime-dimensions
+  - whole-array math - use arithmetic operators and functions on arrays too
+  - column-major indexing - like matlab or R (unlike C/Pythong), so left-most index
+    varies fastest.  Keep in mind when looping
+
+* these are the same:
+```
+  real, dimension(grid_size) :: h
+  real :: h(grid_size)
+```
+
+* allocatable arrays - only specify the rank (number of dimensions), not the size of dimensions
+  Once size is known, `allocate` allocates the array. (c.f. chapter 5)
+* `stop` to halt and catch fire
+```
+  if (dt <= 0) stop 'time step dt must be > 0'
+
+./tsunami
+STOP time step dt must be > 0
+```
+
+* `do` loop if start == end, it will execute once 
+* loops can be named
+```
+outer_loop: do j = 1, jm
+  inner_loop: do i = 1, im
+    blah
+  end do inner_loop
+end do outer_loop
+```
+
+* can exit a specific label - `exit outer_loop`
+* typical operator precendence.  For equal precedence, left to right
+
+* `do concurrent` exists.  More detail in chapter 6.
+  It's a promise to the compiler that the loop contents can be safely vectorized
+```
+! do i = 1, grid_size
+  do concurrent (i = 1:grid_size)
+     h(i) = exp(-decay * (i - icenter) ** 2 )
+  end do
+```
+
+* have procedures and functions in the program by having a `contains` block after the code
+* `&` for line continuation
+
+* return type in function declaration. Eliminates need to have an explicit `res`
+  type declaration
+```
+  real function cold_front_temperature( &
+       temp1, temp2, c, dx, dt) result(res)
+```
+
+* can also omit the result() by assigning to function name
+```
+  real function flonk()
+    flonk = 3.15
+  end function
+```
+
+* actual vs dummy arguments
+  - actual arguments are the ones passed when invoking the procedure (function or subroutine)
+  - dummy arguments are the ones declared in the procedure definition
+  - sum(3, 5) - 3 and 5 are the actual arguments, and a, b in th efunction are the dummy onesbtg
+
+* array-oriented syntax (sneak peek)
+
+```
+     dh = diff(h)
+
+     ! evaluate h at the next time step
+     do concurrent (i = 1:grid_size)
+        h(i) = h(i) - c * dh(i) / dx * dt
+     end do
+```
+
+becomes
+
+```
+     h = h - c * diff(h) / dx * dt
+```
+
+Could replace a whole loop with an array operation are possible b/c h and diff(h)
+hare the same shape (one-dimensional) and size.  c, dx, dt are scalar, and 
+compatible with array operations.  (more in later chapter)
+
+* pure procedures - no side effects. Declare with a `pure` keyword
+  - includes i/o, or modifying the value of a variable declared outside the procedure
+  - can only call pure procedures
+  - can't contain `stop`
+  - and some more coming up later
+
+* "there's no croutons in the future" -- distractedElf
+
