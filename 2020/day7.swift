@@ -30,7 +30,7 @@ for line in lines {
 
     // _dark orange bags"
     let lhs = chunks[0] + " " + chunks[1]
-    print("key \(lhs)")
+//    print("key \(lhs)")
 
     // bags
     _ = chunks[2]
@@ -65,7 +65,7 @@ for line in lines {
     containsTable[String(lhs)] = blah
 
 }
-print("SPLUNGE \(reverseTable)")
+// print("SPLUNGE \(reverseTable)")
 
 // now to process
 
@@ -87,8 +87,8 @@ func grepBag(table: [String: Set<String>], lookingFor: String) {
 }
 
 grepBag(table: reverseTable, lookingFor: "shiny gold")
-print("found")
-print(accumulator)
+// print("found")
+// print(accumulator)
 print("TOTAL ", accumulator.count - 1)
 
 
