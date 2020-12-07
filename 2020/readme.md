@@ -4,6 +4,101 @@ FORTRAN, because why not.  Last FORTRAN I did was in the 80s - had it in the UCS
 on an Apple ][, and took a college course in it during high school at UALR one summer. Some days
 I miss VAX/VMS
 
+## Day 7 - Handy Haversacks
+
+TL;DR
+* luggage!
+* bags are color-coded, and contain specific quantities of other bags
+* rule of the form
+  - adjective color bags  contain  number adjective bag(s), (list may repeat), period
+* we have a shiny gold bag. We want to carry it in at least one other bag
+  (so don't start off with shiny gold)
+* so could have bag-type-A which holds shiny gold bag directly
+  - or bag type B, that holds A, that holds shiny gold
+* question to solve: how many bag colors can eventually contain at least one shiny gold bag?
+
+
+Example rules
+
+```
+A bright white bag, which can hold your shiny gold bag directly.
+A muted yellow bag, which can hold your shiny gold bag directly, plus some other bags.
+A dark orange bag, which can hold bright white and muted yellow bags, either of which could then hold your shiny gold bag.
+A light red bag, which can hold bright white and muted yellow bags, either of which could then hold your shiny gold bag.
+```
+
+
+### Preflight
+
+yikes.  
+
+Maybe start with some kind of lookup table (say by bag color), with a list of bags
+that it contains.  Actually, if the table is reversed from the rules.
+
+So above,
+
+shiny gold ------> live in bright white
+           +-----> live in muted yellow
+           +-----> root
+bright white ----> live in light red
+             +---> live in dark orange
+             +---> root
+muted yellow +---> live in bright white
+             +---> root
+faded blue +-----> live in shiny gold
+           +-----> live in dark olive
+           +-----> live in vibrant plum
+           +-----> root
+vibrant plum +---> live in dark olive
+             +---> root
+dotted black +---> live in faded blue
+             +---> root
+dark orange  +---> root
+light red  +-----> root
+
+So the possible bags for shiny gold are:
+
+* find shiny gold. Follow up to live in root. If get to root, add to set
+```
+  - shiny gold ->  bright white -> root  - BRIGHT WHITE
+                   -> light red -> root - LIGHT RED
+                   -> dark orange -> root - DARK ORANGE
+               ->  muted yellow -> root  - MUTED YELLOW
+```
+
+So four colors, which is the test data solution
+
+sample rule
+
+```
+shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
+```
+
+Things interested in
+
+```
+shiny-gold-bags ignored ignored  dark-olive-bag, ignored vibrant-plum- bags.
+```
+
+Fortran hash table example.
+
+http://fortranwiki.org/fortran/show/hash+table+example
+
+TIL about ELEMENTAL functions
+
+
+#### Twist?
+
+twist - so many directions the twist could go.  Keep counts, so include the transitive
+closure?  adjective becoming important?  TBH I'll be happy if I can solve part 1
+ during my morning freetime.
+
+
+
+
+
+
+
 ## Day 6 - Custom Customs
 
 https://adventofcode.com/2020/day/6
