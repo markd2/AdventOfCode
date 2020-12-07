@@ -21,11 +21,17 @@ TL;DR
 Example rules
 
 ```
-A bright white bag, which can hold your shiny gold bag directly.
-A muted yellow bag, which can hold your shiny gold bag directly, plus some other bags.
-A dark orange bag, which can hold bright white and muted yellow bags, either of which could then hold your shiny gold bag.
-A light red bag, which can hold bright white and muted yellow bags, either of which could then hold your shiny gold bag.
+
+dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+bright white bags contain 1 shiny gold bag.
+muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
+shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
+dark olive bags contain 3 faded blue bags, 4 dotted black bags.
+vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
+faded blue bags contain no other bags.
+dotted black bags contain no other bags.
 ```
+
 
 
 ### Preflight
@@ -39,7 +45,6 @@ So above,
 
 shiny gold ------> live in bright white
            +-----> live in muted yellow
-           +-----> root
 bright white ----> live in light red
              +---> live in dark orange
              +---> root
@@ -84,7 +89,38 @@ Fortran hash table example.
 
 http://fortranwiki.org/fortran/show/hash+table+example
 
-TIL about ELEMENTAL functions
+TIL about ELEMENTAL functions.
+Also, got it working 
+```
+  use hashtbl
+  implicit none
+  type(hash_tbl_sll) :: table
+  
+  character(len=:), allocatable :: out
+
+  call table%init(100)
+
+  call table%put(key="bright white", val="12")
+
+  call table%get("bright white", out)
+  print *, allocated(out)
+  print *, out
+
+  call table%get("splunge", out)
+  print *, allocated(out)
+```
+
+It can only hold strings.  Holding an array would be nice, but already burned
+an hour on getting the above working.  So maybe store space-separated
+oop-ack-blargh and then use that for the lives-in values. Alternative is
+putting the oop-ack-blargh into an array and storing a numerical index
+in the lives-in array.
+
+First hurdle is just parsing the line.  yeah, this is sucking so much time.
+
+May try to see if I can get the algorithm done with swift, then see how
+I could express it fortran-styles.  Hoping the fortran book I'm chewing through
+has some insight on what i'm not understanding.
 
 
 #### Twist?
