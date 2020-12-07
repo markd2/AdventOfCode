@@ -418,11 +418,9 @@ module fToC
 
 stopped part-way through "Derived types"
 
-<<<<<<< HEAD
 * emacs f90-smart-end to no-blink
-=======
 ## Modern Fortran work-through
->>>>>>> 94b4868 (checkpoint)
+
 
 ### (setup) Open MPI and CoArrays
 
