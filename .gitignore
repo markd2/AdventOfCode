@@ -6,6 +6,7 @@
 # others
 a.out
 *.mod
+*.o
 
 oopack
 
