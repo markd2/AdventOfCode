@@ -130,6 +130,15 @@ closure?  adjective becoming important?  TBH I'll be happy if I can solve part 1
  during my morning freetime.
 
 
+### Part 2
+
+Twist is - what is the total number of bags required inside of the shiny gold bag?
+
+
+
+
+
+
 
 
 
