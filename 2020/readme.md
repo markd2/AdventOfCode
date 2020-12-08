@@ -4,6 +4,39 @@ FORTRAN, because why not.  Last FORTRAN I did was in the 80s - had it in the UCS
 on an Apple ][, and took a college course in it during high school at UALR one summer. Some days
 I miss VAX/VMS
 
+## Day 8 - Handheld Halting
+
+Just the name makes me nervous
+
+TL;DR
+
+* three-instruction processor (nop, jmp, add to accumulator)
+* execute program. ~When~ Before an instruction is reached a second time
+* print out the value of the accumulator
+
+
+### Preflight
+
+This is definitely a more Fortranny kind of deal.  Three parallel arrays:
+seen(logical), opcode, parmeter, plus an accumulator.
+
+Twist?  Problably the actual halting problem.  Or maybe detect repeated
+subsequences of instructions.  Or maybe accumulator overflow
+
+### Notes
+
+really straightforward
+
+### Twist
+
+change jmp to nops, or nops to jmps and see if the program falls off the end.
+
+basically, outer loop going from 1 through the end.  If the instruction
+is a jmp, change to nop, then run.  If it hits the end, then groovy and
+we win, report the accumulator.
+
+
+
 ## Day 7 - Handy Haversacks
 
 TL;DR
