@@ -6,7 +6,7 @@ program handheldHalting
   implicit none
 
   ! I/O
-  character(*), parameter :: filename = "day-8-test-input.txt"
+  character(*), parameter :: filename = "day-8-input.txt"
   character(len=50) :: line
   integer :: readStatus, sum
   integer :: lineCount
@@ -26,14 +26,18 @@ program handheldHalting
 
   integer :: i
 
+  ! part two
+  character(len=3) :: savedOpcode
+
   lineCount = fileCount(filename)
   print *, lineCount
 
-  allocate(instructionSeen(lineCount))
+  ! +1 are to account for an END instruction
+  allocate(instructionSeen(lineCount + 1))
   instructionSeen = .false.
 
-  allocate(instructions(lineCount))
-  allocate(operands(lineCount))
+  allocate(instructions(lineCount + 1))
+  allocate(operands(lineCount + 1))
 
   open(unit=23, file=filename, status='old', action='read')
 
@@ -43,23 +47,41 @@ program handheldHalting
      instructions(i) = opcode
      operands(i) = delta
   end do
+  instructions(lineCount + 1) = "END"
 
   ! run!
 
-  programCounter = 1
-  accumulator = 0
+  fuzzer: do i = 1, lineCount
 
-  do
-     print *, "program counter ", programCounter
+     select case(instructions(i))
+     case('nop')
+        ! print *, "changing nop to jmp at ", i
+        savedOpcode = 'nop'
+        instructions(i) = 'jmp'
+     case('acc')
+        cycle
+     case ('jmp')
+        ! print *, "changing jmp to nop at ", i
+        savedOpcode = 'jmp'
+        instructions(i) = 'nop'
+     end select
 
-     if (instructionSeen(programCounter)) then
-        print *, "instruction seen at PC ", programCounter
-        exit
-     end if
+     accumulator = 0
+     programCounter = 1
+     instructionSeen = .false.
 
-     instructionSeen(programCounter) = .true.
-
-     select case(instructions(programCounter))
+     do
+        ! print *, "program counter ", programCounter
+        
+        if (instructionSeen(programCounter)) then
+           print *, "instruction seen at PC ", programCounter
+           exit
+        end if
+        
+        instructionSeen(programCounter) = .true.
+        ! print *, "    ", instructions(programCounter)
+        
+        select case(instructions(programCounter))
         case('nop')
            programCounter = programCounter + 1
         case('acc')
@@ -67,9 +89,16 @@ program handheldHalting
            programCounter = programCounter + 1
         case('jmp')
            programCounter = programCounter + operands(programCounter)
-     end select
+        case('END')
+           print *, "WIN"
+           exit fuzzer
+        end select
+        
+     end do ! run simulation
 
-  end do
+     instructions(i) = savedOpcode
+
+   end do fuzzer
 
   print *, "accumulator is ", accumulator
 
