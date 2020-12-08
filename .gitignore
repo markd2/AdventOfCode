@@ -3,6 +3,8 @@
 \#*
 .\#*
 
+.DS_Store
+
 # others
 a.out
 *.mod
