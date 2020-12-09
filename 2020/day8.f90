@@ -8,7 +8,7 @@ program handheldHalting
   ! I/O
   character(*), parameter :: filename = "day-8-input.txt"
   character(len=50) :: line
-  integer :: readStatus, sum
+  integer :: readStatus
   integer :: lineCount
 
   ! reading destinations
