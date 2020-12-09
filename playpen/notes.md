@@ -533,3 +533,54 @@ compatible with array operations.  (more in later chapter)
 
 * "there's no croutons in the future" -- distractedElf
 
+* Elemental functions - can apply to scalars, or positionally in arrays.
+```
+  pure elemental integer function sum(a, b)
+    integer, intent(in) :: a, b
+    sum = a + b
+  end function
+```
+
+and when called
+
+```
+  print *, sum(3, 5)  -> 8
+  print *, sum([1,2], 3)  -> [3, 5]  (adds 3 to each of the elements)
+  print *, sum(1, [2,3,4])  -> [3, 4, 5] (adds 1 to each of the elements)
+  print *, sum([1,2,3], [2,3,4])  -> [3,5,7]  (adds element-by-element)
+  ! print *, sum([1,2], [2,3,4])  -> error - different shapes
+```
+
+  - Cannot do I/O inside of a pure procedure.  elemental implies pure.
+    author recommends specifying pure anyway.
+
+  - this is kind of mind-blowing.  Like
+```
+  elemental integer function coldFrontTemp(c1, c2, c3, c4, c5)
+```
+    which sums all the elements.
+    Calling it like `print *, coldFrontTemp(1, 2, 3, 4, [5, 6, 7, 8, 9])`
+    essentially has five returns.  The array doesn't necessarily mean
+    "apply this to this array", it could be "these are constant arguments,
+    then instead of a do loop, use this array to drive the function with
+    these arguments"
+  - there are `impure elemental` functions. so you could call IO from in there.
+
+* can have optional arguments to procedures
+  - more 'optional' and then see if 'present'
+```
+  elemental integer function sum(a, b, degub)
+    integer, intent(in) :: a, b
+    logical, intent(in), optional :: degub
+    if (present(degub)) then
+       ! can use `degub` for ifs &c
+```
+
+* to look at : functional fortran - http://mng.bz/nP1 / https://wavebitscientific.github.io/functional-fortran/8
+
+* For specific data sizes, `use iso_fortran_env`, and use things `integer(kind=int32) :: varname`.
+  `kind` is optional.  `integer(int32) :: varname`.
+  - Recommended to always use the fortran ev for real and complex (real32|64|128)
+* to pull in specifics from a module
+  `use iso_fortran_env, only: int32, real32`
+

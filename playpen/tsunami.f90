@@ -1,7 +1,7 @@
 program tsunami
   implicit none
 
-  integer :: i, n
+  integer ::  n
 
   integer, parameter :: grid_size = 100
   integer, parameter :: num_time_steps = 100
@@ -21,8 +21,9 @@ program tsunami
   if (dx <= 0) stop 'grid spacing dx must be > 0'
   if (c <= 0) stop 'background flow speed c must be > 0'
 
-
   call set_gaussian(h, icenter, decay)
+
+  print *, 0, h
 
   ! core of the solver - iterating the solution forward in time
   time_loop: do n = 1, num_time_steps
