@@ -4,6 +4,36 @@ FORTRAN, because why not.  Last FORTRAN I did was in the 80s - had it in the UCS
 on an Apple ][, and took a college course in it during high school at UALR one summer. Some days
 I miss VAX/VMS
 
+
+## Day 9 - Encoding Error
+
+TL;DR
+
+* the cypher:
+  - 25 number preamble
+  - each number after that should be the sum of any two of the 25 immediately
+    prior numbers. (not using the same number twice if I'm reading it
+    correctly)
+* What is the first number that violates that invariant?
+
+### Notes
+
+Straightforward.  Still doing obiwans because of my brain wired for zero-index
+
+
+### Part 2
+
+Twist: Find a contiguous set of at least two nubmers, where the sum of all the
+       items in the list add to the target number.
+     - then find the sum of the smallest and largest number in this range
+
+It says "find blah _in your list_, which implies it's not limited to the 
+preamble.
+
+Nested loops.  Pretty straightforward.
+
+
+
 ## Day 8 - Handheld Halting
 
 Just the name makes me nervous
