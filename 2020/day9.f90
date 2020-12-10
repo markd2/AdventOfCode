@@ -16,7 +16,7 @@ program encodingError
   ! number stream
   integer(int64), allocatable :: stream(:)
   integer(int64) number
-  integer :: i, index
+  integer :: i, index, invalidIndex
   logical :: valid
 
   lineCount = fileCount(filename)
@@ -37,12 +37,25 @@ program encodingError
   do i = preamble + 1, lineCount
      valid = verify(stream, lineCount, preamble, i)
      if (.not. valid) then
-        print *, "index ", i, " value ", stream(i), "is valid? ", valid
+        print *, "index ", i, " value ", stream(i), "is invalid ", valid
+        invalidIndex = i
         exit
      end if
   end do
 
+  print *, "encryption Weakness is ", encryptionWeakness(stream, lineCount, invalidIndex)
+  
+
 contains
+  integer(int64) function encryptionWeakness(stream, lineCount, invalidIndex)
+    integer, intent(in) :: lineCount
+    integer(int64), intent(in) :: stream(lineCount)
+    integer, intent(in) :: invalidIndex
+
+    encryptionWeakness = 23
+    
+  end function
+  
   logical function verify(stream, lineCount, preamble, index)
     integer, intent(in) :: lineCount
     integer(int64), intent(in) :: stream(lineCount)
