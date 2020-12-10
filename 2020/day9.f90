@@ -5,10 +5,10 @@ program encodingError
   implicit none
 
   ! I/O
-  character(*), parameter :: filename = "day-9-test-input.txt"
-  integer :: preamble = 5
-!  character(*), parameter :: filename = "day-9-input.txt"
-!  integer :: preamble = 25
+!  character(*), parameter :: filename = "day-9-test-input.txt"
+!  integer :: preamble = 5
+  character(*), parameter :: filename = "day-9-input.txt"
+  integer :: preamble = 25
   character(len=50) :: line
   integer :: readStatus, sum
   integer :: lineCount
