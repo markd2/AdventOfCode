@@ -26,15 +26,19 @@ program encodingError
   open(unit=23, file=filename, status='old', action='read')
   do i = 1, lineCount
      read (23, *) number
-     print *, "READ ", number
+!     print *, "READ ", number
      stream(i) = number
   end do
   close(23)
+
+!  valid = verify(stream, lineCount, preamble, 146)
+!  print *, "expected ", stream(146), "is valid?", valid
 
   do i = preamble + 1, lineCount
      valid = verify(stream, lineCount, preamble, i)
      if (.not. valid) then
         print *, "index ", i, " value ", stream(i), "is valid? ", valid
+        exit
      end if
   end do
 
@@ -52,7 +56,7 @@ contains
 
     baseValue = stream(index)
     lowIndex = index - preamble
-    highIndex = index - 1
+    highIndex = index
 
     if (lowIndex .le. 0) stop "too low"
     if (highIndex .le. 0) stop "still too low"
@@ -67,6 +71,7 @@ contains
        do j = i, highIndex - 1   ! don't need to check highIndex == highIndex
           iValue = stream(i)
           jValue = stream(j)
+!          print *, "looking at (", i, j, ") and sum ", (iValue + jValue)
           if (iValue .eq. jValue) cycle  ! numbers need to be distinct
           if (iValue + jValue .eq. baseValue) then
              seen = .true.
