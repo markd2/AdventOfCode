@@ -5,17 +5,17 @@ program encodingError
   implicit none
 
   ! I/O
-!  character(*), parameter :: filename = "day-9-test-input.txt"
-!  integer :: preamble = 5
-  character(*), parameter :: filename = "day-9-input.txt"
-  integer :: preamble = 25
+  character(*), parameter :: filename = "day-9-test-input.txt"
+  integer :: preamble = 5
+!  character(*), parameter :: filename = "day-9-input.txt"
+!  integer :: preamble = 25
   character(len=50) :: line
   integer :: readStatus, sum
   integer :: lineCount
 
   ! number stream
   integer(int64), allocatable :: stream(:)
-  integer(int64) number
+  integer(int64) number, weakLink
   integer :: i, index, invalidIndex
   logical :: valid
 
@@ -43,8 +43,10 @@ program encodingError
      end if
   end do
 
-  print *, "encryption Weakness is ", encryptionWeakness(stream, lineCount, invalidIndex)
-  
+  weakLink = encryptionWeakness(stream, lineCount, invalidIndex)
+  print *, "weak link ", weakLink
+
+
 
 contains
   integer(int64) function encryptionWeakness(stream, lineCount, invalidIndex)
@@ -52,7 +54,31 @@ contains
     integer(int64), intent(in) :: stream(lineCount)
     integer, intent(in) :: invalidIndex
 
-    encryptionWeakness = 23
+    integer :: lowIndex, highIndex, i
+    integer(int64) :: sum, targetValue, low, high
+
+    targetValue = stream(invalidIndex)
+
+    outer: do lowIndex = 1, invalidIndex - 2
+       do highIndex = lowIndex + 1, invalidIndex - 1
+          sum = 0
+          do i = lowIndex, highIndex
+             sum = sum + stream(i)
+             ! print *, "evaluating range ", lowIndex, "->", highIndex, " ", i
+          end do
+          if (sum .eq. targetValue) then
+             print *, "found a range!  ", lowIndex, " -> ", highIndex
+             exit outer
+          end if
+       end do
+    end do outer
+
+    print *, "found a range!  ", lowIndex, " -> ", highIndex
+    low = minval(stream(lowIndex:highIndex))
+    high = maxval(stream(lowIndex:highIndex))
+
+    print *, "low, high", low, high
+    encryptionWeakness = low + high
     
   end function
   
