@@ -2,23 +2,26 @@
 
 program adapterArray
   ! I/O
-!  character(*), parameter :: filename = "day-10-test-input-1.txt"
-!  integer :: preamble = 5
+  character(*), parameter :: filename = "day-10-test-input-1.txt"
+  integer :: preamble = 5
 !  character(*), parameter :: filename = "day-10-test-input-2.txt"
 !  integer :: preamble = 5
-  character(*), parameter :: filename = "day-10-input.txt"
-  integer :: preamble = 25
+!  character(*), parameter :: filename = "day-10-input.txt"
+!  integer :: preamble = 25
   character(len=50) :: line
   integer :: readStatus, sum
   integer :: lineCount
+  logical :: isValid
 
   integer :: oneCount, twoCount, threeCount
 
   integer, allocatable :: stream(:)
+  integer, allocatable :: ignoreIndices(:)
 
   lineCount = fileCount(filename)
   print *, lineCount
   allocate(stream(lineCount + 2))  ! for zero-charger and for the device
+  allocate(ignoreIndices(lineCount + 2))  ! for zero-charger and for the device
 
   open(unit=23, file=filename, status='old', action='read')
   do i = 1, lineCount
@@ -35,7 +38,6 @@ program adapterArray
 
   ! device is 3 more than the last adapter
   stream(lineCount + 2) = stream(lineCount + 1) + 3
-  print *, stream
 
   oneCount = 0
   twoCount = 0
@@ -57,7 +59,38 @@ program adapterArray
   print *, oneCount, twoCount, threeCount
   print *, "solution is ", oneCount * threeCount
 
+  ignoreIndices = [1, 2, 3]
+  isValid = valid(stream, lineCount + 2, ignoreIndices)
+  print *, "valid", isValid
+
 contains
+  logical function valid(stream, highIndex, ignoreIndicies)
+    integer, intent(in) :: stream(:)
+    integer, intent(in) :: highIndex
+    integer, intent(in) :: ignoreIndicies(:)
+    integer :: i
+
+    integer :: diff
+
+    !! also need to move the start index
+    do i = 1, size(stream) - 1
+       if (any(ignoreIndicies == i)) then
+          print *, "skipping ", i
+          cycle
+       end if
+       diff = stream(i + 1) - stream(i)
+       if ((diff .lt. 1) .or. (diff .gt. 3)) then
+          valid = .false.
+          return
+       end if
+       lastIndex = i
+
+    end do
+
+    valid = .true.
+  end function
+
+
   function fileCount(filename) result(lineCount)
     use :: iso_fortran_env
     
