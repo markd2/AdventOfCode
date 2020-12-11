@@ -5,6 +5,76 @@ on an Apple ][, and took a college course in it during high school at UALR one s
 I miss VAX/VMS
 
 
+## Day 10 - Adapter Array
+
+TL;DR
+
+* Assemble power adapters, supply power measured in _jolts_
+* Adapter has an output joltage, and can take an input 1,2,3 jolts lower
+  than its raiting and still produce its rated output
+* device has a joltage 3 more than highest rated adapter
+* the charging outlet has an effective joltage of zero
+* using every adapter at once, what's the distribution of joltage differences
+  from charging outlet, adadpters, and the device
+
+Two test data inputs (that's scary).
+
+I really don't undertand it
+
+So given this
+
+```
+original   sorted  used
+16	    1      (A)
+10          4      (B)
+15          5      (C)
+5           6      (D1)
+1           7      (D2)
+11          10     (E)
+7           11
+19          12
+6           15
+12          16
+4           19
+```
+
+* outlet is zero
+  - only adapters that can connect need to have a joltage of 1,2,3.
+  - the only one we have is `1`  (A)
+* the only choice after that is `4` (B)
+* from the 4-jolt, we have 5,6,7 as valid choicses. But to not skip, need to pick
+  up the one rated 5 (C)
+* then next would be 6 and 7 (D1/2)
+* The only one that works with 7 would be the 10-jolt (E)
+* ... so yeah, just sort it.
+
+So take the number of 1-jolt differences multiped by the number fo 3-jolt differences.
+
+The description makes it sound very fiddly.
+
+Yep, just sort and calculate differences. The sample data didn't even have any
+two-differences.
+
+### Part two
+
+essentially creating and counting all the permutations of valid adapters.
+
+So will definitely need a verification function.
+Thinking of
+
+For each item
+  remove it (or skip it)
+  is it valid?  incr count
+  restore it
+
+do for pairs, triplets, etc
+
+"there must be more than a trillion valid ways to arrange (99) adapters"
+"surely there must be an efficient way to count the arrangements"
+
+Yeah, I don't have brain for this today.
+
+
 ## Day 9 - Encoding Error
 
 TL;DR

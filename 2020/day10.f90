@@ -1,6 +1,7 @@
 ! https://adventofcode.com/2020/day/10
 
 program adapterArray
+  implicit none
   ! I/O
   character(*), parameter :: filename = "day-10-test-input-1.txt"
   integer :: preamble = 5
@@ -14,9 +15,11 @@ program adapterArray
   logical :: isValid
 
   integer :: oneCount, twoCount, threeCount
+  integer :: validCount
 
   integer, allocatable :: stream(:)
   integer, allocatable :: ignoreIndices(:)
+  integer :: i, number
 
   lineCount = fileCount(filename)
   print *, lineCount
@@ -58,32 +61,47 @@ program adapterArray
 
   print *, oneCount, twoCount, threeCount
   print *, "solution is ", oneCount * threeCount
-
-  ignoreIndices = [1, 2, 3]
-  isValid = valid(stream, lineCount + 2, ignoreIndices)
-  print *, "valid", isValid
+  
+  validCount = 0
+  
+  do i = 1, lineCount + 1
+     print *, "SKIP ", i
+     ignoreIndices = [i]
+     isValid = valid(stream, lineCount + 2, ignoreIndices)
+     if (isValid) validCount = validCount + 1
+     print *, "valid", isValid, "for i", i
+  end do
 
 contains
+
   logical function valid(stream, highIndex, ignoreIndicies)
+    implicit none
     integer, intent(in) :: stream(:)
     integer, intent(in) :: highIndex
     integer, intent(in) :: ignoreIndicies(:)
+    integer :: low, high
     integer :: i
 
     integer :: diff
 
-    !! also need to move the start index
+    low = 1
+    high = 2
     do i = 1, size(stream) - 1
        if (any(ignoreIndicies == i)) then
           print *, "skipping ", i
+          high = i + 1
           cycle
        end if
-       diff = stream(i + 1) - stream(i)
+       print *, "comparing ", low, high
+
+       diff = stream(high) - stream(low)
        if ((diff .lt. 1) .or. (diff .gt. 3)) then
           valid = .false.
           return
        end if
-       lastIndex = i
+
+       low = i
+       high = i + 1
 
     end do
 
@@ -141,5 +159,4 @@ contains
   end subroutine quicksort
   
 end program
-
 
