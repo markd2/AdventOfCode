@@ -583,4 +583,23 @@ and when called
   - Recommended to always use the fortran ev for real and complex (real32|64|128)
 * to pull in specifics from a module
   `use iso_fortran_env, only: int32, real32`
+* reanme incoming symbols - because no namespaces
+  `use mod_ocean, only: temperature_ocean => temperature`
+  => is "points to" rather than "renamed as"
+  localName => nameInModule
+
+* Whole array operations appeared in Fortran 90.
+
+* ooh, easy break out of loop while reading
+```
+    do
+      read(unit=fileunit, fmt=*, end=1)
+      num_records = num_records + 1
+    end do
+    1 continue
+```
+
+* string concatentation with `//`
+
+
 
