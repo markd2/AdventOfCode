@@ -59,6 +59,8 @@ General approach -
 * compare x[1] with x[0]
 * accumulate count
 
+
+
 ----------
 
 ### Part the second
