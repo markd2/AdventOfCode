@@ -1,6 +1,6 @@
 # Advent of Code
 
-Thinking of doing Advent of Code 2020, with fortran.  For now, trying
-some 2019 puzzles.
+[Advent of Code](https://adventofcode.com).
 
-* https://www.macinchem.org/reviews/fortran/fortran.php - Fortran on a Mac
+* [2021](2021/readme.md)
+* [2020](2020/readme.md)
