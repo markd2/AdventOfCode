@@ -133,3 +133,95 @@ extension Sequence where Element: Numeric {
     }
 }
 ```
+
+==================================================
+## Day 2 - Dive!
+
+How to pilot this thing
+
+Three commands
+  - forward X - go forward by X fleems
+  - down X - increase depth by X fleems
+  - up X - decrease depth by X fleems
+
+"down and up affect your depth, and so they have the opposite result
+of what you might expect" - ?
+
+### Part the first
+
+For example
+```
+forward 5
+down 5
+forward 8
+up 3
+down 8
+forward 2
+```
+
+Horizontal position and depth both start at zero
+
+| command   | horizontal | vertical |
+| ----------|------------|----------|
+|    start  |  0         |  0       |
+| forward 5 |  5         |  0       |
+| down 5    |  5         |  5       |
+| forward 8 | 13         |  5       |
+| up 3      | 13         |  2       |
+| down 8    | 13         | 10       |
+| forward 2 | 15         | 10       |
+
+horizontal position is 15
+vertical position is 15
+
+multiplied is 150
+
+Without knowing the twist, there's two approaches - read each line and process it,
+or break everything down into a set of commands (array of enums), and a little
+machine that'll reduce the starting positions with the commands.
+
+Feeling lazy, so going to do the least elegant thing.
+
+```
+for each line {
+    chunks = split line on space
+    value = Int(chunks[1])
+
+    switch chunks[0] {
+    case "forward":
+        horizontal += value
+    case "down":
+        vertical += value
+    case "up":
+        vertical -= value
+    default:
+        print("argh: \(line)")
+    }
+}
+```
+
+
+### Part the second
+
+The twist is rather than h/v positions, there's an _aim_ that causes
+`forward` to take the current aim into account.  Still pretty easy to
+muscle through.
+
+```
+for each line {
+    chunks = split line on space
+    value = Int(chunks[1])
+
+    switch chunks[0] {
+    case "forward":
+        horizontal += value
+        vertical += aim * value
+    case "down":
+        aim += value
+    case "up":
+        aim -= value
+    default:
+        print("argh: \(line)")
+    }
+}
+```
