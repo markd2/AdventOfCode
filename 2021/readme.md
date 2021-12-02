@@ -4,6 +4,8 @@ Going to be using Swift, maybe use the algo packge as well.  Used FORTRAN last y
 and ran out of available time.  It was fun, but frustrating when doing [alot](http://hyperboleandahalf.blogspot.com/2010/04/alot-is-better-than-you-at-everything.html)
 of string processing.
 
+I'm using swift-sh (https://nshipster.com/swift-sh/) so I can use swift scripts with SwiftAlgorithms (https://github.com/apple/swift-algorithms)
+
 
 ## Day 1 - Sonar Sweep
 
@@ -59,6 +61,27 @@ General approach -
 * compare x[1] with x[0]
 * accumulate count
 
+
+Here's the workable brute force version
+
+```
+    for i in 1 ..< ints.count {
+        if ints[i] > ints[i-1] {
+            increases += 1
+        }
+    }
+```
+
+Using Swift Algorithms adjacent pairs:
+
+```
+let pairs = ints.adjacentPairs()
+
+increases = pairs
+  .filter { (oldFleems, newFleems) in return newFleems > oldFleems }
+  .count
+```
+
 ----------
 
 ### Part the second
@@ -86,3 +109,27 @@ So compare the BBB values vs the AAA values, then the CCC values vs the BBB valu
 Can think of the first problem in terms of two measurement sliding windows.
 (was actually back-of-brain thinking of tuples, but didn't follow through)
 
+Adapted from DaveDelong's solution
+
+```
+    increases = ints.windows(ofCount: 3)
+      .map(\.sum)
+      .adjacentPairs()
+      .filter { (oldFleems, newFleems) in 
+          return newFleems > oldFleems }
+      .count
+```
+
+The map sum is an extension
+
+```
+extension Sequence where Element: Numeric {
+    var sum: Element {
+        var sum: Element = 0
+        forEach { blah in
+            sum += blah
+        }
+        return sum
+    }
+}
+```
