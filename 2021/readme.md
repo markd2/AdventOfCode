@@ -65,3 +65,24 @@ General approach -
 
 Guess at the twist - needing to use the values in some way.  If the deltas are
 increasing or decreasing.
+
+Actual twist - "three measurement sliding window"
+
+```
+199  A      
+200  A B    
+208  A B C  
+210    B C D
+200  E   C D
+207  E F   D
+240  E F G  
+269    F G H
+260      G H
+263        H
+```
+
+So compare the BBB values vs the AAA values, then the CCC values vs the BBB values
+
+Can think of the first problem in terms of two measurement sliding windows.
+(was actually back-of-brain thinking of tuples, but didn't follow through)
+
