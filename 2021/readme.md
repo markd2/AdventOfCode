@@ -233,4 +233,39 @@ for each line {
 actually on my home computer and I'm away from it right now
 
 ==================================================
-# Day 4 - 
+# Day 4 - Giant Squidly
+
+Playing bingo(e) with a giant squid.
+
+**bingo subsystem FTW**
+
+* File format is a row of numbers, followed by bingo squares
+* No diagonals
+* if all in row or column are marked that board _wins_
+
+Score a board by
+- finding the sum of all unmarked numbers on the board
+- multily that sum by the number that was just called
+
+Figure out which board wins first, and what is the final score.
+
+Guessing the twist will be of all boards, perhaps a change to the win calculation
+
+So, sounds ike we've got a 
+
+* Board, with the 5x5 grid.  Make a new Board with each provided grid
+  - contructor that takes the array of strings
+* tell the board when each number is drawn.
+  - the board figures out if it's a winner
+  - the board figures out its own score
+
+Processing loop
+
+```
+for each draw
+  for each board in order
+      inform board of the draw
+      winp?  If so, print score, and bail
+```
+
+
