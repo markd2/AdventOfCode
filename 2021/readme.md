@@ -148,7 +148,7 @@ Three commands
 of what you might expect" - ?
 
 ### Part the first
-
+  
 For example
 ```
 forward 5
@@ -225,3 +225,12 @@ for each line {
     }
 }
 ```
+
+
+==================================================
+# Day 3 - Binary Diagnostic
+
+actually on my home computer and I'm away from it right now
+
+==================================================
+# Day 4 - 
