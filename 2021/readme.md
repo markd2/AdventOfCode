@@ -283,5 +283,45 @@ time see a winning board, store its index into a set.  When that set has seen
 everything, then we know the current board is the winner.  yay
 
 --------------------------------------------------
+# Day 5 - Hydrothermal Venture
 
+OMG HYDROTHERMAL VENTS!  Avoid them if possible.
 
+They form in lines.  The sub produces a list of nearby lines of vents, e.g.
+
+```
+0,9 -> 5,9
+8,0 -> 0,8
+9,4 -> 3,4
+2,2 -> 2,1
+7,0 -> 7,4
+6,4 -> 2,0
+0,9 -> 2,9
+3,4 -> 1,4
+0,0 -> 8,8
+5,5 -> 8,2
+```
+
+Each line of vents is given as a line segment in the format (x1,y1) -> (x2,y2) where
+they're the ends of the line segment (inclusive)
+
+"FOR NOW" only consider horizontal and veritcal lines (I imagine this is going to
+be the twist.  Bresenham's time?)  (assuming other lines we can ignore
+
+* For a coordinate of e.g. 1,1->1,3, this is 1,1, 1,2, 1,3
+  - common first elemnt
+* or 9,7->7,7, this is points 9,7, 8,7, 7,7
+  - common second element
+
+Top-left is (0,0, and bottom-right is 9,9).
+Sum the number of lines that cover that point.  Multiple intersecting lines will
+hit that point
+
+Approach:
+* build line objects. Along the way we can figure out the max width/height for the
+  world
+  - toss lines that aren't horionztal/vertical
+    - cardinalDirectionP %-)
+* make a world grid
+* iterate lines and apply to the world
+* score by counting how many points at least two lines overlap.
