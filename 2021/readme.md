@@ -239,6 +239,8 @@ Playing bingo(e) with a giant squid.
 
 **bingo subsystem FTW**
 
+## Part the first
+
 * File format is a row of numbers, followed by bingo squares
 * No diagonals
 * if all in row or column are marked that board _wins_
@@ -267,5 +269,19 @@ for each draw
       inform board of the draw
       winp?  If so, print score, and bail
 ```
+
+`zip` is a thing I should use more often. It's fun
+
+## Part the second
+
+"let the giant squid win"
+
+Figure out which board will win last and choose that one.
+
+Real low-class way, but works.  I'm not interested in the winning boards, so every
+time see a winning board, store its index into a set.  When that set has seen
+everything, then we know the current board is the winner.  yay
+
+--------------------------------------------------
 
 
