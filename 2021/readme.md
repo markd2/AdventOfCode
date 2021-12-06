@@ -348,3 +348,79 @@ Having trouble visualizing the diagnoal, so for `5, 5 -> 2, 8`, it's the X's in
 9 222111....
 ```
 
+--------------------------------------------------
+# Day 6 - Lanternfish
+
+ut oh.  It says _exponentialy_.  Plus DaveDeLong says "uh guys do NOT try to brute-force
+it unless you have a freakton of RAM".  I suggested AWS and a big loan.
+
+First read through I found inscrutible. This time with notes
+
+* "surely" each laternfish creates a new oen every _7_ days
+* not synchronized - one might have 2 days left until it makes another one,
+  and another might have 4
+* can model each fish as a single number representing the number of days until
+  it creates a new lanternfish
+* a new fish would take two more days for its first cycle
+
+Example.
+
+- Fishy with internal timer of 3
+- next day, timer goes to 2
+- next day, timer goes to 1
+- next day, timer goes to 0
+- next day, interneal timer resets to 6 _(why six?)_
+  - creates a new lantern fish with an internal timer of 8 _(6 + 2)_
+- next day, first fish would have internal timer of 5, second internal timer of 7
+
+ah, it's six because new fish every 7 days, and because 0 is a legit value
+
+assuming no deaths, cannibalism, or trying to walk in Star Citizen..
+
+The input is the current timers
+
+```
+3,4,3,1,2
+```
+
+so first fish has an internal timer of 3, second of 4, ...
+
+3,4,3,1,2
+2,3,2,0,1 <- new fishy tomorrow
+1,2,1,6,0,8 <-< new fishy tomorrow
+0,1,0,5,6,7,8
+etc, growing bighuge
+
+after 18 days, these five grew to 26.  Then after 80 total of 5934. 
+
+So.  It's huge.
+
+## Part the first
+
+Storing each individual fish (the aforementioned (big) Bruté) is a non-starter,
+with 300 in the prod data aset.  The 18 day would be 90,000, and then assuming
+an exponent of 2.7, 4.8 million (which doesn't sound *too* bad...)
+
+so instead, store counts of fish at each time increment.
+
+Process by:
+* the 0s, save off
+* move everyone down a slot (so 0 gets clobbered)
+* add 0s to 6
+* add 0s to 8
+
+yes!  that worked well
+
+
+## Part the second
+
+Same, but with more (256 days instead of 8) (going from 351188 -> 1595779846729 for
+my data set).  Just a one line-change
+
+```
+- let finalDay = 80
++ let finalDay = 256
+```
+
+Yay for navitve 64-bit integer types.
+
