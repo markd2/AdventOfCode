@@ -325,3 +325,26 @@ Approach:
 * make a world grid
 * iterate lines and apply to the world
 * score by counting how many points at least two lines overlap.
+
+## Part the second
+
+Yep diagonal lines. But perfectly (45 degree) diagonal.  (makes it a TON easier).
+
+_lines in your list will only ever be horizontal, vertical, or a diagonal line at exactly 45 degrees_, so something is diagonal if it's not horizontal or vertical.
+
+Having trouble visualizing the diagnoal, so for `5, 5 -> 2, 8`, it's the X's in
+
+```
+  0123456789
+0 .......1..
+1 ..1....1..
+2 ..1....1X.
+3 .......X..
+4 .11211X211
+5 .....X....
+6 ..........
+7 ..........
+8 ..........
+9 222111....
+```
+
