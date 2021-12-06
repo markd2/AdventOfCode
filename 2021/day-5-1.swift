@@ -2,131 +2,133 @@
 import Foundation
 //import Algorithms // https://github.com/apple/swift-algorithms ~> 1.0.0
 
-let inputFilename = "day-4-prod.txt"
+let inputFilename = "day-5-prod.txt"
 
 // ----------
 let input = try! String(contentsOfFile: inputFilename)
 let lines = input.split(separator: "\n")
 // ----------
 
-class Board {
-    let width = 5
-    let height = 5
-    var storage: [Int] = []
-    var seen: [Bool] = []
+struct Point {
+    let row: Int
+    let column: Int
+    
+    // of the form 12,34 (col, row)
+    init(string: String) {
+        let chunks = string.split(separator: ",")
+        self.column = Int(chunks[0])!
+        self.row = Int(chunks[1])!
+    }
+    init(_ row: Int, _ column: Int) {
+        self.row = row
+        self.column = column
+    }
+}
 
-    init(_ values: [Int]) {
-        self.storage = values
-        self.seen = Array(repeating: false, count: values.count)
-        print("values count? \(values.count)")
+struct Line {
+    let thing1: Point
+    let thing2: Point
+
+    var isHorizontal: Bool {
+        return thing1.row == thing2.row
+    }
+    
+    var isVertical: Bool {
+        return thing1.column == thing2.column
+    }
+}
+
+class World {
+    var width: Int
+    var height: Int
+    private var counts: [Int]
+
+    init(width: Int, height: Int) {
+        self.width = width
+        self.height = height
+        self.counts = Array(repeating: 0, count: width * height)
     }
 
-    private func valueAt(row: Int, column: Int) -> Int {
-        let index = column + row * width
-        return storage[index]
-    }
+    func apply(_ line: Line) {
 
-    private func seenValue(_ row: Int, _ column: Int) -> Bool {
-        let index = column + row * width
-        return seen[index]
-    }
+        if line.isHorizontal {
+            let row = line.thing1.row
+            let startColumn = min(line.thing1.column, line.thing2.column)
+            let stopColumn = max(line.thing1.column, line.thing2.column)
 
-    func visit(value: Int) {
-        // We could sort and binary search, but wait until we measure a real
-        // performance problem
-        for (i, boardValue) in storage.enumerated() {
-            if boardValue == value {
-                seen[i] = true
-            }
-        }
-    }
-
-    func aWinnerIsMe() -> Bool {
-        // check rows
-
-        for row in 0 ..< height {
-            var squaresSeen = 0
-            for column in 0 ..< width {
-                if seenValue(row, column) {
-                    squaresSeen += 1
-                }
+            for column in startColumn ... stopColumn {
+                let index = column + row * width
+                counts[index] += 1
             }
             
-            if squaresSeen == 5 {
-                print("a winner is me on row \(row)")
-                return true
-            }
-        }
+        } else if line.isVertical {
+            let column = line.thing1.column
+            let startRow = min(line.thing1.row, line.thing2.row)
+            let stopRow = max(line.thing1.row, line.thing2.row)
 
-        // check columns
-        for column in 0 ..< width {
-            var squaresSeen = 0
-            for row in 0 ..< height {
-                if seenValue(row, column) {
-                    squaresSeen += 1
-                }
-            }
-            
-            if squaresSeen == 5 {
-                print("a winner is me on column \(column)")
-                return true
+            for row in startRow ... stopRow {
+                let index = column + row * width
+                counts[index] += 1
             }
         }
-        return false
     }
 
-    func score(withDraw: Int) -> Int {
-        var unseenSum = 0
-        
-        for (value, sawIt) in zip(storage, seen) {
-            if !sawIt {
-                unseenSum += value
-            }
-        }
-        print("unseenmly \(unseenSum)")
-        let score = unseenSum * withDraw
-        return score
+    func overlapCountAt(_ row: Int, _ column: Int) -> Int {
+        let index = column + row * width
+        return counts[index]
     }
 
     func dump() {
-        print(storage)
-        print(seen)
-    }
-}
-
-let draws = lines[0].split(separator: ",").compactMap { Int(String($0)) }
-
-var i = 1
-
-var boards: [Board] = []
-
-while i < lines.count - 1 {
-    var boardValues: [Int] = []
-    for _ in 0 ..< 5 {
-        boardValues += lines[i].split(separator:" ").compactMap { Int(String($0)) }
-        i += 1
-    }
-    if boardValues.count != 25 {
-        print("OH NOES \(i) \(boardValues.count)")
-    }
-    boards.append(Board(boardValues))
-}
-
-print("found \(boards.count) boards")
-
-var winningBoards: Set<Int> = []
-
-blah: for draw in draws {
-
-    for (index, board) in boards.enumerated() {
-        board.visit(value: draw)
-
-        if board.aWinnerIsMe() {
-            winningBoards.insert(index)
-            if winningBoards.count == boards.count {
-                let score = board.score(withDraw: draw) 
-                break blah
+        for row in 0 ..< height {
+            for column in 0 ..< width {
+                let index = column + row * width
+                print("\(counts[index])", terminator: "")
             }
+            print("")
         }
     }
 }
+
+var width = 0
+var height = 0  
+var dangerLines: [Line] = []
+
+for line in lines {
+    let chunks = String(line).split(separator: " ")
+    if chunks.count != 3 {
+        print("blarg \(line)")
+    }
+    let point1 = Point(string: String(chunks[0]))
+    let point2 = Point(string: String(chunks[2]))
+
+    width = max(width, point1.column)
+    height = max(height, point1.row)
+    width = max(width, point2.column)
+    height = max(height, point2.row)
+
+    let dangerLine = Line(thing1: point1, thing2: point2)
+    dangerLines.append(dangerLine)
+}
+
+let world = World(width: width + 1, height: height + 1)
+
+for dangerLine in dangerLines {
+    guard dangerLine.isHorizontal || dangerLine.isVertical else { continue }
+    world.apply(dangerLine)
+}
+
+
+// find the spots
+var dangerousAreaCount = 0
+
+for row in 0 ..< height {
+    for column in 0 ..< width {
+        let overlapCount = world.overlapCountAt(row, column)
+        if overlapCount >= 2 {
+            dangerousAreaCount += 1
+        }
+    }
+}
+
+print("count \(dangerousAreaCount)")
+

@@ -309,9 +309,9 @@ they're the ends of the line segment (inclusive)
 be the twist.  Bresenham's time?)  (assuming other lines we can ignore
 
 * For a coordinate of e.g. 1,1->1,3, this is 1,1, 1,2, 1,3
-  - common first elemnt
+  - horizontal has common first elemnt
 * or 9,7->7,7, this is points 9,7, 8,7, 7,7
-  - common second element
+  - vertical common second element
 
 Top-left is (0,0, and bottom-right is 9,9).
 Sum the number of lines that cover that point.  Multiple intersecting lines will
