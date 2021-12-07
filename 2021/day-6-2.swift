@@ -1,6 +1,5 @@
-#!/usr/bin/swift sh
+#!/usr/bin/swift
 import Foundation
-//import Algorithms // https://github.com/apple/swift-algorithms ~> 1.0.0
 
 let inputFilename = "day-6-prod.txt"
 
@@ -39,5 +38,3 @@ while true {
 let allOfThem = ageCounts.reduce(0, +)
 
 print("so many fishes \(ageCounts) left in the sea, but only \(allOfThem) for Londo and me")
-
-

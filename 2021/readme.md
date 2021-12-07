@@ -424,3 +424,53 @@ my data set).  Just a one line-change
 
 Yay for navitve 64-bit integer types.
 
+==================================================
+# Day 7 - The Treachery of Whales
+
+oh noes! Thar Be Whales Here!  They want to nom us.
+
+There's a bunch of friendly crabs (in submaries, naturally) spread out across the ocean
+floor. Have them move horizontally until they line up, but using the position of least
+resistance.
+
+## Part 1
+
+Dave DeLong whispered "Triangular numbers".
+
+Going to brute-force it first (the max size in my production data is around 1880)
+so should be able to exhaustively search through the space.  Guessing the twist will
+make that approach untenable.
+
+But it worked and was pretty straightforward to write.
+
+## Part the second
+
+ah, fuel cost is non-linear.  Each step costs one more fuel.  
+
+So moving from 0 to 5, that's 
+0->1 = 1,  1
+0->2 = 2,  3
+2->3 = 3   6
+3->4 = 4  10 
+4->5 = 5  15
+
+nesting that into the rest of the calculation
+
+```
+func fuelCost(position: Int, army: [Int]) -> Int {
+    // How I first learned sigma notation.x
+    func sigma(x: Int) -> Int {
+        (0...x).reduce(0, +)
+    }
+
+    return army.reduce(0, { $0 + sigma(x: abs($1 - position)) })
+}
+```
+
+is a massive cpu spike.  _sad trombone_ - this is the usual "Swift can have poor
+performance in non-optimized builds".  I let it run 5-10 minutes ramping up my fans
+(but not nearly as badly as with BitDefender running).  Running it optimized for
+Instrumeting (just curious what the real problem was), and it finished nearly immediately.
+#iLoveYouSwift.
+
+
