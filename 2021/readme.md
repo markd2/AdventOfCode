@@ -473,4 +473,43 @@ performance in non-optimized builds".  I let it run 5-10 minutes ramping up my f
 Instrumeting (just curious what the real problem was), and it finished nearly immediately.
 #iLoveYouSwift.
 
+Ah, this is the triangular number thing Dave was talking about.
 
+--------------------------------------------------
+# Day 8: Seven Segment Search
+
+uh.... 7-segment LED info(e) dump, With that much lead-in, either the
+twist is going to be hell, or these will stretch over a couple days
+worth of puzzles
+
+```
+ aaaa  
+b    c 
+b    c 
+ dddd  
+e    f 
+e    f 
+ gggg  
+```
+
+and input line like
+
+```
+be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
+```
+
+Ten unique signal paatterns (so "here are the different ways I can render 0...9), a pipe, and then four-digit output value
+
+## Part the first
+
+The first problem seems to be 
+"count the number of 1, 4, 7, 8 segment numbers", which devolves
+into not understanding anything - just parsing the input line and finding
+strings of the proper length (2, 4, 3, and 7 respectively)
+
+* Split on the pipe, then split on spaces on each side.
+* Have a Display struct (since there's no modifications required at least
+  for part 1) with the set of 10 signal patterns and then the four digits
+  being displayed
+
+## Part the second
