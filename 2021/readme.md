@@ -513,3 +513,138 @@ strings of the proper length (2, 4, 3, and 7 respectively)
   being displayed
 
 ## Part the second
+
+yay, so now actually figure out what the segments are, then sum them up.
+(WE'RE GONNA SUM <clap> YOU UHP)
+
+So figure out which signal wire (A...G) corresponds with which segment (a...g)
+
+that'll be fun.
+
+1, 4, 7, 8 will be the lunchpins  Given that, can we know anything?
+
+```
+1:   c  f
+4:  bcd f
+7: a c  f
+8: abcdefg
+```
+n
+Can't really uniquely determine anything from thatexcept the bottom segment (thanks
+to the 8). each of the other segments appear in at least xtwo digits
+
+The complete breakdown
+
+```
+0: abc efg
+1:   c  f
+2: a cde g
+3: a cd fg
+4:  bcd f
+5: ab d fg
+6: ab defg
+7: a c  f
+8: abcdef
+9: abcd fg
+```
+
+So we'll see each of those.  What are the counts?
+```
+a: 8
+b: 6
+c: 7
+d: 7
+e: 4
+f: 9
+g: 6
+```
+
+rotated
+```
+4: e
+6: b
+7: dg
+8: ac
+9: f
+```
+
+Is this useful information?
+
+
+if a wire appears four times (e.g. E) in the signal patterns, then that 
+must be the lower-left segment e
+
+So immediately we should be able to bucket line e, b, and f, 
+gand partition the other six segments.
+
+Pick up the third line for fun:
+x
+```
+fgaebd cg bdaec gdafb agbcfd gdcbef bgcad gfac gcb cdgabef
+```
+
+sorting the internal components for sanity
+
+```
+abdefg cg abcde abdfg abcdfg bcdefg abcdg acfg bcg abcdefg
+```
+
+We know that
+
+```
+definitely 1:   c   g
+definitely 4: a c  fg
+definitely 7:  bc   g 
+definitely 8: abcdefg
+maybe 0 or 9: ab defg 
+              abcd fg
+maybe 2356  : abcde 
+              ab d fg 
+               bcdefg 
+              abcd  g
+```
+
+histogram of counts
+
+```
+a: 7
+b: 8
+c: 8
+d: 7
+e: 4
+f: 6
+g: 9
+```
+
+should get one each of 4, 6, 9, two of 7 8. (yay)
+
+so we know that for the given wires (lowercase) we know these segments (uppercase):
+
+```
+E: e  (b/c 4 e's)
+B: f  (b/c 4 f's)
+G: g  (b/c 9 g's)
+```
+
+so now we know that anything with with an 
+
+```
+e has E turned on, and so must be a 0,2,6,8
+f has B turned on, and so must be a 0,4,5,8,9
+g has G turned on, and so must be a 0,2,3,5,6,8,9
+```
+
+hrm. what does that tell us?  I dunno.  That's :alot: of piles of info.
+
+Hypothesis - if we can figure out wire to SEGMENT mapping, then it becomes
+trivial to map segments to digits (ABCEFG == 0, CF == 1, etc)
+
+letting subconcious chew on this for a bit
+
+
+
+
+
+
+
+
