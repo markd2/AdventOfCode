@@ -715,3 +715,33 @@ trivial to map segments to digits (ABCEFG == 0, CF == 1, etc)
 
 letting subconcious chew on this for a bit
 
+--------------------------------------------------
+# Day 9 - Smoke Basin.
+
+Given a matrix of numbers which are a height map
+
+```
+2199943210
+3987894921
+9856789892
+8767896789
+9899965678
+```
+
+## Part the first
+
+So walk through each row/column and see if it's the lowest point
+
+"sum of the levels of all low points."  make a function given a row/column,
+see if it is a low point.  It'll have if's.  I could be clever and pad everything
+with 9s, so would always have something a low point around.
+
+999999999999
+921999432109
+939878949219
+998567898929
+987678967899
+998999656789
+999999999999
+
+a low point is that are lower than any of its adjacent locations.
