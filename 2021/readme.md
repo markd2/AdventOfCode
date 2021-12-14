@@ -745,3 +745,23 @@ with 9s, so would always have something a low point around.
 999999999999
 
 a low point is that are lower than any of its adjacent locations.
+
+## Part the second
+
+Find the largest basins to know what to avoid.
+
+A basin is all locations that eventualy flow downward to a single low point.
+
+* Every low point has a basin
+* locations of height 9 do not count as being basins
+
+The size of a basin is the number of locations within the basin including the low point
+
+I think can be driven by the low points.
+
+For each point:
+  - add non 9-9 neighbors into the list
+
+actually, once I got into it, decided to write everything connected (including 9/9) into
+a `Set<Point>` and then trim the 9s.  seems to work!
+
