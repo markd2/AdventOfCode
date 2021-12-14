@@ -82,7 +82,6 @@ increases = pairs
   .count
 ```
 
-----------
 
 ### Part the second
 
@@ -201,7 +200,7 @@ for each line {
 ```
 
 
-### Part the second
+### Part the Second
 
 The twist is rather than h/v positions, there's an _aim_ that causes
 `forward` to take the current aim into account.  Still pretty easy to
@@ -226,11 +225,86 @@ for each line {
 }
 ```
 
-
 ==================================================
 # Day 3 - Binary Diagnostic
 
-actually on my home computer and I'm away from it right now
+Get a binary code from the sub:
+
+```
+00100
+11110
+10110
+10111
+10101
+01111
+00111
+11100
+10000
+11001
+00010
+01010
+```
+
+(the real data is wider, coming in at 12 bits, 000000010011)
+
+So do some bitwise-gamgee work on it
+
+## Part the First
+
+For each _Column_ of bits, if the number of 1 bits wins, then a 1 survives
+to the final value, otherwise a zero.  This aggregate number is **gamma**
+rate.  Flip the bits and get the **epsilon** rate.  Multiply the two and get the
+final value, and emit it in decimal.
+
+Since bit counts are being used, accumulate them in buckets
+
+```
+var buckets: [Int] = Array(repeating: 0, count: bitcount)
+
+// Count number of 1 bits in each position
+lines.forEach { line in
+    for (i, character) in line.enumerated() {
+        buckets[i] += (character == "1") ? 1 : 0
+    }
+}
+```
+
+And then walk the counts, this time doing binary stuff.  It's kind of annoying
+needing to `-1` the array index.
+
+```
+var epsilon: UInt = 0
+var gamma: UInt = 0
+for i in 0 ..< bitcount {
+    if buckets[bitcount - i - 1] > totalLines / 2 {
+        epsilon |= 1 << i
+    } else {
+        gamma |= 1 << i
+    }
+}
+```
+
+### Part the Second
+
+This time **oxygen generator rating** and **CO2 scrubber rating**.
+
+This looks tedious.  "filtering out values until only one remains"
+
+* keep only numbers selected by the _bit criteria_ for the type of rating
+  - discard values that do not match this filter
+
+Bit Criteria
+- **O2 generator**
+    - determine the most common value (0, 1) in the current bit position
+    - keep only numbers with the bit in that position
+    - if 0 and 1 are equally common, keep values with 1 in that position
+- **CO2 Scrubber**
+    - flipped - keep values with 0 in that position
+
+So it's a winnowing.
+
+All the things
+  - take out the ones 
 
 ==================================================
 # Day 4 - Giant Squidly
@@ -640,11 +714,4 @@ Hypothesis - if we can figure out wire to SEGMENT mapping, then it becomes
 trivial to map segments to digits (ABCEFG == 0, CF == 1, etc)
 
 letting subconcious chew on this for a bit
-
-
-
-
-
-
-
 
