@@ -803,3 +803,37 @@ with stuff on the stack, that makes things incomplete)
 the stuff on the stack are the things that would complete the string, so pop those off.
 
 
+--------------------------------------------------
+# Day 11: Dumbo Octopus
+
+```
+5483143223
+2745854711
+5264556173
+6141336146
+6357385478
+4167524645
+2176841721
+6882881134
+4846848554
+5283751526
+```
+
+octopuses in a 10x10 grid.  Each grows energy (+1 each turn) and flashes when full
+(going to 10)
+
+Can model in discrete steps
+* First, increment energy of each octopus by 1
+* any with a level > 9 flashes
+    - incrementing 8 neighbors
+    - setting its level to 0
+    - any thing that exceeds 9 also flashes
+    - continue until flashing stops
+
+## Part the First
+
+after 100 steps, count the total number of flashes.
+
+figure go through it row/column, incrementing each. If get a flash, then start recursing
+on all the things that flash
+
