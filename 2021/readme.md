@@ -798,5 +798,8 @@ Have a stack, when see an open delimiter, push it.  When see a close delimiter, 
 better match the top of the stack. if not, it is corrupted.  (vs just running out of characters
 with stuff on the stack, that makes things incomplete)
 
+## Part the second
+
+the stuff on the stack are the things that would complete the string, so pop those off.
 
 
