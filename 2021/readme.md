@@ -765,3 +765,38 @@ For each point:
 actually, once I got into it, decided to write everything connected (including 9/9) into
 a `Set<Point>` and then trim the 9s.  seems to work!
 
+--------------------------------------------------
+# Day 10: Syntax Scoring
+
+Delimiter matching with () [] {} and <>, nested
+
+Two flavors of lines
+* incomplete
+* corrupted
+
+```
+[({(<(())[]>[[{[]{<()<>>
+[(()[<>])]({[<{<<[]>>(
+{([(<{}[<>[]}>{[]{[(<()>
+(((({<>}<{<{<>}{[]{[]{}
+[[<[([]))<([[{}[[()]]]
+[{[{({}]{}}([{[{{{}}([]
+{<[[]]>}<{[{[{[]{()[[[]
+[<(<(<(<{}))><([]([]()
+<{([([[(<>()){}]>(<<{{
+<{([{{}}[<[[[<>{}]]]>[]]
+```
+
+
+## Part the first
+
+Find and discard the corrupted lines, where a chunk closes with the wrong charater
+
+Find the first illegal character in each line, and make the score based on the wrong character.
+
+Have a stack, when see an open delimiter, push it.  When see a close delimiter, it
+better match the top of the stack. if not, it is corrupted.  (vs just running out of characters
+with stuff on the stack, that makes things incomplete)
+
+
+
