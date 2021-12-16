@@ -835,5 +835,12 @@ Can model in discrete steps
 after 100 steps, count the total number of flashes.
 
 figure go through it row/column, incrementing each. If get a flash, then start recursing
-on all the things that flash
+on all the things that flash.
+
+Using a -1 for a "flashed" otherwise the 0 value would get incremented again (or not)
+
+
+## Part the second
+
+first step when all octopussies flash
 
