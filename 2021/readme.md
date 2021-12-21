@@ -889,3 +889,35 @@ I'm really not feeling this one.
 
     
 
+--------------------------------------------------
+# Day 13 - Transparent Origami
+
+Thermal imaging and thermal camera.  "To activate enter the code found on page 1
+of the manual". It's transparent paper with random dots and instructions on
+how to fold
+
+```
+6,10
+0,14
+9,10
+0,3
+10,4
+4,11
+6,0
+6,12
+4,1
+0,13
+10,12
+3,4
+3,0
+8,4
+1,10
+2,14
+8,10
+9,0
+
+fold along y=7
+fold along x=5
+```
+
+first section is a list of dots on the transparent paper.  0,0 is top-left.
