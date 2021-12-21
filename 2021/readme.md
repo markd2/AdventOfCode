@@ -844,3 +844,48 @@ Using a -1 for a "flashed" otherwise the 0 value would get incremented again (or
 
 first step when all octopussies flash
 
+
+--------------------------------------------------
+# Day 12: Passage Pathing
+
+(hoo boy, this one has the most folks not doing it at all on various lederboards...)
+
+Finding all paths.
+
+So,
+
+```
+start-A
+start-b
+A-c
+A-b
+b-d
+A-end
+b-end
+```
+
+List of how all the caves are connected.
+
+* Start in start
+* Q-z means there is a connection from Q to z
+* big caves (uppercase), small caves (lowercase)
+* waste of time to visit small cave more than once,
+* but big caves may be worth visiting multiple times
+
+```
+   start
+    /   \
+c--A-----b--d
+    \   /
+     end
+```
+
+## Part the First
+
+so find the _number_ of distinct paths that start and end at end, and
+don't visit small caves more than once.
+
+I'm really not feeling this one.
+
+    
+
