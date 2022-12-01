@@ -42,6 +42,12 @@ In this case, it's 24000 from the fourth elf.
 * go to nom numbers until hit new line
 * return the max
 
+#### Solution
+
+69626
+
+_(of course, my solution is different than yours)_
+
 
 #### Twist Guess
 
@@ -51,7 +57,28 @@ elf has all the calories, just how many total.
 
 #### Learnings
 
+* `getline(cin, lineString)` to read a line from stdin
+* use `line.empty()` to see the blank space
+* `stoi(lineString)` to convert string to integer.
 
+### Part 2
 
+The twist is - keep track of the top _three_ elves calories, and
+calculate that sum.
 
+For the example, the top three elves are the fourth (24000),
+third (11000), fifth (10000).
 
+So don't need the identity of the elf
+
+#### Approach
+
+instead of letting the sums float by / keeping the max.  Dump into
+an array. Sort. Take the top 3.  Sum them.
+
+(there's also an approach from Data Oriented Design that might 
+look at if there's time)
+
+#### Solution
+
+206780
