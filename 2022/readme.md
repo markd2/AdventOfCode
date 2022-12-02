@@ -12,15 +12,45 @@ Rock Paper Scissors!
 
 ### Part 1
 
+Data:
 
+* Column 1
+    - A : Rock
+    - B : Paper
+    - C : Scissors
+* Column 2 (supposition)
+    - X : Rock
+    - Y : Paper
+    - Z : Scissors
+* scoring
+    - Shape Score
+        - 1 : Rock
+        - 2 : Paper
+        - 3 : Scissors
+    - Round Score
+        - 0 : lost
+        - 3 : drawn
+        - 6 : won
+
+Then sum up :all-the-things:. What is the total score.
 
 #### Approach
+
+2500 lines in the prod data set.  Shouldn't be a problem - linear scan,
+calculate, sum.  
 
 #### Solution
 
 #### Twist Guess
 
+Guessing that XYZ stand for different things. Might be dependent on
+the first column. Might be a backtracking thing. "X for what your opponent
+chose two rounds ago".  Or maybe it turns in to rock paper scissors lizard spock
+
 #### Learnings
+
+Opportunity to learn up on enum classes (a.k.a. scoped enumerations)
+
 
 ### Part 2
 
