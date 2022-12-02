@@ -66,17 +66,23 @@ Doesn't seem to be a `split`, but stringstreams come close for space-delimited o
 ```
 
 
-
-
 ### Part 2
+
+Twist is:
+
+* Column 2
+    - X : Lose
+    - Y : Draw
+    - Z : Win
 
 #### Approach
 
+Add a couple of "convert RPS move X into win/lose" and use the existing scoring 
+functions.
+
 #### Solution
 
-#### Twist Guess
-
-#### Learnings
+10560 (first try!)
 
 --------------------------------------------------
 
@@ -180,7 +186,5 @@ https://adventofcode.com/2022/day/X
 #### Approach
 
 #### Solution
-
-#### Twist Guess
 
 #### Learnings
