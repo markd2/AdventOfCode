@@ -4,6 +4,36 @@ This year using AoC to learn C++!  I am some kind of masochist!!11!
 
 Reindeer food!
 
+## Day 2
+
+https://adventofcode.com/2022/day/2
+
+Rock Paper Scissors!
+
+### Part 1
+
+
+
+#### Approach
+
+#### Solution
+
+#### Twist Guess
+
+#### Learnings
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Twist Guess
+
+#### Learnings
+
+--------------------------------------------------
+
 ## Day 1
 
 https://adventofcode.com/2022/day/1
@@ -82,3 +112,29 @@ look at if there's time)
 #### Solution
 
 206780
+
+==================================================
+
+## Day X
+
+https://adventofcode.com/2022/day/X
+
+### Part 1
+
+#### Approach
+
+#### Solution
+
+#### Twist Guess
+
+#### Learnings
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Twist Guess
+
+#### Learnings
