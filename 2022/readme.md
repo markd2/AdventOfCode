@@ -41,15 +41,31 @@ calculate, sum.
 
 #### Solution
 
+9651. First try.
+
 #### Twist Guess
 
 Guessing that XYZ stand for different things. Might be dependent on
 the first column. Might be a backtracking thing. "X for what your opponent
 chose two rounds ago".  Or maybe it turns in to rock paper scissors lizard spock
+Or maybe it's calculate the opponent score too.
 
 #### Learnings
 
-Opportunity to learn up on enum classes (a.k.a. scoped enumerations)
+Opportunity to learn up on enum classes (a.k.a. scoped enumerations).  Basically
+a scoping/namespacing mechanism (no methods like in swift-land). Does allow
+for switch-exhaustiveness checking.
+
+Doesn't seem to be a `split`, but stringstreams come close for space-delimited ones.
+
+```
+        std::stringstream ss(line);
+        std::string opponent, player;
+        ss >> opponent;
+        ss >> player;
+```
+
+
 
 
 ### Part 2
