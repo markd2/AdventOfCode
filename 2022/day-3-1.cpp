@@ -10,18 +10,7 @@
 // ./day-3-1 < day-3-example.txt
 // ./day-3-1 < day-3-prod.txt
 
-    using namespace std;
-
-template <class T>
-ostream& operator << (ostream &out, const set<T> &values)
-{
-  const char *sep = " ";
-  for (const T &value : values) {
-    out << sep << value; sep = ", ";
-  }
-  return out;
-}
-
+using namespace std;
 int score(char blarg) {
     int score;
 

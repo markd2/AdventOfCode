@@ -73,8 +73,24 @@ two sets, instead nom three lines, and intersect three sets.
 
 #### Solution
 
+2276 (first time!)
+
 #### Learnings
 
+I've made this error twice:
+
+```
+set<char> fromString(const string &s) {
+    set<char> thing;
+    for (int i = 0; i < s.length(); i++) {
+        thing.insert(s[i]);  // originally did just thing.insert(i)
+    }
+    return thing;
+}
+```
+I'm sure there's a concise idiomatic way of doing this
+
+--------------------------------------------------
 
 ## Day 2
 
