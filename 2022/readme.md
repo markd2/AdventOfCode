@@ -4,6 +4,58 @@ This year using AoC to learn C++!  I am some kind of masochist!!11!
 
 Reindeer food!
 
+## Day 3
+
+https://adventofcode.com/2022/day/3
+
+Rucksack reorganization.
+
+There's a set of rucksacks, each with the same number of items.
+Items are keyed by upperand lowercase characters. `F` is one thing and
+`f` is another.  Given a description of the rucksack contents, e.g, 
+_"vJrwpWtwJgWrhcsFMMfFFhFp"_, split it in half for each rucksack
+vJrwpWtwJgWr and hcsFMMfFFhFp, and find the error (the same item in both,
+so a lower case p)
+
+Then score them 1-26 (lowercase) and 27-52 (uppercase) by "the priority
+of the item type that apears in both compartments.
+
+The example doesn't have overlapping found items - do they just want the
+_type_ (so if `p` appears 17 times in the data, then it contributes singly to
+the total) or the actual itmes (so it contributes 17 times to the total).
+
+The example also show exactly one conflict, but can there be multiple?
+Guess we'll find out.
+
+### Part 1
+
+#### Approach
+
+The actual work seems pretty straightforward:
+  - split string in half
+  - dump each character in to a set
+  - intersect the sets
+  - score the contents of the sets
+
+#### Solution
+
+#### Twist Guess
+
+Probably will involve fixing the rucksacks - given all the leftovers, distribute
+them so there's no conflicts
+
+
+#### Learnings
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Learnings
+
+
 ## Day 2
 
 https://adventofcode.com/2022/day/2
