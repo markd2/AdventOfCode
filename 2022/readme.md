@@ -23,9 +23,10 @@ of the item type that apears in both compartments.
 The example doesn't have overlapping found items - do they just want the
 _type_ (so if `p` appears 17 times in the data, then it contributes singly to
 the total) or the actual itmes (so it contributes 17 times to the total).
+_(turns out it was the latter)_
 
 The example also show exactly one conflict, but can there be multiple?
-Guess we'll find out.
+Guess we'll find out.  _(Turns out exactly one)_
 
 ### Part 1
 
@@ -39,17 +40,36 @@ The actual work seems pretty straightforward:
 
 #### Solution
 
+7742 (first time!)
+
 #### Twist Guess
 
 Probably will involve fixing the rucksacks - given all the leftovers, distribute
 them so there's no conflicts
 
-
 #### Learnings
+
+Data structures and algorithms are kind of awkward.  Like intersecting a set:
+
+```
+        set<char> intersect;
+        set_intersection(ruck1.begin(), ruck1.end(),
+                         ruck2.begin(), ruck2.end(),
+                         inserter(intersect, intersect.begin()));
+```
+
+Getting the first element of a set (might not be arbitrary):
+`char blah = *intersect.begin();`
+
 
 ### Part 2
 
+Group by three, and find the commonaltiy between three of the elve's rucksacks.
+
 #### Approach
+
+Sounds like more of the same - instead of splitting a line and intersecting
+two sets, instead nom three lines, and intersect three sets.
 
 #### Solution
 
