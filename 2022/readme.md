@@ -71,16 +71,27 @@ if (std::regex_search(line, matches, matchRangesRegex)) {
 }
 ```
 
+Also, there's :alot: of line noise in C++
+```
+[[nodiscard]] constexpr const bool contains(const Range &otherRange) noexcept {
+```
+
 
 
 ### Part 2
 
+Twist is, if the number pairs overlap at all.
+
 #### Approach
+
+Right now `Range` has a "contans", so should be easy to add an intersect.
+`||` instead of `&&` or some such thing.
 
 #### Solution
 
-#### Learnings
+897 (did not get first try. Needed to double-up on my contains check)
 
+--------------------------------------------------
 
 ## Day 3
 
