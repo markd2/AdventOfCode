@@ -51,11 +51,26 @@ Question: how many of these fully contain the other?
 
 #### Solution
 
+507 (first try!)
+
 #### Twist Guess
 
 Determine which sections aren't being covered?  Maybe something with overlaps?
+Or maybe three elves contribute to the overlap ranges?
 
 #### Learnings
+
+REGEX! for pulling apart the ##-## chunks.
+
+```
+const auto matchElfRanges = "(\\d*)-(\\d*),(\\d*)-(\\d*)";
+std::regex matchRangesRegex(matchElfRanges);
+std::smatch matches;
+if (std::regex_search(line, matches, matchRangesRegex)) {
+    // use matches[1] ... matches[3] for the guts.
+}
+```
+
 
 
 ### Part 2

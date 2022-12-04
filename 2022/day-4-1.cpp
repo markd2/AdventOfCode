@@ -11,35 +11,38 @@
 
 const auto matchElfRanges = "(\\d*)-(\\d*),(\\d*)-(\\d*)";
 
+struct Range {
+    int start;
+    int end;
+
+public:
+    [[nodiscard]] const bool contains(const Range otherRange) noexcept {
+        return otherRange.start >= start && otherRange.end <= end;
+    }
+};
+
 int main() {
     std::string line;
     int sum = 0;
     std::regex matchRangesRegex(matchElfRanges);
 
+    int count = 0;
     while (std::getline(std::cin, line)) {
-        std::cout << line << std::endl;
         std::smatch matches;
 
         if (std::regex_search(line, matches, matchRangesRegex)) {
 
-            for (auto i = 0; i < matches.size(); ++i) {
-                std::cout << i << ": " << matches[i].str() << std::endl;
+            auto elf1 = Range{ stoi(matches[1].str()),
+                stoi(matches[2].str()) };
+            auto elf2 = Range{ stoi(matches[3].str()), 
+                stoi(matches[4].str()) };
+
+            if (elf1.contains(elf2) || elf2.contains(elf1)) {
+                count++;
             }
         } else {
             std::cout << "got unexpected unparsable input: |" << line << "|" << std::endl;
         }
-
-        
-#if 0
-        auto ranges_begin = std::sregex_iterator(line.begin(), line.end(), matchRangesRegex);
-        auto ranges_end = std::sregex_iterator();
-
-        for (std::sregex_iterator i = ranges_begin; i != ranges_end; ++i) {
-            std::smatch match = *i;
-            std::string matchString = match.str();
-            std::cout << matchString << std::endl;
-        }
-#endif
-        break;
-    }    
+    }
+    std::cout << count << std::endl;
 }
