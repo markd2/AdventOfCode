@@ -4,6 +4,69 @@ This year using AoC to learn C++!  I am some kind of masochist!!11!
 
 Reindeer food!
 
+## Day 4
+
+https://adventofcode.com/2022/day/4
+
+Camp Cleanup
+
+Cleaning up the camp before more supplies can be unloaded. Elves are
+assigned the job of cleaning up sections of the camp.
+
+- Every section has a unique ID
+- each elf is assigned a (single) range of (multiple) section IDs
+- elves are pairing up, e.g.
+```
+2-4,6-8  // elf1 sections 2,3,4, elf2 sections 6,7,8
+2-3,4-5
+5-7,7-9
+```
+
+
+### Part 1
+
+Some overlap, some are distinct, and some fully contain others (like
+the outer two here)
+
+```
+....567..  5-7
+......789  7-9
+
+.2345678.  2-8
+..34567..  3-7
+
+.....6...  6-6
+...456...  4-6
+```
+
+Question: how many of these fully contain the other?
+
+#### Approach
+
+- Make a range type (start/end)
+- have a contains method
+- parse the file
+- see how many of the paris (e1.contains(e2) or e2.contains(e1)
+- sum them
+
+#### Solution
+
+#### Twist Guess
+
+Determine which sections aren't being covered?  Maybe something with overlaps?
+
+#### Learnings
+
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Learnings
+
+
 ## Day 3
 
 https://adventofcode.com/2022/day/3
@@ -258,6 +321,7 @@ look at if there's time)
 ## Day X
 
 https://adventofcode.com/2022/day/X
+Subtitle
 
 ### Part 1
 
