@@ -16,7 +16,7 @@ struct Range {
     int end;
 
 public:
-    [[nodiscard]] const bool contains(const Range otherRange) noexcept {
+    [[nodiscard]] constexpr const bool contains(const Range &otherRange) noexcept {
         return otherRange.start >= start && otherRange.end <= end;
     }
 };
