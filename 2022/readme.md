@@ -51,6 +51,13 @@ Super crane that can move 2 at a time.
 
 #### Learnings
 
+lldb and stdin:
+```
+(lldb) break set -y day-5-1.cpp:47
+(lldb) settings set target.input-path day-5-example.txt 
+(lldb) process launch
+```
+
 
 ### Part 2
 
