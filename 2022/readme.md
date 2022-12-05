@@ -44,6 +44,7 @@ Figured:
 
 #### Solution
 
+TLNGFGMFN (first time!)
 
 #### Twist Guess
 

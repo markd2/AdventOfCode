@@ -1,6 +1,7 @@
 #import <iostream>
 #import <stack>
 #import <string>
+#import <sstream>
 
 // Supply Stacks
 // https://adventofcode.com/2022/day/5
@@ -47,7 +48,36 @@ int main() {
     std::getline(std::cin, line);
 
     // parse instructions
-    std::getline(std::cin, line);
-    cout << line << endl;
+    while (getline(cin, line)) {
+        std::stringstream ss(line);
+        std::string move, count, from, source, to,destination;
+
+        ss >> move;
+        ss >> count;
+        ss >> from;
+        ss >> source;
+        ss >> to;
+        ss >> destination;
+
+        if (line.size() == 0) break;
+
+        int icount = stoi(count);
+        int ifrom = stoi(source) - 1;
+        int ito = stoi(destination) - 1;
+
+        // cout << icount << " " << ifrom << " " << ito << endl;
+
+        for (int i = 0; i < icount; i++) {
+            string floater = stacks[ifrom].top();
+            stacks[ifrom].pop();
+            stacks[ito].push(floater);
+        }
+    }
+
+    for (int i = 0; i < numStacks; i++) {
+        cout << stacks[i].top();
+    }
+
+    cout << endl;
 }
 
