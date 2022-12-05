@@ -19,6 +19,7 @@ int main() {
 
     stack<string> lines;
 
+    // slurp in all the ascii art, then process from bottom to top
     while (std::getline(std::cin, line)) {
         if (line[0] == ' ' && line[1] == '1') break;  // should be " 1   2   3 ..." line
         lines.push(line);
@@ -30,7 +31,7 @@ int main() {
     auto numStacks = (lines.top().size() / 4) + 1;
     stack<string> stacks[numStacks];
 
-    // process ASCII art
+    // process ASCII art bottom to top
     while (!lines.empty()) {
         string line = lines.top();
 

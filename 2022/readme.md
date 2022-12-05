@@ -62,7 +62,14 @@ lldb and stdin:
 
 ### Part 2
 
+Twist: the crane can move multiple crates, so it won't have the single pop/push
+behavior. Instead all of the move.
+
 #### Approach
+
+I'm sure there's a "move range of stuff from one vector to another", so can
+change to vectors (still building like a stack yay push_back) and use that.
+
 
 #### Solution
 
