@@ -4,6 +4,64 @@ This year using AoC to learn C++!  I am some kind of masochist!!11!
 
 Reindeer food!
 
+## Day 5
+
+https://adventofcode.com/2022/day/5
+
+Supply Stacks
+
+Parsing a picture!  Then running through "move X of something one at a time
+from stack to stack".
+
+### Part 1
+
+Stacks will be important.
+
+Cool ASCII art:
+```
+    [D]    
+[N] [C]    
+[Z] [M] [P]
+ 1   2   3 
+
+move 1 from 2 to 1
+...
+```
+
+Considerately it's full of spaces, so easy indexing
+
+#### Approach
+
+Need to make stacks out of each, well, stack.
+
+Figured:
+* read in the lines
+* process backwards, so all the stacks are filled in
+* once we've hit a space above a crate we can stop processing
+  that stack
+* then stream the instructions, which will be a "for count, pop A push B"
+* report the top of each stack as a string, e.g. "CDB"
+
+#### Solution
+
+
+#### Twist Guess
+
+Super crane that can move 2 at a time.
+
+#### Learnings
+
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Learnings
+
+--------------------------------------------------
+
 ## Day 4
 
 https://adventofcode.com/2022/day/4
