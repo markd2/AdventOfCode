@@ -55,10 +55,9 @@ Super crane that can move 2 at a time.
 lldb and stdin:
 ```
 (lldb) break set -y day-5-1.cpp:47
-(lldb) settings set target.input-path day-5-example.txt 
+(lldb) settings set target.input-path day-5-example.txt
 (lldb) process launch
 ```
-
 
 ### Part 2
 
@@ -70,10 +69,25 @@ behavior. Instead all of the move.
 I'm sure there's a "move range of stuff from one vector to another", so can
 change to vectors (still building like a stack yay push_back) and use that.
 
-
 #### Solution
 
+FGLQJCMBD (First time!)
+
 #### Learnings
+
+Yep there was a way to move stuff
+
+```
+        too.insert(too.end(), 
+                   make_move_iterator(fromm.begin() + (fromm.size() - icount)),
+                   make_move_iterator(fromm.end()));
+```
+
+The fromm still has "" for the things that were removed, so needed to trim
+
+```
+        fromm.resize(fromm.size() - icount);
+```
 
 --------------------------------------------------
 
