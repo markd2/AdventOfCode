@@ -70,16 +70,16 @@ int main() {
 
         // cout << icount << " " << ifrom << " " << ito << endl;
 
-        auto fromm = stacks[ifrom];
-        auto too = stacks[ito];
+        auto &fromm = stacks[ifrom];
+        auto &too = stacks[ito];
 
+        // Copy from the source into the destination
         too.insert(too.end(), 
                    make_move_iterator(fromm.begin() + (fromm.size() - icount)),
                    make_move_iterator(fromm.end()));
+        // trim the source
         fromm.resize(fromm.size() - icount);
 
-        stacks[ifrom] = fromm;
-        stacks[ito] = too;
     }
 
     for (int i = 0; i < numStacks; i++) {
