@@ -46,9 +46,15 @@ std::set<char> checker(window.begin(), window.end());
 
 ### Part 2
 
+Twist is 14-character windows.
+
 #### Approach
 
+Change a constant.
+
 #### Solution
+
+3256 (first try!)
 
 #### Learnings
 

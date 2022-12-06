@@ -6,13 +6,13 @@
 // Tuning Trouble
 // https://adventofcode.com/2022/day/6
 
-// clang++ -g -std=c++20 -o day-6-1 day-6-1.cpp 
-// ./day-6-1 < day-6-example-1.txt
-// ./day-6-1 < day-6-example-2.txt
-// ./day-6-1 < day-6-example-3.txt
-// ./day-6-1 < day-6-example-4.txt
-// ./day-6-1 < day-6-example-5.txt
-// ./day-6-1 < day-6-prod.txt
+// clang++ -g -std=c++20 -o day-6-2 day-6-2.cpp 
+// ./day-6-2 < day-6-example-1.txt
+// ./day-6-2 < day-6-example-2.txt
+// ./day-6-2 < day-6-example-3.txt
+// ./day-6-2 < day-6-example-4.txt
+// ./day-6-2 < day-6-example-5.txt
+// ./day-6-2 < day-6-prod.txt
 
 int main() {
     std::string line;
@@ -20,7 +20,7 @@ int main() {
     std::cin >> line;
     int index = 0;
     do {
-        const int windowSize = 4;
+        const int windowSize = 14;
         auto window = line.substr(index, windowSize);
         std::set<char> checker(window.begin(), window.end());
 
