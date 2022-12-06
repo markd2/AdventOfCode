@@ -28,6 +28,7 @@ start of packet marker is detected
 
 #### Solution
 
+1855 (first try!)
 
 #### Twist Guess
 
@@ -35,6 +36,13 @@ Since the part one solution description says **first** start of packet, I'm
 guessing we'll need to find all the start of packets.  Maybe of differing sizes.
 
 #### Learnings
+
+much consise. very compacting.
+
+```
+auto window = line.substr(index, windowSize);
+std::set<char> checker(window.begin(), window.end());
+````
 
 ### Part 2
 
