@@ -4,6 +4,48 @@ This year using AoC to learn C++!  I am some kind of masochist!!11!
 
 Reindeer food!
 
+
+## Day 6
+
+https://adventofcode.com/2022/day/6
+
+Tuning Trouble
+
+Making comm systems work!
+
+### Part 1
+
+Find a four-character window into a string of line noise where each character
+is unique. Return the number of characters processed before the first(!)
+start of packet marker is detected
+
+#### Approach
+
+* Read in string.
+* go character by character
+* pick up four characters
+* see if all unique (toss in to a set sounds easy)
+
+#### Solution
+
+
+#### Twist Guess
+
+Since the part one solution description says **first** start of packet, I'm
+guessing we'll need to find all the start of packets.  Maybe of differing sizes.
+
+#### Learnings
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Learnings
+
+--------------------------------------------------
+
 ## Day 5
 
 https://adventofcode.com/2022/day/5
