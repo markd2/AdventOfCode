@@ -5,6 +5,66 @@ This year using AoC to learn C++!  I am some kind of masochist!!11!
 Reindeer food!
 
 
+## Day 7
+
+https://adventofcode.com/2022/day/7
+
+No Space Left On Device
+
+
+### Part 1
+
+Trying to run a system update, getting no space on device. Look for
+files to delete.
+
+Slurp in a terminal session essentially doing a recursive `ls` with file sizes.
+
+Then, find all the directories with a total size of at **most** 100000. What's
+the sum of such directores
+
+#### Approach
+
+We get the terminal session, essentially building a tree.  So
+
+* Walk the input
+* `$` is the start of the command. Lines after that are the command output
+* `cd` to move around file system
+    - no complex paths.  Just "`cd name`
+* `ls` to get a listing
+* `dir NAME` are directories
+* `12345 NAME` are files (includng size)
+* `..` exists
+
+Solution thoughts
+- We get new files from `cd` and from `ls`
+- make a tree of dictionaries
+- a key of ".." references the parent
+- can do a recursive summing rather than accumulating the size
+    - the input is only 1024 lines, so the actual file system stuff should be 
+      fairly smol
+- for part 1, for each directory calculate the size.  then filter <= 100_000
+  and then sum all those. (files can be counted multiple times)
+
+#### Solution
+
+
+#### Twist Guess
+
+Don't count files twice?
+
+
+#### Learnings
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Learnings
+
+--------------------------------------------------
+
 ## Day 6
 
 https://adventofcode.com/2022/day/6
