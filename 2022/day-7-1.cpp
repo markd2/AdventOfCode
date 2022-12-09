@@ -94,6 +94,16 @@ int main() {
 
                         std::cout << "*" << dirName << std::endl;
                     } else {
+                        // size, filename 
+                        auto split = line.find(" ", 0);
+                        auto filename = line.substr(split + 1, line.size() - (split + 1));
+                        auto size = stoi(line.substr(0, split));
+                        std::cout << "SNORGLE " << filename << "| " << size << std::endl;
+
+                        inode *newFile = new inode;
+                        newFile->isDirectory = false;
+                        newFile->size = size;
+                        cwd->dirent[filename] = newFile;
                     }
 
                     if (std::cin.peek() == '$') {
@@ -109,7 +119,7 @@ int main() {
         }
         if (!std::getline(std::cin, line)) break;
     }
-
+    std::cout << "------------------------------" << std::endl;
     walk(root);
     // std::cout << "blah" << std::endl;
 }
