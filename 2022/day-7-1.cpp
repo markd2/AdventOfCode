@@ -12,7 +12,7 @@
 struct inode {
     std::map<std::string, inode *> dirent;
     bool isDirectory = true;
-    int size = 0;
+    int size = -1;
 };
 
 inode *root = nullptr;
@@ -36,6 +36,8 @@ int du(const inode *root) {
     return sum;
 }
 
+std::vector<const inode*> matchingInodes;
+
 void walk(const inode *root, int indent = 0) {
     for (std::map<std::string, inode*>::const_iterator it = root->dirent.begin();
          it !=  root->dirent.end(); ++it) {
@@ -48,6 +50,9 @@ void walk(const inode *root, int indent = 0) {
         std::cout << spaces << key << " " << (value->isDirectory ? "dir" : std::to_string(value->size)) << std::endl;
         if (value->isDirectory) {
             auto sum = du(value);
+            if (sum <= 100'000) {
+                matchingInodes.push_back(value);
+            }
             std::cout << spaces << " sum: " << sum << std::endl;
         }
 
@@ -143,5 +148,12 @@ int main() {
     std::cout << "------------------------------" << std::endl;
     std::cout << "/ " << du(root) << std::endl;
     walk(root, 1);
-    // std::cout << "blah" << std::endl;
+    std::cout << "blah" << matchingInodes.size() << std::endl;
+
+    // too lazy to figure out std::reduce for this
+    int sum = 0;
+    for (auto inode: matchingInodes) {
+        sum += du(inode);
+    }
+    std::cout << sum << std::endl;
 }
