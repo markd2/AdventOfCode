@@ -4,6 +4,56 @@ This year using AoC to learn C++!  I am some kind of masochist!!11!
 
 Reindeer food!
 
+## Day 8
+
+https://adventofcode.com/2022/day/8
+
+_sings_ Treetop Tree House (cambot...)
+
+### Part 1
+
+given a grid of tree/heights (0 shortest)
+
+```
+30373
+25512
+65332
+33549
+35390
+```
+
+count the number of trees that are visible from outside the grid when
+looking at a row or column.
+
+A tree is visible if all the other trees between it and an edge of the grid are 
+shorter
+
+Prod data is 99x99
+
+#### Approach
+
+* four-state bitflag for each tree - visible from t/l/b/r
+* For each tree, walk the four directions
+* if it hits the edge, set the visible flag.
+* sum all the trees with a visible bit set
+
+#### Solution
+
+#### Twist Guess
+
+diagonals
+
+#### Learnings
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Learnings
+
+--------------------------------------------------
 
 ## Day 7
 
