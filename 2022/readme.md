@@ -47,21 +47,44 @@ Solution thoughts
 
 #### Solution
 
+1141028 (first try!)
 
 #### Twist Guess
 
 Don't count files twice?
 
-
 #### Learnings
+
+:alot: of learning, like
+
+* `cin.peek()` to see if an upcoming line is a command.
+* using `std::map`
+
 
 ### Part 2
 
+total space on the filesystem is 70'000'000, need unused space of at
+least 30'000'000. Right now it's 48'008'081 (for prod data) of space 
+consumed, for 21'991'919 free.
+
+Find the smallest directory that if is deleted, would give us 30meggies of space.
+
+
 #### Approach
+
+* do the `du` walk
+* for each subtract from 70meggies
+* if the resulting is <= 30 meggies
+    - accumulate the min
 
 #### Solution
 
+8278005 (first try!)
+
 #### Learnings
+
+Horribly messy code is very malleable when you're still working on it. Overall
+it's terrible.
 
 --------------------------------------------------
 
