@@ -18,8 +18,25 @@ struct inode {
 inode *root = nullptr;
 inode *cwd = nullptr;
 
+int du(const inode *root) {
+    int sum = 0;
+
+    for (std::map<std::string, inode*>::const_iterator it = root->dirent.begin();
+         it !=  root->dirent.end(); ++it) {
+        if (it->first == "..") continue;
+
+        auto inode = it->second;
+        if (inode->isDirectory) {
+            sum += du(inode);
+        } else {
+            sum += inode->size;
+        }
+    }
+
+    return sum;
+}
+
 void walk(const inode *root, int indent = 0) {
-    std::vector<std::string> keys;
     for (std::map<std::string, inode*>::const_iterator it = root->dirent.begin();
          it !=  root->dirent.end(); ++it) {
         auto key = it->first;
@@ -29,6 +46,10 @@ void walk(const inode *root, int indent = 0) {
 
         auto spaces = std::string(indent * 2, ' ');
         std::cout << spaces << key << " " << (value->isDirectory ? "dir" : std::to_string(value->size)) << std::endl;
+        if (value->isDirectory) {
+            auto sum = du(value);
+            std::cout << spaces << " sum: " << sum << std::endl;
+        }
 
         if (value != nullptr) {
             walk(value, indent + 1);
@@ -120,6 +141,7 @@ int main() {
         if (!std::getline(std::cin, line)) break;
     }
     std::cout << "------------------------------" << std::endl;
-    walk(root);
+    std::cout << "/ " << du(root) << std::endl;
+    walk(root, 1);
     // std::cout << "blah" << std::endl;
 }
