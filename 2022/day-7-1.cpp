@@ -11,6 +11,8 @@
 
 struct inode {
     std::map<std::string, inode *> dirent;
+    bool isDirectory = true;
+    int size = 0;
 };
 
 inode *root = nullptr;
@@ -21,12 +23,13 @@ void walk(const inode *root, int indent = 0) {
     for (std::map<std::string, inode*>::const_iterator it = root->dirent.begin();
          it !=  root->dirent.end(); ++it) {
         auto key = it->first;
+        auto value = it->second;
+
         if (key == "..") continue;
 
         auto spaces = std::string(indent * 2, ' ');
-        std::cout << spaces << key << std::endl;
+        std::cout << spaces << key << " " << (value->isDirectory ? "dir" : std::to_string(value->size)) << std::endl;
 
-        auto value = it->second;
         if (value != nullptr) {
             walk(value, indent + 1);
         }
