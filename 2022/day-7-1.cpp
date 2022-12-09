@@ -35,21 +35,29 @@ void walk(const inode *root, int indent = 0) {
 
 int main() {
     std::string line;
-    while (std::getline(std::cin, line)) {
-        if (line[0] == '$') {
+    std::getline(std::cin, line);
 
+    std::cout << "TOP OF LOOP " << line << std::endl;
+
+    while (true) {
+        const std::string cd = "$ cd";
+        const std::string ls = "$ ls";
+
+        std::cout << "TOP OF LOOP " << line << std::endl;
+
+        if (line[0] == '$') {
             // --------------------
-            // cd
-            const std::string cd = "$ cd";
+            std::cout << line << std::endl;
             if (line.compare(0, cd.size(), cd) == 0) {
                 std::cout << line << std::endl;
                 auto dirName = line.substr(5, line.size() - 5);
 
                 if (root == nullptr) {
                     // we found /
-                    std::cout << "made root";
+                    std::cout << "made root" << std::endl;
                     root = new inode;
                     cwd = root;
+                    if (!std::getline(std::cin, line)) break;
                     continue;
                 }
                 // check if we've seen this directory yet.  If not,
@@ -62,9 +70,41 @@ int main() {
                 }
                 // then move to it
                 cwd = cwd->dirent[dirName];
+                if (!std::getline(std::cin, line)) break;
                 continue;
             }
+
+            if (line.compare(0, ls.size(), ls) == 0) {
+                std::cout << "TOP OF LS" << line << std::endl;
+                while(std::getline(std::cin, line)) {
+                    // process line
+                    std::cout << line << std::endl;
+                    if (line[0] == 'd') {
+                        auto dirName = line.substr(4, line.size() - 4);
+                        if (cwd->dirent[dirName] == nullptr) {
+                            std::cout << "    NEW NEW NEW" << std::endl;
+                            inode *newDirectory = new inode;
+                            cwd->dirent[dirName] = newDirectory;
+                            newDirectory->dirent[".."] = cwd;
+                            std::cout << "    added new directory |" << dirName << "|" << std::endl;
+                        }
+
+                        std::cout << "*" << dirName << std::endl;
+                    } else {
+                    }
+
+                    if (std::cin.peek() == '$') {
+                        std::cout << "  YAY DONE" << std::endl;
+                        break;
+                    }
+                    std::cout << line << std::endl;
+                }
+                // slurp up lines:
+                //    - dir NAME
+                //    - SIZE NAME
+            }
         }
+        if (!std::getline(std::cin, line)) break;
     }
 
     walk(root);
