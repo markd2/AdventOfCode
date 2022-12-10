@@ -31,6 +31,7 @@ int scenicScore(int treeRow, int treeColumn, Direction direction) {
     int height = forest[treeRow][treeColumn].height;
 
     if (direction == Direction::LookingLeft) {
+        if (treeColumn == 0) return 0;
         for (int column = treeColumn - 1; column >= 0; column--) {
             if (forest[treeRow][column].height <= height) {
                 score += 1;
@@ -42,7 +43,8 @@ int scenicScore(int treeRow, int treeColumn, Direction direction) {
     }
     if (direction == Direction::LookingRight) {
         int max = forest[treeRow].size();
-        for (int column = treeColumn + 1; column < max; column--) {
+        if (treeColumn == max - 1) return 0;
+        for (int column = treeColumn + 1; column < max; column++) {
             if (forest[treeRow][column].height <= height) {
                 score += 1;
             }
@@ -52,6 +54,7 @@ int scenicScore(int treeRow, int treeColumn, Direction direction) {
         }
     }
     if (direction == Direction::LookingUp) {
+        if (treeRow == 0) return 0;
         for (int row = treeRow - 1; row >= 0; row--) {
             if (forest[row][treeColumn].height <= height) {
                 score += 1;
@@ -63,6 +66,7 @@ int scenicScore(int treeRow, int treeColumn, Direction direction) {
     }
     if (direction == Direction::LookingDown) {
         int max = forest.size();
+        if (treeRow == max - 1) return 0;
         for (int row = treeRow + 1; row < max; row++) {
             if (forest[row][treeColumn].height <= height) {
                 score += 1;
@@ -73,6 +77,7 @@ int scenicScore(int treeRow, int treeColumn, Direction direction) {
         }
     }
 
+    if (score == 0) return 1;
     return score;
 }
 
@@ -109,22 +114,21 @@ int main() {
         }
     }
 
-    cout << forest[1][2].scenicScore << endl;
-    cout << forest[3][2].scenicScore << endl;
-
-    cout << maxScore << endl;
-
-/*
-    // now count up visible trees
-    int visible = 0;
-    for (int row = 0; row < height; row++) {
-        for (int column = 0; column < width; column++) {
-            // visible += forest[row][column].anyVisible() ? 1 : 0;
-        }
+    {
+        int row = 2; int column = 1;
+        auto scenicLeft = scenicScore(row, column, Direction::LookingLeft);
+        auto scenicRight = scenicScore(row, column, Direction::LookingRight);
+        auto scenicUp = scenicScore(row, column, Direction::LookingUp);
+        auto scenicDown = scenicScore(row, column, Direction::LookingDown);
+        cout << scenicLeft << " " << scenicRight  << " " << scenicUp  << " " << scenicDown << endl;
     }
 
-    // visibleMap();
+    for (int row = 0; row < height; row++) {
+        for (int column = 0; column < width; column++) {
+            cout << forest[row][column].scenicScore << " ";
+        }
+        cout << endl;
+    }
+    cout << maxScore << endl;
 
-    cout << visible << endl;
-*/
 }

@@ -49,11 +49,11 @@ diagonals
 
 ### Part 2
 
-#### Approach
+different scoring algorithm
 
 #### Solution
 
-#### Learnings
+535680 (second try :-( )
 
 --------------------------------------------------
 
