@@ -73,11 +73,16 @@ Sketch out 2-D geometry.  The diagonal checking logic became very straightforwar
 
 ### Part 2
 
+Instead of two knot (head / tail), there's 10 of them
+
 #### Approach
+
+Have an array, apply the move to the head, and then do the "tail move" on each
+subsequent one.
 
 #### Solution
 
-#### Learnings
+2619 (first time!)
 
 
 --------------------------------------------------
