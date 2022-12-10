@@ -54,8 +54,27 @@ int tallestFrom(int treeRow, int treeColumn, Direction direction) {
             tallest = max(tallest, forest[treeRow][column].height);
         }
     }
+    if (direction == Direction::FromRight) {
+        int maxWidth = forest[treeRow].size();
+        if (treeColumn == maxWidth - 1) return kAlwaysVisible;
+        for (int column = treeColumn + 1; column < maxWidth; column++) {
+            tallest = max(tallest, forest[treeRow][column].height);
+        }
+    }
+    if (direction == Direction::FromTop) {
+        if (treeRow == 0) return kAlwaysVisible;
+        for (int row = 0; row < treeRow; row++) {
+            tallest = max(tallest, forest[row][treeColumn].height);
+        }
+    }
+    if (direction == Direction::FromBottom) {
+        int maxHeight = forest.size();
+        if (treeRow == maxHeight - 1) return kAlwaysVisible;
+        for (int row = treeRow + 1; row < maxHeight; row++) {
+            tallest = max(tallest, forest[row][treeColumn].height);
+        }
+    }
 
-    cout << "(" << treeRow << ", " << treeColumn << ") " << tallest << endl;
     return tallest;
 }
 
@@ -82,9 +101,23 @@ int main() {
     for (int row = 0; row < height; row++) {
         for (int column = 0; column < width; column++) {
             auto tallestLeft = tallestFrom(row, column, Direction::FromLeft);
-            cout << "tallest is " << tallestLeft << " (" << row << ", " << column << ")" << endl;
             if (tallestLeft < forest[row][column].height) {
                 forest[row][column].visibleFromLeft = true;                
+            }
+
+            auto tallestRight = tallestFrom(row, column, Direction::FromRight);
+            if (tallestRight < forest[row][column].height) {
+                forest[row][column].visibleFromRight = true;                
+            }
+
+            auto tallestTop = tallestFrom(row, column, Direction::FromTop);
+            if (tallestTop < forest[row][column].height) {
+                forest[row][column].visibleFromTop = true;                
+            }
+
+            auto tallestBottom = tallestFrom(row, column, Direction::FromBottom);
+            if (tallestBottom < forest[row][column].height) {
+                forest[row][column].visibleFromBottom = true;                
             }
         }
     }
