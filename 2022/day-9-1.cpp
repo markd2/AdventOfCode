@@ -81,10 +81,10 @@ void Point::move(Point head) {
     // otherwise move diagonally
     {
         // via a diagram (hi Via!), if the Head is in the middle at the origin,
-        // - tails in quadrant 1 travel SW
-        // - tails in quadrant 2 travel NW
-        // - tails in quadrant 3 travel NE
-        // - tails in quadrant 4 travel SE
+        // - tails in quadrant 1 travel SW  (Down Left)
+        // - tails in quadrant 2 travel NW  (Up Left)
+        // - tails in quadrant 3 travel NE  (Up Right)
+        // - tails in quadrant 4 travel SE  (Down Right)
         //   *or*
         // - tails to the left of the head move East
         // - tails to the right of the head move West
@@ -93,7 +93,7 @@ void Point::move(Point head) {
         // - tails below the head move north
         Direction move1, move2;
 
-        if (column < head.column) {
+        if (column > head.column) {
             move1 = Direction::Left;
         } else {
             move1 = Direction::Right;
@@ -199,12 +199,12 @@ int main() {
     }
 
     // larger
-    int width = maxRow - minRow + 1 + 3; // %-)
+    int width = maxRow - minRow + 1 + 1; // %-)
     int height = maxCol - minCol + 1 + 1;
 
     if (width > 10) {
-        width = max(width, 301);
-        height = max(width, 220); // hacks....
+        width += 50; // extra pad for paranoia
+        height += 50;
     }
 
     int startRow = abs(minRow) + 1;
@@ -236,11 +236,11 @@ int main() {
         int count = stoi(line.substr(2, line.size() - 2));
 
         cout << "--------------------" << endl;
+        cout << line << endl;
 
         for (int i = 0; i < count; i++) {
             cout << "    --------" << endl;
             moveCount--;
-//            if (moveCount == 0) break;
             head.move(direction);
             printHeadTail(head, tail);
             cout << " ==> " << endl;
