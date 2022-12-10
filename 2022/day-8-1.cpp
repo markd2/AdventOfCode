@@ -9,6 +9,13 @@
 
 using namespace std;
 
+enum class Direction {
+    FromTop,
+    FromLeft,
+    FromBottom,
+    FromRight
+};
+
 struct Tree {
     int height;
     bool visibleFromTop = false;
@@ -19,11 +26,14 @@ struct Tree {
     bool anyVisible();
 };
 
+const int kAlwaysVisible = -1;
+
 bool Tree::anyVisible() {
     return visibleFromTop || visibleFromBottom || visibleFromLeft || visibleFromRight;
 }
 
 std::vector<std::vector<Tree>> forest;
+
 
 
 void visibleMap() {
@@ -33,6 +43,20 @@ void visibleMap() {
         }
         cout << endl;
     }
+}
+
+int tallestFrom(int treeRow, int treeColumn, Direction direction) {
+    int tallest = -1;
+
+    if (direction == Direction::FromLeft) {
+        if (treeColumn == 0) return kAlwaysVisible;
+        for (int column = 0; column < treeColumn; column++) {
+            tallest = max(tallest, forest[treeRow][column].height);
+        }
+    }
+
+    cout << "(" << treeRow << ", " << treeColumn << ") " << tallest << endl;
+    return tallest;
 }
 
 int main() {
@@ -49,8 +73,23 @@ int main() {
         forest.push_back(stripe);
         cout << line << endl;
     }
+    
+    int width = forest[0].size();
+    int height = forest.size();
 
-    forest[1][2].visibleFromTop = true;
+    cout << "width " << width << " height " << height << endl;
+
+    for (int row = 0; row < height; row++) {
+        for (int column = 0; column < width; column++) {
+            auto tallestLeft = tallestFrom(row, column, Direction::FromLeft);
+            cout << "tallest is " << tallestLeft << " (" << row << ", " << column << ")" << endl;
+            if (tallestLeft < forest[row][column].height) {
+                forest[row][column].visibleFromLeft = true;                
+            }
+        }
+    }
+
+    // forest[1][2].visibleFromTop = true;
 
     visibleMap();
 }
