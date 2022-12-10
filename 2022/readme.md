@@ -4,6 +4,76 @@ This year using AoC to learn C++!  I am some kind of masochist!!11!
 
 Reindeer food!
 
+
+
+## Day X
+
+https://adventofcode.com/2022/day/9
+
+Rope Bridge
+
+### Part 1
+
+Rope has a head and tail (coordinate in a square grid), the head moves, and the
+tail gets pulled along.
+
+H and T must alwys be touching (overlapping or adjacent, including diagonals)
+
+If the head ends up two steps away (UDLR), the tail moves one step in that direction.
+(this is in the same row and columnnO
+
+If the head and tail aren't touching ,and aren't in the same row or column, the tail
+moves one step diagonally to keep up
+
+While simulating the rope, count all the positions the tail visited _at least_ once.
+
+count up those positions.
+
+Prod has 2000 moves.
+
+
+#### Approach
+
+lot of moving bits here.
+
+* matrix of "tail has visited" flags
+* point where H is
+* point where T is
+
+For each instruction
+  - for the number of moves in that direction
+    - move H according to instructions appropriate
+    - move T accordingly
+
+Things that'll be intersting
+* don't know how large the move matrix will be
+
+
+So, FIRST off, run through all instructions and get the min/max/width/height
+of the world, and use that for the starting point of H an T.
+
+The do the above work.
+
+#### Solution
+
+#### Twist Guess
+
+My brain hurts from reading the instructions for 8:1 normally, can't think of
+anything more elvis.
+
+#### Learnings
+
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Learnings
+
+
+--------------------------------------------------
 ## Day 8
 
 https://adventofcode.com/2022/day/8
