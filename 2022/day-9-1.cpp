@@ -23,7 +23,21 @@ struct Point {
 
     Point(int r, int c) : row(r), column(c) { }
     void move(Direction);
+    void move(Point); // move the tail
+    bool isTouching(Point); // 8 directions
+    bool isOrthogonallyAway(Point); // 4 directions
 };
+
+bool Point::isTouching(Point point) {
+    if (abs(point.row - row) >= 2) return false;
+    if (abs(point.column - column) >= 2) return false;
+    return true;
+}
+
+bool Point::isOrthogonallyAway(Point point) {
+    if (point.row == row || point.column == column) return true;
+    return false;
+}
 
 void Point::move(Direction direction) {
     switch (direction) {
@@ -39,6 +53,26 @@ void Point::move(Direction direction) {
     case Direction::Right:
         column++;
         break;
+    }
+}
+
+void Point::move(Point head) {
+    if (isTouching(head)) return;
+
+    if (isOrthogonallyAway(head)) {
+        if (head.row == row) { // same row
+            if (head.column - column > 0) { // to the right
+                column++;
+            } else {
+                column--; // to the left
+            }
+        } else { // same column
+            if (head.row - row > 0) { // below
+                row++;
+            } else {
+                row--;  // above
+            }
+        }
     }
 }
 
@@ -76,6 +110,28 @@ void printBoard() {
     }
 }
 
+void printHeadTail(Point head, Point tail) {
+    int width = board[0].size();
+    int height = board.size();
+
+    for (int row = 0; row < height; row++) {
+        for (int column = 0; column < width; column++) {
+            if (head.row == row && head.column == column) {
+                cout << "H";
+            } else if (tail.row == row && tail.column == column) {
+                if (tail.row == head.row && tail.column == head.column) {
+                    cout << "X";
+                } else {
+                    cout << "T";
+                }
+            } else {
+                cout << ".";
+            }
+        }
+        cout << endl;
+    }
+}
+
 int main() {
     string line;
 
@@ -102,8 +158,8 @@ int main() {
     }
 
     // larger
-    int width = maxRow - minRow + 1 + 3 + 20; // %-)
-    int height = maxCol - minCol + 1 + 1 + 20;
+    int width = maxRow - minRow + 1 + 3; // %-)
+    int height = maxCol - minCol + 1 + 1;
 
     if (width > 10) {
         width = max(width, 301);
@@ -128,17 +184,31 @@ int main() {
     }
 
     // move the head around
+    int moveCount = 3;
+
+    printHeadTail(head, tail);
 
     for (auto line: instructions) {
         auto direction = directionFor(line);
         int count = stoi(line.substr(2, line.size() - 2));
 
+        cout << "--------------------" << endl;
+
         for (int i = 0; i < count; i++) {
+            cout << "    ----" << endl;
+            moveCount--;
+            if (moveCount == 0) break;
             head.move(direction);
+            printHeadTail(head, tail);
             board[head.row][head.column] = true;
+            cout << " == " << endl;
+            tail.move(head);
+            printHeadTail(head, tail);
+            cout << "    ----" << endl;
         }
+        if (moveCount == 0) break;
     }
 
     // print out the track
-    printBoard();
+    // printBoard();
 }
