@@ -4,9 +4,41 @@ This year using AoC to learn C++!  I am some kind of masochist!!11!
 
 Reindeer food!
 
+## Day 10
 
+https://adventofcode.com/2022/day/10
 
-## Day X
+Cathode-Ray tube
+
+### Part 1
+
+Emulate a little computer
+
+#### Approach
+
+Run through the instructions, emit an extra `noop` instruction before
+the addx, that way everything is one cycle (yay RISC), and then process
+that looking for the nth cycle
+
+#### Solution
+
+#### Twist Guess
+
+Branch instructions
+
+#### Learnings
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Learnings
+
+--------------------------------------------------
+
+## Day 9
 
 https://adventofcode.com/2022/day/9
 
