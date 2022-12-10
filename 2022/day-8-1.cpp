@@ -122,7 +122,15 @@ int main() {
         }
     }
 
-    // forest[1][2].visibleFromTop = true;
+    // now count up visible trees
+    int visible = 0;
+    for (int row = 0; row < height; row++) {
+        for (int column = 0; column < width; column++) {
+            visible += forest[row][column].anyVisible() ? 1 : 0;
+        }
+    }
 
     visibleMap();
+
+    cout << visible << endl;
 }

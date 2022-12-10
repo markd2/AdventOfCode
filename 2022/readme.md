@@ -39,6 +39,8 @@ Prod data is 99x99
 
 #### Solution
 
+1690 (first try!)
+
 #### Twist Guess
 
 diagonals
