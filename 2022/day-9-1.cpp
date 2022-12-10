@@ -57,7 +57,9 @@ void Point::move(Direction direction) {
 }
 
 void Point::move(Point head) {
-    if (isTouching(head)) return;
+    if (isTouching(head)) {
+        return;
+    }
 
     if (isOrthogonallyAway(head)) {
         if (head.row == row) { // same row
@@ -73,6 +75,38 @@ void Point::move(Point head) {
                 row--;  // above
             }
         }
+        return;
+    }
+
+    // otherwise move diagonally
+    {
+        // via a diagram (hi Via!), if the Head is in the middle at the origin,
+        // - tails in quadrant 1 travel SW
+        // - tails in quadrant 2 travel NW
+        // - tails in quadrant 3 travel NE
+        // - tails in quadrant 4 travel SE
+        //   *or*
+        // - tails to the left of the head move East
+        // - tails to the right of the head move West
+        //
+        // - tails above the head move south
+        // - tails below the head move north
+        Direction move1, move2;
+
+        if (column < head.column) {
+            move1 = Direction::Left;
+        } else {
+            move1 = Direction::Right;
+        }
+
+        if (row < head.row) {
+            move2 = Direction::Down;
+        } else {
+            move2 = Direction::Up;
+        }
+        move(move1);
+        move(move2);
+        return;
     }
 }
 
@@ -98,16 +132,19 @@ Direction directionFor(const string &instruction) {
 vector<string> instructions;
 vector<vector<bool>> board;
 
-void printBoard() {
+int printBoardAndCountTailCells() {
+    int sum = 0;
     int width = board[0].size();
     int height = board.size();
 
     for (int row = 0; row < height; row++) {
         for (int column = 0; column < width; column++) {
             cout << (board[row][column] ? "#" : ".");
+            if (board[row][column]) sum++;
         }
         cout << endl;
     }
+    return sum;
 }
 
 void printHeadTail(Point head, Point tail) {
@@ -117,9 +154,13 @@ void printHeadTail(Point head, Point tail) {
     for (int row = 0; row < height; row++) {
         for (int column = 0; column < width; column++) {
             if (head.row == row && head.column == column) {
-                cout << "H";
+                if (tail.row == row && tail.column == column) {
+                    cout << "X";
+                } else {
+                    cout << "H";
+                }
             } else if (tail.row == row && tail.column == column) {
-                if (tail.row == head.row && tail.column == head.column) {
+                if (head.row == row && head.column == column) {
                     cout << "X";
                 } else {
                     cout << "T";
@@ -182,11 +223,13 @@ int main() {
         }
         board.push_back(stripe);
     }
+    board[tail.row][tail.column] = true;
 
     // move the head around
-    int moveCount = 3;
+    int moveCount = 6;
 
     printHeadTail(head, tail);
+    cout << endl;
 
     for (auto line: instructions) {
         auto direction = directionFor(line);
@@ -195,20 +238,21 @@ int main() {
         cout << "--------------------" << endl;
 
         for (int i = 0; i < count; i++) {
-            cout << "    ----" << endl;
+            cout << "    --------" << endl;
             moveCount--;
-            if (moveCount == 0) break;
+//            if (moveCount == 0) break;
             head.move(direction);
             printHeadTail(head, tail);
-            board[head.row][head.column] = true;
-            cout << " == " << endl;
+            cout << " ==> " << endl;
             tail.move(head);
+            board[tail.row][tail.column] = true;
             printHeadTail(head, tail);
-            cout << "    ----" << endl;
+            cout << "    --------" << endl << endl;
         }
         if (moveCount == 0) break;
     }
 
     // print out the track
-    // printBoard();
+    int sum = printBoardAndCountTailCells();
+    cout << sum << endl;
 }
