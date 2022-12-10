@@ -46,6 +46,7 @@ For each instruction
     - move T accordingly
 
 Things that'll be intersting
+
 * don't know how large the move matrix will be
 
 
@@ -56,6 +57,9 @@ The do the above work.
 
 #### Solution
 
+6018 (second try!  first time had a logic erro in vertical coordinate handling because
+of a top-left origin)
+
 #### Twist Guess
 
 My brain hurts from reading the instructions for 8:1 normally, can't think of
@@ -63,6 +67,9 @@ anything more elvis.
 
 #### Learnings
 
+Sketch out 2-D geometry.  The diagonal checking logic became very straightforward.
+
+![](heads-or-tails.jpg)
 
 ### Part 2
 

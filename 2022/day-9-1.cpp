@@ -203,8 +203,8 @@ int main() {
     int height = maxCol - minCol + 1 + 1;
 
     if (width > 10) {
-        width += 50; // extra pad for paranoia
-        height += 50;
+        width += 250; // extra pad for paranoia
+        height += 250;
     }
 
     int startRow = abs(minRow) + 1;
@@ -229,25 +229,25 @@ int main() {
     int moveCount = 6;
 
     printHeadTail(head, tail);
-    cout << endl;
+//    cout << endl;
 
     for (auto line: instructions) {
         auto direction = directionFor(line);
         int count = stoi(line.substr(2, line.size() - 2));
 
-        cout << "--------------------" << endl;
-        cout << line << endl;
+//        cout << "--------------------" << endl;
+//        cout << line << endl;
 
         for (int i = 0; i < count; i++) {
-            cout << "    --------" << endl;
+//            cout << "    --------" << endl;
             moveCount--;
             head.move(direction);
-            printHeadTail(head, tail);
-            cout << " ==> " << endl;
+//            printHeadTail(head, tail);
+//            cout << " ==> " << endl;
             tail.move(head);
             board[tail.row][tail.column] = true;
-            printHeadTail(head, tail);
-            cout << "    --------" << endl << endl;
+//            printHeadTail(head, tail);
+//            cout << "    --------" << endl << endl;
         }
         if (moveCount == 0) break;
     }
