@@ -68,8 +68,16 @@ int main() {
             sprite.moveTo(X);
         }
 
+        int row = (cycle - 1) / 40;
+        int column = (cycle -1) % 40;
+        cout << row << " : " << column << endl;
+
+        if ((row + column) % 3 == 0) {
+            framebuffer[row][column] = "#";
+        }
 
         cycle++;
+        if (cycle >= 240) break;
 /*
         if (cycle == 20 || ((cycle - 20) % 40 == 0) ) {
             cout << "cycle " << cycle << " X " << X << " strength " << X * cycle << endl;
