@@ -39,7 +39,7 @@ int main() {
     for (int i = 0; i < height; i++) {
         vector<string> stripe;
         for (int j = 0; j < width; j++) {
-            stripe.push_back(".");
+            stripe.push_back(" ");
         }
         framebuffer.push_back(stripe);
     }
