@@ -22,15 +22,34 @@ that looking for the nth cycle
 
 #### Solution
 
+14820 (first try)
+
 #### Twist Guess
 
 Branch instructions
 
-#### Learnings
 
 ### Part 2
 
+ooh, get to render an image!  Was wondering what the CRT tie-in is.  Getting
+Atari 2600 vibes...
+
+* X register controls the horizontal position of a 3-pixel wide sprite
+    - the middle of said 3-pixel wide sprite
+* We're riding the beam.  Where we draw as the beam goes down the screen controls
+  where the pixels go
+* 40 x 6 frame buffer, 0...39 indexes, 1...40 for the cycle (cycle one is top, left,
+  cycle two is the one after that.
+* Left to right starting from the top, then the row below that
+* CRT draws a single pixel during each cycle
+
+Should be able to determine is the sprite is visible when a pixel is drawn.
+* # is lit, . is dark
+
 #### Approach
+
+Gonna be off by ones, with the 0-index pixel and the 1-index cycle
+
 
 #### Solution
 
