@@ -48,7 +48,18 @@ Should be able to determine is the sprite is visible when a pixel is drawn.
 
 #### Approach
 
-Gonna be off by ones, with the 0-index pixel and the 1-index cycle
+Gonna be off by ones, with the 0-index pixel and the 1-index cycle.
+
+woo, got a test pattern working!
+
+```
+#..#..#..#..#..#..#..#..#..#..#..#..#..#
+..#..#..#..#..#..#..#..#..#..#..#..#..#.
+.#..#..#..#..#..#..#..#..#..#..#..#..#..
+#..#..#..#..#..#..#..#..#..#..#..#..#..#
+..#..#..#..#..#..#..#..#..#..#..#..#..#.
+.#..#..#..#..#..#..#..#..#..#..#..#..#..
+```
 
 
 #### Solution

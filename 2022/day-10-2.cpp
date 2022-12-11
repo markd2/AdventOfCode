@@ -58,22 +58,22 @@ int main() {
     // start executing
     int cycle = 1;
     int X = 1;
-    sprite.moveTo(X);
+    sprite.moveTo(X-1);
     int strengthSum = 0;
     for (auto instruction: instructions) {
-        if (instruction[0] == 'a') {
-            auto numberString = instruction.substr(5, instruction.size() - 5);
-            auto number = stoi(numberString);
-            X += number;
-            sprite.moveTo(X);
-        }
-
         int row = (cycle - 1) / 40;
         int column = (cycle -1) % 40;
         cout << row << " : " << column << endl;
 
-        if ((row + column) % 3 == 0) {
+        if (sprite.pixelState(column - 1)) {
             framebuffer[row][column] = "#";
+        }
+
+        if (instruction[0] == 'a') {
+            auto numberString = instruction.substr(5, instruction.size() - 5);
+            auto number = stoi(numberString);
+            X += number;
+            sprite.moveTo(X-1);
         }
 
         cycle++;
