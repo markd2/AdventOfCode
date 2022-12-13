@@ -1,6 +1,7 @@
+#import <deque>
 #import <iostream>
-#import <vector>
 #import <sstream>
+#import <vector>
 
 // https://adventofcode.com/2022/day/11
 // Shiny Monkey Dog In The Middle
@@ -13,14 +14,39 @@ using namespace std;
 
 
 struct Monkey {
-    vector<int> items;
+    deque<int> items;
     string op; // + * - /
     string rhs;  // right hand side.  e.g. "3" or "old"
     int divisibility;
     int throwTrue;
     int throwFalse;
     
+    int computedWorry(int startingWorryLevel);
 };
+
+
+int Monkey::computedWorry(int startingWorryLevel) {
+    int rvalue = (rhs == "old") ? startingWorryLevel : stoi(rhs);
+    int lvalue = -1;
+    switch (op[0]) {
+    case '+':
+        lvalue = startingWorryLevel + rvalue;
+        break;
+    case '-':
+        lvalue = startingWorryLevel - rvalue;
+        break;
+    case '*':
+        lvalue = startingWorryLevel * rvalue;
+        break;
+    case '/':
+        lvalue = startingWorryLevel / rvalue;
+        break;
+    default:
+        cout << "OH NOES " << op << endl;
+    }
+    return lvalue;
+}
+
 
 vector<Monkey> monkies;
 
@@ -28,7 +54,6 @@ int main() {
     string line;
 
     Monkey monkey;
-    monkies.push_back(monkey);
 
     while(getline(cin, line)) {
         // Monkey 0:
@@ -39,7 +64,7 @@ int main() {
             auto items = line.substr(18, line.size() - 18);
 
             stringstream ss(items);
-            vector<int> splunge;
+            deque<int> splunge;
             string token;
             while (getline(ss, token, ',')) {
                 ss.ignore();
@@ -83,6 +108,29 @@ int main() {
         if (line.size() == 0) {
             monkey = Monkey();
             monkies.push_back(monkey);
+        }
+    }
+    monkies.push_back(monkey);
+
+    while (true) {
+        for (auto monkey: monkies) {
+            if (monkey.items.size() == 0) {
+                cout << "empty monkey" << endl;
+                continue; // ???
+            }
+            int worryLevel = monkey.items[0];
+            worryLevel = monkey.computedWorry(worryLevel);
+            worryLevel /= 3;
+
+            int throwIndex = -1;
+            if (worryLevel % monkey.divisibility == 0) {
+                throwIndex = monkey.throwTrue;
+            } else {
+                throwIndex = monkey.throwFalse;
+            }
+            int item = monkey.items[0];
+            monkey.items.pop_front();
+            monkies[throwIndex].items.push_back(item);
         }
     }
 
