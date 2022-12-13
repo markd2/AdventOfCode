@@ -14,8 +14,8 @@ using namespace std;
 
 struct Monkey {
     vector<int> items;
-    char op; // + * - /
-    char rhs;  // right hand side.  e.g. "3" or "old"
+    string op; // + * - /
+    string rhs;  // right hand side.  e.g. "3" or "old"
     int divisibility;
     int throwTrue;
     int throwFalse;
@@ -46,6 +46,19 @@ int main() {
                 splunge.push_back(stoi(token));
             }
             monkey.items = splunge;
+            continue;
+        }
+
+        //   Operation: new = old + 3
+        string opMatch = "  Operation: new = old ";
+        if (int index = line.rfind(opMatch) == 0) {
+            auto opration = line.substr(opMatch.size(), line.size() - opMatch.size());
+            std::stringstream ss(opration);
+            string op, rhs;
+            ss >> op;
+            ss >> rhs;
+            monkey.op = op;
+            monkey.rhs = rhs;
             continue;
         }
 
