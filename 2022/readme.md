@@ -4,6 +4,46 @@ This year using AoC to learn C++!  I am some kind of masochist!!11!
 
 Reindeer food!
 
+--------------------------------------------------
+
+## Day 11
+
+https://adventofcode.com/2022/day/11
+
+Shiny Monkey Dog in the Middle
+
+### Part 1
+
+figure once get the parsing done into monkey objects, should be a pretty straightforward
+plug and chug with the round-by-round specifics.  (though there's few enough could
+manually extract them)
+
+#### Approach
+
+Simple string stuff (substr, a homegrown split) to get each monkey into a struct
+that has the various instructions and formulas
+
+#### Solution
+
+#### Twist Guess
+
+MOAR MONKEYS.  Or maybe more complex equations.
+
+
+#### Learnings
+
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Learnings
+
+
+--------------------------------------------------
+
 ## Day 10
 
 https://adventofcode.com/2022/day/10
@@ -63,6 +103,15 @@ woo, got a test pattern working!
 
 
 #### Solution
+
+```
+###  #### #### #  # #### #### #  #  ##  
+#  #    # #    # #  #    #    #  # #  # 
+#  #   #  ###  ##   ###  ###  #### #  # 
+###   #   #    # #  #    #    #  # #### 
+# #  #    #    # #  #    #    #  # #  # 
+#  # #### #### #  # #### #    #  # #  # 
+
 
 #### Learnings
 
