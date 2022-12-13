@@ -62,6 +62,24 @@ int main() {
             continue;
         }
 
+        string divMatch = "  Test: divisible by ";
+        if (int index = line.rfind(divMatch) == 0) {
+            auto divvy = line.substr(divMatch.size(), line.size() - divMatch.size());
+            monkey.divisibility = stoi(divvy);
+        }
+        
+        string trueMatch = "    If true: throw to monkey";
+        if (int index = line.rfind(trueMatch) == 0) {
+            auto rest = line.substr(trueMatch.size(), line.size() - trueMatch.size());
+            monkey.throwTrue = stoi(rest);
+        }
+
+        string falseMatch = "    If false: throw to monkey";
+        if (int index = line.rfind(falseMatch) == 0) {
+            auto rest = line.substr(falseMatch.size(), line.size() - falseMatch.size());
+            monkey.throwFalse = stoi(rest);
+        }
+
         if (line.size() == 0) {
             monkey = Monkey();
             monkies.push_back(monkey);
