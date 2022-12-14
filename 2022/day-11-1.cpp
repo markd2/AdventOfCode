@@ -20,6 +20,9 @@ struct Monkey {
     int divisibility;
     int throwTrue;
     int throwFalse;
+    int monkeyNumber = 0;
+
+    int inspectedCount = 0;
     
     int computedWorry(int startingWorryLevel);
 };
@@ -106,33 +109,48 @@ int main() {
         }
 
         if (line.size() == 0) {
-            monkey = Monkey();
             monkies.push_back(monkey);
+            monkey = Monkey();
         }
     }
+    
+    for (int i = 0; i < monkies.size(); i++) {
+        monkies[i].monkeyNumber = i;
+    }
+
     monkies.push_back(monkey);
 
+    int turn = 0;
+    const int maxTurn = 20;
     while (true) {
-        for (auto monkey: monkies) {
-            if (monkey.items.size() == 0) {
-                cout << "empty monkey" << endl;
-                continue; // ???
-            }
-            int worryLevel = monkey.items[0];
-            worryLevel = monkey.computedWorry(worryLevel);
-            worryLevel /= 3;
-
-            int throwIndex = -1;
-            if (worryLevel % monkey.divisibility == 0) {
-                throwIndex = monkey.throwTrue;
-            } else {
-                throwIndex = monkey.throwFalse;
-            }
-            int item = monkey.items[0];
-            monkey.items.pop_front();
-            monkies[throwIndex].items.push_back(item);
+        if (turn >= maxTurn) {
+            break;
         }
-    }
+        cout << "turn " << turn << endl;
+        for (auto &monkey: monkies) {
+            cout << "  monkey: " << monkey.monkeyNumber << endl;
+            for (auto item: monkey.items) {
+                monkey.inspectedCount++;
+                int worryLevel = item;
+                worryLevel = monkey.computedWorry(worryLevel);
+                worryLevel /= 3;
+                
+                int throwIndex = -1;
+                if (worryLevel % monkey.divisibility == 0) {
+                    throwIndex = monkey.throwTrue;
+                } else {
+                    throwIndex = monkey.throwFalse;
+                }
+                cout << "    tossing " << item << "  to " << throwIndex << " worry " << worryLevel << endl;
 
-    cout << monkies.size() << endl;
+                // throw to another monkey
+                monkey.items.pop_front();
+                monkies[throwIndex].items.push_back(worryLevel);
+            }
+        }
+        turn++;
+    }
+    for (auto monkey: monkies) {
+        cout << "look at " << monkey.inspectedCount << endl;
+    }
 }
