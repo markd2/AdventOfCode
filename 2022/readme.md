@@ -32,12 +32,16 @@ Find the path with the fewest steps
 
 (prod is 167 x 45)
 
-
 #### Approach
+
+recursion.  Keep track of the direction (try N E S W in that order) for when
+backtracking.  Keep track of number of steps
 
 #### Solution
 
 #### Twist Guess
+
+Change in scoring
 
 #### Learnings
 
