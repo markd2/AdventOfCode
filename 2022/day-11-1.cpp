@@ -150,7 +150,14 @@ int main() {
         }
         turn++;
     }
+
+    sort(monkies.begin(), monkies.end(),
+         [](const Monkey &thing1, const Monkey &thing2) -> bool {
+             return thing1.inspectedCount > thing2.inspectedCount;
+         });
     for (auto monkey: monkies) {
         cout << "look at " << monkey.inspectedCount << endl;
     }
+    int solution = monkies[0].inspectedCount * monkies[1].inspectedCount;
+    cout << solution << endl;
 }
