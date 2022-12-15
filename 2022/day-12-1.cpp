@@ -113,14 +113,14 @@ int walk(Point point, int count) {
     // try walking east
     Point east = point.movedBy(East);
     neighbor = cellAtPoint(east);
-    if (neighbor != nullptr && !(neighbor->directionsSeen & East)) {
+    if (neighbor != nullptr && !neighbor->directionsSeen) {
         cell->directionsSeen |= East;
         return walk(east, count + 1);
     }
     // try south
     Point south = point.movedBy(South);
     neighbor = cellAtPoint(south);
-    if (neighbor != nullptr && !(neighbor->directionsSeen & South)) {
+    if (neighbor != nullptr && !neighbor->directionsSeen) {
         cell->directionsSeen |= South;
         return walk(south, count + 1);
     }
@@ -128,10 +128,19 @@ int walk(Point point, int count) {
     // try west
     Point west = point.movedBy(West);
     neighbor = cellAtPoint(west);
-    if (neighbor != nullptr && !(neighbor->directionsSeen & West)) {
+    if (neighbor != nullptr && !neighbor->directionsSeen) {
         cell->directionsSeen |= West;
         return walk(west, count + 1);
     }
+
+    // try north
+    Point north = point.movedBy(North);
+    neighbor = cellAtPoint(north);
+    if (neighbor != nullptr && !neighbor->directionsSeen) {
+        cell->directionsSeen |= North;
+        return walk(north, count + 1);
+    }
+
 
     // zigzak until we find it.
     
