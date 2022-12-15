@@ -94,6 +94,14 @@ void printBoard() {
     cout << "-------------------------" << endl;
 }
 
+bool validMove(Cell &from, Cell &to) {
+    cout << from.altitude << " to " << to.altitude << endl;
+    if (to.altitude <= from.altitude + 1) {
+        return true;
+    }
+    return false;
+}
+
 Cell *cellAtPoint(Point point) {
     if (point.row < 0 || point.column < 0) return nullptr;
     if (point.row >= terrain.size() || point.column >= terrain[0].size()) return nullptr;
@@ -113,14 +121,18 @@ int walk(Point point, int count) {
     // try walking east
     Point east = point.movedBy(East);
     neighbor = cellAtPoint(east);
-    if (neighbor != nullptr && !neighbor->directionsSeen) {
+    if (neighbor != nullptr 
+        && validMove(*cell, *neighbor)
+        && !neighbor->directionsSeen) {
         cell->directionsSeen |= East;
         return walk(east, count + 1);
     }
     // try south
     Point south = point.movedBy(South);
     neighbor = cellAtPoint(south);
-    if (neighbor != nullptr && !neighbor->directionsSeen) {
+    if (neighbor != nullptr 
+        && validMove(*cell, *neighbor)
+        && !neighbor->directionsSeen) {
         cell->directionsSeen |= South;
         return walk(south, count + 1);
     }
@@ -128,7 +140,9 @@ int walk(Point point, int count) {
     // try west
     Point west = point.movedBy(West);
     neighbor = cellAtPoint(west);
-    if (neighbor != nullptr && !neighbor->directionsSeen) {
+    if (neighbor != nullptr 
+        && validMove(*cell, *neighbor)
+        && !neighbor->directionsSeen) {
         cell->directionsSeen |= West;
         return walk(west, count + 1);
     }
@@ -136,7 +150,9 @@ int walk(Point point, int count) {
     // try north
     Point north = point.movedBy(North);
     neighbor = cellAtPoint(north);
-    if (neighbor != nullptr && !neighbor->directionsSeen) {
+    if (neighbor != nullptr
+        && validMove(*cell, *neighbor)
+        && !neighbor->directionsSeen) {
         cell->directionsSeen |= North;
         return walk(north, count + 1);
     }
@@ -155,7 +171,12 @@ int main() {
         column = 0;
         vector<Cell> stripe;
         for (char alt: line) {
-            Cell cell(alt - 'a', alt == 'S', alt == 'E');
+            int altitude = alt - 'a';
+
+            if (alt == 'S') altitude = 'a' - 'a';
+            if (alt == 'E') altitude = 'z' - 'a';
+            
+            Cell cell(altitude, alt == 'S', alt == 'E');
             stripe.push_back(cell);
 
             if (alt == 'S') {
