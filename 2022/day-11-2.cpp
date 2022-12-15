@@ -156,7 +156,7 @@ int main() {
         }
 
         turn++;
-        if (turn == 1 || turn == 20 || turn == 1000) {
+        if (turn == 1 || turn == 20 || turn == 1000 || turn == 2000 || turn == 3000 || turn == 4000 || turn == 5000 || turn == 6000 || turn == 7000 || turn == 8000 || turn == 9000 || turn == 10000) {
             cout << "turn " << turn << endl;
             for (auto monkey: monkies) {
                 cout << "  monkey " << monkey.monkeyNumber << " inspected " << monkey.inspectedCount << endl;
