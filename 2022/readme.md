@@ -25,6 +25,8 @@ that has the various instructions and formulas
 
 #### Solution
 
+98280 (first try!)
+
 #### Twist Guess
 
 MOAR MONKEYS.  Or maybe more complex equations.
@@ -32,14 +34,93 @@ MOAR MONKEYS.  Or maybe more complex equations.
 
 #### Learnings
 
+Got to do a sort with a lambda!
+
+```
+    sort(monkies.begin(), monkies.end(),
+         [](const Monkey &thing1, const Monkey &thing2) -> bool {
+             return thing1.inspectedCount > thing2.inspectedCount;
+         });
+```
+
 
 ### Part 2
 
+No dividing by 3, so numbers gonna keep going up and up.  I can't really figure out the
+hint a couple of times.
+
+"find another way to keep your worry levels manageable."
+
+Like another divisor?  Another monkey to monkey algorithm?  Using floats doesn't
+seem like it will work with the roundoff and modding it.
+
 #### Approach
+
+Going to try bignums.  Found a header-only one at git@github.com:983/Num.git .
+
+I got round 20 correct with bignums, but things REALLY slow down.  Even with -O3
+things grind down around 400, with 12000 digit numbers. So definitely will not
+scale to 10,000 rounds.
+
+In case it's the lib, try git@github.com:WindowsNT/N.git.  (gave up on that, between
+a syntax error, and difficulties getting things like vector<N<>> working.
+
+just curious, stoachstic debug with the first bignum and see if
+there's something unexpected.
+
+not surprisingly, it's in the div_mod
+
+Can we suss out anything with the expected number of iterations?
+
+```
+== After round 1000 ==
+Monkey 0 inspected items 5204 times.
+Monkey 1 inspected items 4792 times.
+Monkey 2 inspected items 199 times.
+Monkey 3 inspected items 5192 times.
+
+== After round 2000 ==
+Monkey 0 inspected items 10419 times.
+Monkey 1 inspected items 9577 times.
+Monkey 2 inspected items 392 times.
+Monkey 3 inspected items 10391 times.
+```
+
+over the course of 1000 iterations, 
+
+- Monkey 0 diff 5,215  ratio 2.0021137586
+- Monkey 1 diff 4,785  ratio 1.9985392321
+- Monkey 2 diff 193    ratio 1.9698492462
+- Monkey 3 diff 5,199  ratio 2.001348228
+
+
+```
+== After round 2000 ==
+Monkey 0 inspected items 10419 times.
+Monkey 1 inspected items 9577 times.
+Monkey 2 inspected items 392 times.
+Monkey 3 inspected items 10391 times.
+
+== After round 3000 ==
+Monkey 0 inspected items 15638 times.
+Monkey 1 inspected items 14358 times.
+Monkey 2 inspected items 587 times.
+Monkey 3 inspected items 15593 times.
+```
+
+- Monkey 0 diff 5,219  ratio 1.4965927632
+- Monkey 1 diff 4,781  ratio 1.4992168738
+- Monkey 2 diff 195    ratio 1.4974489796
+- Monkey 3 diff 5,202  ratio 1.5006255413
+
+hrm.  _you'll need to find another way to keep your worry levels manageable_
+
 
 #### Solution
 
 #### Learnings
+
+
 
 
 --------------------------------------------------
