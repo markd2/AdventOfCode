@@ -56,6 +56,18 @@ void printBoard() {
     }
 }
 
+Cell &cellAtPoint(Point point) {
+    return terrain[point.row][point.column];
+}
+
+int walk(Point point, int count) {
+    Cell &cell = cellAtPoint(point);
+    if (cell.isTarget) {
+        return count;
+    }
+    return 12;
+}
+
 int main() {
     string line;
 
@@ -75,6 +87,9 @@ int main() {
         terrain.push_back(stripe);
         row++;
     }
+    
+    int distance = walk(start, 0);
 
     printBoard();
+    cout << distance << endl;
 }
