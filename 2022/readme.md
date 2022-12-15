@@ -6,6 +6,52 @@ Reindeer food!
 
 --------------------------------------------------
 
+## Day 12
+
+https://adventofcode.com/2022/day/12
+
+Hill Climbing Algorithm
+
+### Part 1
+
+```
+Sabqponm
+abcryxxl
+accszExk
+acctuvwj
+abdefghi
+```
+* These are altitudes.
+* S the start at altitude a
+* E is the destination at altitude z
+
+* Can move orthogonally one square
+* to move, the destination can be at most one higher (value - 'a', ASCII FTW)
+
+Find the path with the fewest steps
+
+(prod is 167 x 45)
+
+
+#### Approach
+
+#### Solution
+
+#### Twist Guess
+
+#### Learnings
+
+### Part 2
+
+#### Approach
+
+#### Solution
+
+#### Learnings
+
+
+--------------------------------------------------
+
 ## Day 11
 
 https://adventofcode.com/2022/day/11
