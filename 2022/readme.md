@@ -115,11 +115,74 @@ Monkey 3 inspected items 15593 times.
 
 hrm.  _you'll need to find another way to keep your worry levels manageable_
 
+The problem is that the worry numbers explode. We don't care about what
+the values actually are, just checking the divisibility. Wonder if we
+can GCD between the four of them, and then scale things back. (of course, if
+we stumble in to prime territory...)
+
+alas, we get stuff like
+```
+  [0] = 1586
+  [1] = 28699
+  [2] = 35558
+  [3] = 118759
+  [4] = 68580
+  [5] = 178951
+  [6] = 21834
+  [7] = 25805
+  [8] = 29415
+  [9] = 29054
+```
+
+so no common denomZ.  
+
+All the tests are divisible by primes, if that helps.  All the operators are *, +, or square.
+
+What if we mod the worry level by the divisibility?  Tried that when pushing the item
+using both the incoming monkey's divisbility, and the outgoing's.  As usual got numbers
+kind of near the ballpark, but not correct.
+
+But basically
+* if item-old-worry-level processed by the operation mod the div is 0, then true
+so would want
+* if (changed item old worry level) processed by the operation mod the div is 0 then true
+
+So that means that the remainder is the same.
+
+operation(iowl) % div = 0
+operation(owl) % div = 0
+
+also trying with and without
+```
+                auto remainder = monkey.items[i] % monkey.divisibility;
+                monkey.items[i] /= monkey.divisibility;
+//                monkey.items[i] += remainder;
+```
 
 #### Solution
 
+
 #### Learnings
 
+multi GCD
+
+
+```
+int gcd(int a, int b) {
+    if (a == 0) return b;
+    return gcd(b % a, a);
+}
+
+const int multiGCD(const vector<int> &list) {
+    int result = list[0];
+    for (int i = 0; i < list.size(); i++) {
+        result = gcd(list[i], result);
+        // all relatively prime, so we're done.
+        if (result == 1) return 1;
+    }
+    return result;
+}
+```
 
 
 

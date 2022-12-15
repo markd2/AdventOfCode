@@ -16,7 +16,7 @@ using namespace std;
 
 
 struct Monkey {
-    deque<Num> items;
+    deque<int> items;
     string op; // + * - /
     string rhs;  // right hand side.  e.g. "3" or "old"
     int divisibility;
@@ -26,13 +26,13 @@ struct Monkey {
 
     int inspectedCount = 0;
     
-    Num computedWorry(Num startingWorryLevel);
+    int computedWorry(int startingWorryLevel);
 };
 
 
-Num Monkey::computedWorry(Num startingWorryLevel) {
-    Num rvalue = (rhs == "old") ? startingWorryLevel : stoi(rhs);
-    Num lvalue = -1;
+int Monkey::computedWorry(int startingWorryLevel) {
+    int rvalue = (rhs == "old") ? startingWorryLevel : stoi(rhs);
+    int lvalue = -1;
     switch (op[0]) {
     case '+':
         lvalue = startingWorryLevel + rvalue;
@@ -69,7 +69,7 @@ int main() {
             auto items = line.substr(18, line.size() - 18);
 
             stringstream ss(items);
-            deque<Num> splunge;
+            deque<int> splunge;
             string token;
             while (getline(ss, token, ',')) {
                 ss.ignore();
@@ -133,9 +133,10 @@ int main() {
 //            cout << "  monkey: " << monkey.monkeyNumber << endl;
             for (auto item: monkey.items) {
                 monkey.inspectedCount++;
-                Num worryLevel = item;
+                int worryLevel = item;
                 worryLevel = monkey.computedWorry(worryLevel);
 //                worryLevel /= 3;
+//                worryLevel /= (monkey.monkeyNumber + 1);
                 
                 int throwIndex = -1;
                 if (worryLevel % monkey.divisibility == 0) {
@@ -150,9 +151,18 @@ int main() {
                 monkies[throwIndex].items.push_back(worryLevel);
             }
         }
+
+        for (auto &monkey: monkies) {
+            for (int i = 0; i < monkey.items.size(); i++) {
+                auto remainder = monkey.items[i] % monkey.divisibility;
+                monkey.items[i] /= monkey.divisibility;
+                monkey.items[i] %= remainder;
+            }
+        }
+
         if (turn % 10 == 0) {
-            cout << "turn " << turn << endl;
-            cout << monkies[0].items[0];
+            // cout << "turn " << turn << endl;
+            // cout << monkies[0].items[0];
         }
 
         turn++;
