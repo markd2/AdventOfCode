@@ -7,7 +7,7 @@
 
 using namespace std;
 
-enum Directions {
+enum Direction {
     North = 1 << 0,
     East = 1 << 1,
     South = 1 << 2,
@@ -29,7 +29,30 @@ struct Point {
 
     Point() : row(0), column(0) { }
     Point(int row, int column) : row(row), column(column) { }
+
+    const Point movedBy(Direction direction);
 };
+
+const Point Point::movedBy(Direction direction) {
+    Point newPoint = *this;
+
+    switch (direction) {
+    case North:
+        newPoint.row--;
+        break;
+    case East:
+        newPoint.column++;
+        break;
+    case South:
+        newPoint.row++;
+        break;
+    case West:
+        newPoint.column--;
+        break;
+    }
+
+    return newPoint;
+}
 
 vector<vector<Cell>> terrain;
 Point start;
@@ -49,22 +72,69 @@ void printBoard() {
             if (cell.isStart) cout << "S";
             else if (cell.isTarget) cout << "E";
             else {
-                cout << ".";
+                char output;
+
+                if (cell.directionsSeen & North) {
+                    output = '^';
+                } else if (cell.directionsSeen & East) {
+                    output = '>';
+                } else if (cell.directionsSeen & South) {
+                    output = 'v';
+                } else if (cell.directionsSeen &West) {
+                    output = '<';
+                } else {
+                    output = '.';
+                }  
+                cout << output;
             }
         }
         cout << endl;
     }
+
+    cout << "-------------------------" << endl;
 }
 
-Cell &cellAtPoint(Point point) {
-    return terrain[point.row][point.column];
+Cell *cellAtPoint(Point point) {
+    if (point.row < 0 || point.column < 0) return nullptr;
+    if (point.row >= terrain.size() || point.column >= terrain[0].size()) return nullptr;
+
+    return &terrain[point.row][point.column];
 }
 
 int walk(Point point, int count) {
-    Cell &cell = cellAtPoint(point);
-    if (cell.isTarget) {
+    printBoard();
+    Cell *cell = cellAtPoint(point);
+    if (cell->isTarget) {
         return count;
     }
+
+    Cell *neighbor;
+
+    // try walking east
+    Point east = point.movedBy(East);
+    neighbor = cellAtPoint(east);
+    if (neighbor != nullptr && !(neighbor->directionsSeen & East)) {
+        cell->directionsSeen |= East;
+        return walk(east, count + 1);
+    }
+    // try south
+    Point south = point.movedBy(South);
+    neighbor = cellAtPoint(south);
+    if (neighbor != nullptr && !(neighbor->directionsSeen & South)) {
+        cell->directionsSeen |= South;
+        return walk(south, count + 1);
+    }
+
+    // try west
+    Point west = point.movedBy(West);
+    neighbor = cellAtPoint(west);
+    if (neighbor != nullptr && !(neighbor->directionsSeen & West)) {
+        cell->directionsSeen |= West;
+        return walk(west, count + 1);
+    }
+
+    // zigzak until we find it.
+    
     return 12;
 }
 
