@@ -39,7 +39,18 @@ void printBoard() {
         for (auto cell: stripe) {
             if (cell.isStart) cout << "S";
             else if (cell.isTarget) cout << "E";
-            else cout << cell.altitude + 'a';
+            else {
+                char blah = 'a' + cell.altitude;
+                cout << blah;
+            }
+        }
+        cout << "    ";
+        for (auto cell: stripe) {
+            if (cell.isStart) cout << "S";
+            else if (cell.isTarget) cout << "E";
+            else {
+                cout << ".";
+            }
         }
         cout << endl;
     }
@@ -51,16 +62,18 @@ int main() {
     int row = 0, column = 0;
     while(getline(cin, line)) {
         column = 0;
+        vector<Cell> stripe;
         for (char alt: line) {
             Cell cell(alt - 'a', alt == 'S', alt == 'E');
+            stripe.push_back(cell);
 
             if (alt == 'S') {
                 start = Point(row, column);
             }
             column++;
         }
+        terrain.push_back(stripe);
         row++;
-        cout << line << endl;
     }
 
     printBoard();
