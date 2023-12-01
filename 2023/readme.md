@@ -37,3 +37,27 @@ questions I had.
 And yay, got it right.
 
 ### Part 2
+
+lol.  that's hilarious.  Need to look up character strings as well.
+
+```
+two1nine          = 29
+eightwothree      = 83
+abcone2threexyz   = 13
+xtwone3four       = 24
+4nineeightseven2  = 42
+zoneight234       = 14
+7pqrstsixteen     = 76
+```
+
+(kind of tedious...)
+
+hrm.  eyeballing, seems to work fine.  I am parsing eighthree as 83 and
+sevenine as 79, but saying I'm too low.  
+
+Heh. Ran it through a random python script from reddit, and it got a
+lower value (by six)
+
+original: 55336
+with a stupid memory fix: 30093
+python script: 55330
