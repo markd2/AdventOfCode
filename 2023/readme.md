@@ -16,3 +16,24 @@ I swear, there must be an `if markd-is-looking-forward-to-coding { fail(random()
 So, Objective-C it is until I can get swift fixed on this machine. _sigh_
 
 
+## Day 1 - Trebuchet
+
+https://adventofcode.com/2023/day/1
+
+### Part 1
+
+Looks like a "scan string from ends, make a number"
+
+```
+1abc2        == 12
+pqr3stu8vwx  == 38
+a1b2c3d4e5f  == 25
+treb7uchet   == 7
+```
+
+Let's take a moment and marvel at the examples, that answered all the
+questions I had.
+
+And yay, got it right.
+
+### Part 2
