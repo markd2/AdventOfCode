@@ -57,8 +57,11 @@ hrm.  eyeballing, seems to work fine.  I am parsing eighthree as 83 and
 sevenine as 79, but saying I'm too low.  
 
 Heh. Ran it through a random python script from reddit, and it got a
-lower value (by six)
+lower value (by six). Also wrong.
+
+Found a "thought there'd be a pear, but nothing there
 
 original: 55336
 with a stupid memory fix: 30093
 python script: 55330
+found a C++ version 55343

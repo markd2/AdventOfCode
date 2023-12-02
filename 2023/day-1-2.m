@@ -63,39 +63,43 @@ NSArray *values = @[
 ];
 
 void numberByString(NSString *line, Pear *outFirst, Pear *outSecond) {
-    Pear pears[10] = { { notfound, notfound } };
+    NSInteger pearIndex = 0;
+    Pear pears[20] = { { notfound, notfound } };
 
     for (NSInteger i = 0; i < values.count; i++) {
         NSString *value = values[i];
 
-        NSRange radar = [line rangeOfString: value];
+        NSRange range = NSMakeRange(0, line.length);
 
-        pears[i].number = notfound;
-        pears[i].index = notfound;
-        if (radar.location != NSNotFound) {
-            if (pears[i].index != notfound) {
-                NSLog(@"COLLISION");
+        do {
+            NSRange radar = [line rangeOfString: value
+                                        options: 0
+                                          range: range];
+
+            if (radar.location == NSNotFound) break;
+
+            pears[pearIndex].number = i + 1;
+            pears[pearIndex].index = radar.location;
+
+            pearIndex++;
+
+            range.location = radar.location + radar.length;
+            NSInteger length = line.length - range.location;
+            if (length < value.length) {
+                break;
             }
-            pears[i].number = i + 1;
-            pears[i].index = radar.location;
-        }
+            range.length = length;
+
+        } while(true);
     }
 
-    qsort_b(pears, sizeof(pears) / sizeof(*pears), sizeof(*pears),
+    qsort_b(pears, pearIndex, sizeof(*pears),
             ^int(const void *thing1, const void *thing2) {
                 return ((Pear *)thing1)->index - ((Pear *)thing2)->index;
             });
 
-    *outSecond = pears[9];
-    outFirst->number = notfound;
-    outFirst->index = notfound;
-
-    for (NSInteger i = 0; i < sizeof(pears) / sizeof(*pears); i++) {
-        if (pears[i].index != notfound) {
-            *outFirst = pears[i];
-            break;
-        }
-    }
+    *outFirst = pears[0];
+    *outSecond = pears[pearIndex - 1];
     
 } // numberByString
 
@@ -112,28 +116,45 @@ int main() {
     for (NSString *line in lines) {
         if (line.length == 0) continue;
 
-        Pear pears[4] = { {notfound, notfound} };
+        Pear pears[4];
+        NSInteger pearCount = 0;
 
-        pears[0] = numberByDigit(line, forward);
-        pears[1] = numberByDigit(line, backward);
+        Pear firstNumber = numberByDigit(line, forward);
+        Pear secondNumber = numberByDigit(line, backward);
+        if (firstNumber.number >= 1) {
+            pears[pearCount] = firstNumber;
+            pearCount++;
+        }
+        if (secondNumber.number >= 1) {
+            pears[pearCount] = secondNumber;
+            pearCount++;
+        }
 
-        numberByString(line, &pears[2], &pears[3]);
+        Pear firstString, secondString;
+        numberByString(line, &firstString, &secondString);
 
-        qsort_b(pears, sizeof(pears) / sizeof(*pears), sizeof(*pears),
+        if (firstString.number >= 1) {
+            pears[pearCount] = firstString;
+            pearCount++;
+        }
+        if (secondString.number >= 1) {
+            pears[pearCount] = secondString;
+            pearCount++;
+        }
+
+        qsort_b(pears, pearCount, sizeof(*pears),
                 ^int(const void *thing1, const void *thing2) {
                     return ((Pear *)thing1)->index - ((Pear *)thing2)->index;
                 });
 
-        NSInteger first = NSNotFound;
-        for (NSInteger i = 0; i < 4; i++) {
-            if (pears[i].index == notfound) continue;
-            first = pears[i].number;
-            break;
-        }
-        NSInteger second = pears[3].number;
-        printf("%ld %ld - %s\n", first, second, line.cString);
+        NSInteger first = pears[0].number;
+        NSInteger second = pears[pearCount - 1].number;
 
         NSInteger value = first * 10 + second;
+        if (first == 0 || second == 0) {
+            NSLog(@"ZEROE");
+        }
+        // printf("%ld %ld %s\n", first, second, line.cString);
         sum += value;
     }
 
