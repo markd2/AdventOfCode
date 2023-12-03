@@ -29,8 +29,8 @@ struct Symbol {
     let anchor: Int
 }
 
-var numbers: [Number] = []
-var symbols: [Symbol] = []
+var numbers: [Int: [Number] ] = [:]
+var symbols: [Int: [Symbol] ] = [:]
 
 for (index, line) in lines.enumerated() {
     // numbers
@@ -45,7 +45,7 @@ for (index, line) in lines.enumerated() {
                                 anchor: $0.range.location)
             return number
         }
-        numbers = (numbers + lineNumbers).flatMap{ $0 }
+        numbers[index] = lineNumbers
     } catch let error {
         print("invalid regex: \(error.localizedDescription)")
     }
@@ -60,7 +60,7 @@ for (index, line) in lines.enumerated() {
                                 anchor: $0.range.location)
             return symbol
         }
-        symbols = (symbols + lineSymbols).flatMap{ $0 }
+        symbols[index] = lineSymbols
     } catch let error {
         print("invalid regex: \(error.localizedDescription)")
     }
