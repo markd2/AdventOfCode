@@ -16,6 +16,17 @@ So, Objective-C it is until I can get swift fixed on this machine. _sigh_
 Update: looks like past-me in 2021 used https://nshipster.com/swift-sh/, 
 for easier running of swift files as scripts.
 
+==================================================
+## Day 3 - Gear Ratios
+
+Looks like adjacency of ranges is the crux.  yep!
+
+### Part 1
+
+Kind of over-designed pulling numbers and symbols out into their own structures,
+and making stripes of arrays for each line.  Hopefully the twist won't mess me up.
+
+### Part 2
 
 
 --------------------------------------------------

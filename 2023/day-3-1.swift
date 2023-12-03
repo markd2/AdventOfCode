@@ -2,8 +2,8 @@
 import Foundation
 import RegexBuilder
 
-let inputFilename = "day-3-1-test.txt"
-// let inputFilename = "day-3-prod.txt"
+//let inputFilename = "day-3-1-test.txt"
+let inputFilename = "day-3-prod.txt"
 
 // ----------
 let input = try! String(contentsOfFile: inputFilename)
@@ -65,5 +65,33 @@ for (index, line) in lines.enumerated() {
         print("invalid regex: \(error.localizedDescription)")
     }
 }
-print(numbers)
-print(symbols)
+//print(numbers)
+//print(symbols)
+
+func hasAdjacentSymbol(_ number: Number) -> Bool {
+    let above = symbols[number.line - 1]
+    let this = symbols[number.line]
+    let below = symbols[number.line + 1]
+    let all = (this ?? []) + (above ?? []) + (below ?? [])
+
+    let numberLength = Int(trunc(log10(Double(number.number))))
+
+    let range = (number.anchor-1)...(number.anchor + numberLength + 1)
+    for symbol in all {
+        if range.contains(symbol.anchor) {
+            return true
+        }
+    }
+    return false
+}
+
+var sum = 0
+for lineNumber in numbers.keys.sorted() {
+    for number in numbers[lineNumber]! {
+        if hasAdjacentSymbol(number) {
+            sum += number.number
+        }
+    }
+}
+
+print(sum)
