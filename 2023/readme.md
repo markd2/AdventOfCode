@@ -17,6 +17,24 @@ Update: looks like past-me in 2021 used https://nshipster.com/swift-sh/,
 for easier running of swift files as scripts.
 
 
+
+--------------------------------------------------
+## Day 2 - Cube Conundrum
+
+https://adventofcode.com/2023/day/2
+
+### Part 1
+
+Looks like :alot: of spltting and comparing to a fixed set of nubmers.
+
+yeah, pretty plug and chug
+
+### Part 2
+
+Looks like find the max of each color.  yep!  Much easier than yesterday.
+
+
+--------------------------------------------------
 ## Day 1 - Trebuchet
 
 https://adventofcode.com/2023/day/1
@@ -59,9 +77,13 @@ sevenine as 79, but saying I'm too low.
 Heh. Ran it through a random python script from reddit, and it got a
 lower value (by six). Also wrong.
 
-Found a "thought there'd be a pear, but nothing there
+Found a "thought there'd be a pear, but nothing there"
 
 original: 55336
 with a stupid memory fix: 30093
 python script: 55330
 found a C++ version 55343
+
+ok, the problem was not getting repeated words
+
+--------------------------------------------------
