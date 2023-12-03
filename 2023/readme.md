@@ -28,6 +28,9 @@ and making stripes of arrays for each line.  Hopefully the twist won't mess me u
 
 ### Part 2
 
+The over-engineering paid off.  essentially swapping the loop that finds
+adjancy overlaps, and done.
+
 
 --------------------------------------------------
 ## Day 2 - Cube Conundrum
