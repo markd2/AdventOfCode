@@ -67,11 +67,9 @@ for card in cards {
     let winCount = card.winners
     guard winCount > 0 else { continue }
 
-    print("card \(card.cardNumber) has \(winCount) winners and \(card.copies) copies")
     for x in 0 ..< card.copies + 1 {
 
         for i in 0 ..< winCount {
-            print("    splatting to card \(card.cardNumber + i + 1)")
             cards[card.cardNumber + i].copies += 1
         }
     }
