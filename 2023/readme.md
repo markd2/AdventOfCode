@@ -16,6 +16,17 @@ So, Objective-C it is until I can get swift fixed on this machine. _sigh_
 Update: looks like past-me in 2021 used https://nshipster.com/swift-sh/, 
 for easier running of swift files as scripts.
 
+=================================================
+## Day 4 - Scratchcards
+
+looks like a simple "stuff things into a lookup table.  look other things
+up and calculate a value".  I bet the card number value will be involved
+in the twist.
+
+
+### Part 1
+
+
 ==================================================
 ## Day 3 - Gear Ratios
 
