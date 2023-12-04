@@ -10,10 +10,17 @@ let input = try! String(contentsOfFile: inputFilename)
 let lines = input.split(separator: "\n")
 // ----------
 
-struct Card {
+class Card {
     let cardNumber: Int
     let winningNumbers: [Int]
     let pulledNumbers: [Int]
+    var copies = 0
+
+    init(cardNumber: Int, winningNumbers: [Int], pulledNumbers: [Int]) {
+        self.cardNumber = cardNumber
+        self.winningNumbers = winningNumbers
+        self.pulledNumbers = pulledNumbers
+    }
 
     var winners: Int {
         var winningSet = Set<Int>()
@@ -52,9 +59,27 @@ for line in lines {
     cards.append(card)
 }
 
-var sum = 0
 for card in cards {
     sum += card.score
+}
+
+for card in cards {
+    let winCount = card.winners
+    guard winCount > 0 else { continue }
+
+    print("card \(card.cardNumber) has \(winCount) winners and \(card.copies) copies")
+    for x in 0 ..< card.copies + 1 {
+
+        for i in 0 ..< winCount {
+            print("    splatting to card \(card.cardNumber + i + 1)")
+            cards[card.cardNumber + i].copies += 1
+        }
+    }
+}
+
+var sum = 0
+for card in cards {
+    sum += card.copies + 1
 }
 
 print(sum)
