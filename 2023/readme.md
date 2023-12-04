@@ -26,6 +26,12 @@ in the twist.
 
 ### Part 1
 
+Pretty straightforward
+
+### Part 2
+
+Took longer to understand the problem than to do it :-)
+
 
 ==================================================
 ## Day 3 - Gear Ratios
