@@ -16,6 +16,14 @@ So, Objective-C it is until I can get swift fixed on this machine. _sigh_
 Update: looks like past-me in 2021 used https://nshipster.com/swift-sh/, 
 for easier running of swift files as scripts.
 
+==================================================
+## Day 5 - if you give a seed a fertilizer
+
+Get a feeling that "just understanding the problem is enough to solve it", with
+a non-exhaustive data structure, since the prod data uses BIG numbers
+
+
+
 =================================================
 ## Day 4 - Scratchcards
 
