@@ -13,7 +13,7 @@ let lines = input.split(separator: "\n")
 // first line are the seeds
 
 let seedsLine = lines[0].split(separator: ":")
-let seeds: [Int] = seedsLine[1].split(separator: " ").map { Int(String($0))! }
+let seedRanges: [Int] = seedsLine[1].split(separator: " ").map { Int(String($0))! }
 
 class Map {
     struct SubMap {
@@ -39,11 +39,8 @@ class Map {
     }
 
     func convert(_ source: Int) -> Int {
-        var found = false
-
         for submap in submaps {
             if submap.contains(source) {
-                found = true
                 return submap.convert(source)
             }
         }
@@ -102,49 +99,29 @@ for line in lines.dropFirst() {
     currentMap.append(submap)
 }
 
-var locations: [Int] = []
+var min = Int.max
 
-for seed in seeds {
-    let soil = seedToSoilMap.convert(seed)
-    let fert = soilToFertilizerMap.convert(soil)
-    let water = fertilizerToWaterMap.convert(fert)
-    let light = waterToLightMap.convert(water)
-    let temperature = lightToTemperatureMap.convert(light)
-    let humiditty = temperatureToHumidityMap.convert(temperature)
-    let location = humidityToLocationMap.convert(humiditty)
-    locations.append(location)
-}
+for i in stride(from: 0, to: seedRanges.count, by: 2) {
+    let low = seedRanges[i]
+    let high = low + seedRanges[i + 1]
+    print("stride \(high - low)")
 
-print(locations.min()!)
+    for seed in low ..< high {
+        let soil = seedToSoilMap.convert(seed)
+        let fert = soilToFertilizerMap.convert(soil)
+        let water = fertilizerToWaterMap.convert(fert)
+        let light = waterToLightMap.convert(water)
+        let temperature = lightToTemperatureMap.convert(light)
+        let humiditty = temperatureToHumidityMap.convert(temperature)
+        let location = humidityToLocationMap.convert(humiditty)
 
-
-
-/* extensive Unit testing
-let oopack: [(Int, Int)] = [
-  (0, 0),
-  (1, 10),
-  (-1, -1),
-  (48, 48),
-  (49, 49),
-  (50, 52),
-  (51, 53),
-  (-1, -1),
-  (96, 98),
-  (97, 99),
-  (98, 50),
-  (99, 51)
-]
-
-
-for oop in oopack {
-    if (oop.0 == -1) {
-        print("........")
-    } else {
-        let converted = seedToSoilMap.convert(oop.0)
-        if converted != oop.1 {
-            print("oops - got \(converted), expected \(oop.1)  for \(oop.0)")
+        if location < min {
+            print("ticking down to \(location)")
+            min = location
         }
-        print("\(oop.0)  \(converted)")
     }
 }
-*/
+
+NSLog("done with seeds")
+
+print(min)

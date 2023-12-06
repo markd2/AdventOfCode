@@ -22,6 +22,27 @@ for easier running of swift files as scripts.
 Get a feeling that "just understanding the problem is enough to solve it", with
 a non-exhaustive data structure, since the prod data uses BIG numbers
 
+### Part 1
+
+yeah.  just a little tedious cascading through all the maps
+
+### Part 2
+
+arg, these take forever to run - prod data has a redonk number of things to chew throw
+
+stride 114805397
+stride 164506173
+stride 166087295
+stride 340945548
+stride 483360452
+stride 252097746
+stride 279314434
+stride 145640027
+stride 149488635
+stride 236791935
+
+the solution I got was too high 17729183
+
 
 
 =================================================
@@ -126,3 +147,4 @@ found a C++ version 55343
 ok, the problem was not getting repeated words
 
 --------------------------------------------------
+
