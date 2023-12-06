@@ -17,6 +17,16 @@ Update: looks like past-me in 2021 used https://nshipster.com/swift-sh/,
 for easier running of swift files as scripts.
 
 ==================================================
+## Day 6 - Elvis Needs Boats
+
+### Part 1
+
+I think it's just "do the same math over a range". Since it feels bell-curvey,
+could probably optimize by approaching from the ends.
+
+
+
+==================================================
 ## Day 5 - if you give a seed a fertilizer
 
 Get a feeling that "just understanding the problem is enough to solve it", with
@@ -41,7 +51,8 @@ stride 145640027
 stride 149488635
 stride 236791935
 
-the solution I got was too high 17729183
+the solution I got was too high 17729183.  I probably have an obiwan in the
+map code that's not getting exercised by the inidividual seed numbers.
 
 
 
