@@ -48,3 +48,20 @@ enum Card: Int {
     }
 }
 
+struct Hand {
+    let cards: [Card]
+    let bid: Int
+}
+var hands: [Hand] = []
+
+for line in lines {
+    let line = line.split(separator: " ")
+    var cards: [Card] = []
+    for char in line[0] {
+        cards.append(Card(char))
+    }
+    let bid = Int(line[1])!
+    hands.append(Hand(cards: cards, bid: bid))
+}
+
+print(hands)
