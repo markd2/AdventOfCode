@@ -11,7 +11,7 @@ let lines = input.split(separator: "\n")
 // ----------
 
 // AKQJT98765432
-enum Card: Int {
+enum Card: Int, Comparable {
     case card2
     case card3
     case card4
@@ -46,9 +46,13 @@ enum Card: Int {
             self = .card2
         }
     }
-}
 
-struct Hand {
+    static func < (lhs: Card, rhs: Card) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+}
+ 
+struct Hand: Comparable {
     let cards: [Card]
     let bid: Int
     var type: HandType {
@@ -56,13 +60,18 @@ struct Hand {
     }
 
     enum HandType: Int {
-        case highCard
-        case onePair
-        case twoPair
-        case threeOfAKind
-        case fullHouse
-        case fourOfAKind
         case fiveOfAKind
+        case fourOfAKind
+        case fullHouse
+        case threeOfAKind
+        case twoPair
+        case onePair
+        case highCard
+    }
+
+    init(cards: [Card], bid: Int) {
+        self.cards = cards.sorted().reversed()
+        self.bid = bid
     }
 
     func determineType() -> HandType {
@@ -82,7 +91,21 @@ struct Hand {
         return .onePair
     }
 
-    BORK: have a comparison, that does by handType first, then if tie, by stronger first card. maybe cahce the value if determineType will get called a redonk number of times.
+    static func < (lhs: Hand, rhs: Hand) -> Bool {
+        let thing1type = lhs.type
+        let thing2type = rhs.type
+
+        if thing1type == thing2type {
+            return lhs.cards.max()! < rhs.cards.max()!
+        } else {
+            return thing1type.rawValue < thing2type.rawValue
+        }
+        
+    }
+    
+    static func == (lhs: Hand, rhs: Hand) -> Bool {
+        return lhs.cards == rhs.cards
+    }
 }
 var hands: [Hand] = []
 
@@ -96,6 +119,13 @@ for line in lines {
     hands.append(Hand(cards: cards, bid: bid))
 }
 
-for hand in hands {
-    print(hand.type)
+hands.sort()
+
+var totalWinnings = 0
+
+for (index, hand) in hands.enumerated() {
+    print(index + 1, hand.bid, hand.type)
+    totalWinnings += hand.bid * (index + 1)
 }
+
+print(totalWinnings)
