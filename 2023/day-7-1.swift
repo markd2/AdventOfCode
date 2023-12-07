@@ -51,6 +51,38 @@ enum Card: Int {
 struct Hand {
     let cards: [Card]
     let bid: Int
+    var type: HandType {
+        determineType()
+    }
+
+    enum HandType: Int {
+        case highCard
+        case onePair
+        case twoPair
+        case threeOfAKind
+        case fullHouse
+        case fourOfAKind
+        case fiveOfAKind
+    }
+
+    func determineType() -> HandType {
+        var countingCoup: [Card: Int] = [:]
+        for card in cards {
+            let val = countingCoup[card, default: 0]
+            countingCoup[card] = val + 1
+        }
+
+        if countingCoup.keys.count == 1 { return .fiveOfAKind }
+        if countingCoup.values.filter { $0 == 4 }.count == 1 { return .fourOfAKind }
+        if countingCoup.keys.count == 2 { return .fullHouse }
+        if countingCoup.values.filter { $0 == 3 }.count == 1 { return .threeOfAKind }
+        if countingCoup.values.filter { $0 == 2 }.count == 2 { return .twoPair }
+        if countingCoup.values.count == 5 { return .highCard }
+
+        return .onePair
+    }
+
+    BORK: have a comparison, that does by handType first, then if tie, by stronger first card. maybe cahce the value if determineType will get called a redonk number of times.
 }
 var hands: [Hand] = []
 
@@ -64,4 +96,6 @@ for line in lines {
     hands.append(Hand(cards: cards, bid: bid))
 }
 
-print(hands)
+for hand in hands {
+    print(hand.type)
+}

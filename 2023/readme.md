@@ -17,6 +17,19 @@ Update: looks like past-me in 2021 used https://nshipster.com/swift-sh/,
 for easier running of swift files as scripts.
 
 ==================================================
+## Day 7 - Camel Cards
+
+Loks like the complexity is detecting poker hands.  There's only 1000
+lines in the prod databases, so probably can just brute force it
+like before.  Kind of nice mid-week not having to think too hard.
+
+### Part 1
+
+Score and accumulate ranks and bids.
+
+
+
+==================================================
 ## Day 6 - Elvis Needs Boats
 
 ### Part 1
@@ -24,6 +37,12 @@ for easier running of swift files as scripts.
 I think it's just "do the same math over a range". Since it feels bell-curvey,
 could probably optimize by approaching from the ends.
 
+Nah, brute force worked fine
+
+### Part 2
+
+just brute force over :all-the-things:?  Some of the underdogs talking about
+quadratic formula. Brute force took all of a minute.
 
 
 ==================================================
