@@ -2,8 +2,8 @@
 import Foundation
 import RegexBuilder
 
-let inputFilename = "day-7-1-test.txt"
-//let inputFilename = "day-7-prod.txt"
+//let inputFilename = "day-7-1-test.txt"
+let inputFilename = "day-7-prod.txt"
 
 // ----------
 let input = try! String(contentsOfFile: inputFilename)
@@ -60,17 +60,17 @@ struct Hand: Comparable {
     }
 
     enum HandType: Int {
-        case fiveOfAKind
-        case fourOfAKind
-        case fullHouse
-        case threeOfAKind
-        case twoPair
-        case onePair
         case highCard
+        case onePair
+        case twoPair
+        case threeOfAKind
+        case fullHouse
+        case fourOfAKind
+        case fiveOfAKind
     }
 
     init(cards: [Card], bid: Int) {
-        self.cards = cards.sorted().reversed()
+        self.cards = cards
         self.bid = bid
     }
 
@@ -96,11 +96,15 @@ struct Hand: Comparable {
         let thing2type = rhs.type
 
         if thing1type == thing2type {
-            return lhs.cards.max()! < rhs.cards.max()!
+            for blah in zip(lhs.cards, rhs.cards) {
+                if blah.0 == blah.1 { continue }
+                return blah.0 < blah.1
+            }
+            print("shoud not have gotten here")
+            return false
         } else {
             return thing1type.rawValue < thing2type.rawValue
         }
-        
     }
     
     static func == (lhs: Hand, rhs: Hand) -> Bool {
@@ -124,8 +128,9 @@ hands.sort()
 var totalWinnings = 0
 
 for (index, hand) in hands.enumerated() {
-    print(index + 1, hand.bid, hand.type)
     totalWinnings += hand.bid * (index + 1)
 }
 
 print(totalWinnings)
+
+
