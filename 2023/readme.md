@@ -25,7 +25,12 @@ like before.  Kind of nice mid-week not having to think too hard.
 
 ### Part 1
 
-Score and accumulate ranks and bids.
+Score and accumulate ranks and bids.  Hardest part was reading the
+requirements. PEBCAK
+
+### Part 2
+
+jokers!  Not in the mood, so waiting on this one til later.
 
 
 
