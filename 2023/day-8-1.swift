@@ -2,8 +2,8 @@
 import Foundation
 
 //let inputFilename = "day-8-1-test.txt"
-let inputFilename = "day-8-1-test-2.txt"
-//let inputFilename = "day-8-prod.txt"
+//let inputFilename = "day-8-1-test-2.txt"
+let inputFilename = "day-8-prod.txt"
 
 // ----------
 let input = try! String(contentsOfFile: inputFilename)
@@ -51,7 +51,6 @@ while true {
         print("did not find graph entry for \(currentNode)")
         break
     }
-    print("looking at \(currentNode), got \(pair), instruction \(instruction)")
 
     if instruction == "L" {
         currentNode = pair.left
