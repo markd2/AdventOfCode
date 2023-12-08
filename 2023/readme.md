@@ -17,6 +17,15 @@ Update: looks like past-me in 2021 used https://nshipster.com/swift-sh/,
 for easier running of swift files as scripts.
 
 ==================================================
+## Day 8 - Haunted Wasteland
+
+Build a graph, run through instructions.  Seems straightforward.
+For parsing, tried regexs, but swift kept complaining about it, so going to
+do it stupid-style
+
+
+
+==================================================
 ## Day 7 - Camel Cards
 
 Loks like the complexity is detecting poker hands.  There's only 1000
