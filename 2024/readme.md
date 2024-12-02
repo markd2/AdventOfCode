@@ -31,5 +31,16 @@ similarity scores - basically accumulate the right column into a counted
 set.
 
 
+# Day 2
+
+today's task is to pull apart a list of numbers, and apply some rules:
+  * numbers are all increasing or decreasing
+  * adjacent numbers don't differ by more than three.
+  * (equal values violate both conditions)
+
+Twist?  Either more complex logic in a row, or we'll need to do comparisons
+across rows?
+
+### Day 2.1
 
 
