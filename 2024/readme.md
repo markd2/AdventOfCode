@@ -41,6 +41,16 @@ today's task is to pull apart a list of numbers, and apply some rules:
 Twist?  Either more complex logic in a row, or we'll need to do comparisons
 across rows?
 
-### Day 2.1
+### Day 2.2
+
+Allow one failure due to bad level.  Haven't done this yet
+
+# Day 3
+
+Switching over to Go.  Got a Go project coming up.
+
+The mul(#,#) thing.
+
+
 
 
