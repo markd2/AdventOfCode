@@ -11,8 +11,14 @@ import (
 )
 
 func main() {
+	// Get filename from command line or use default
+	filename := "day-1-prod.txt"
+	if len(os.Args) > 1 {
+		filename = os.Args[1]
+	}
+
 	// Read input file
-	file, err := os.Open("day-1-prod.txt")
+	file, err := os.Open(filename)
 	if err != nil {
 		fmt.Printf("Error opening input file: %v\n", err)
 		os.Exit(1)
@@ -21,25 +27,27 @@ func main() {
 
 	var firstNumbers []int
 	var secondNumbers []int
+	lineCount := 0
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
+		lineCount++
 		line := scanner.Text()
 		numbers := strings.Fields(line)
 		if len(numbers) != 2 {
-			fmt.Printf("Invalid line format: %s\n", line)
+			fmt.Printf("Invalid line format at line %d: %s\n", lineCount, line)
 			continue
 		}
 
 		firstNum, err := strconv.Atoi(numbers[0])
 		if err != nil {
-			fmt.Printf("Error converting first number: %v\n", err)
+			fmt.Printf("Error converting first number at line %d: %v\n", lineCount, err)
 			continue
 		}
 
 		secondNum, err := strconv.Atoi(numbers[1])
 		if err != nil {
-			fmt.Printf("Error converting second number: %v\n", err)
+			fmt.Printf("Error converting second number at line %d: %v\n", lineCount, err)
 			continue
 		}
 
@@ -50,6 +58,17 @@ func main() {
 	if err := scanner.Err(); err != nil {
 		fmt.Printf("Error reading file: %v\n", err)
 		os.Exit(1)
+	}
+
+	if len(firstNumbers) == 0 {
+		fmt.Printf("\nFinal running sum: 0\n")
+		return
+	}
+
+	if len(firstNumbers) != len(secondNumbers) {
+		fmt.Printf("Mismatch in number of pairs: first=%d, second=%d\n", len(firstNumbers), len(secondNumbers))
+		fmt.Printf("\nFinal running sum: 0\n")
+		return
 	}
 
 	// Sort both arrays
